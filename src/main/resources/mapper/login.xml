@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.LoginDAO">
+
+    <select id="getUserInfo" parameterType="com.example.hackingproject.login.dto.LoginReq"
+            resultType="com.example.hackingproject.login.vo.UserVO">
+        SELECT
+            u.id
+            , u.pass
+            , u.name
+        FROM my.user as u
+        <where>
+            u.id = #{id}
+            AND u.pass = #{pass}
+        </where>
+    </select>
+
+    <update id="updateUserLogin" parameterType="com.example.hackingproject.login.vo.UserVO">
+        UPDATE my.user as u
+            SET u.last_login = DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
+        WHERE u.id = #{id}
+    </update>
+</mapper>

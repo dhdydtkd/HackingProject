@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.NoticeDAO">
+
+    <select id="getNoticeList" parameterType="com.example.hackingproject.common.vo.TableSearchVO"
+            resultType="com.example.hackingproject.notice.vo.NoticeVO">
+        SELECT
+            n.no
+            , n.title
+            , n.context
+            , n.create_id
+            , DATE_FORMAT(n.create_dt, "%Y-%m-%d %H:%m:%s") AS create_dt
+            , DATE_FORMAT(n.update_dt, "%Y-%m-%d %H:%m:%s") AS update_dt
+        FROM my.notice as n
+        <where>
+            AND n.delete_dt IS NULL
+        </where>
+        LIMIT #{pageMaxCount}
+        OFFSET #{currentPage};
+    </select>
+
+    <select id="getNoticeListCount" parameterType="com.example.hackingproject.common.vo.TableSearchVO"
+            resultType="int">
+        SELECT
+            COUNT(*)
+        FROM my.notice as n
+        <where>
+            AND n.delete_dt IS NULL
+        </where>
+    </select>
+
+    <insert id="addSchedulerNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
+        INSERT INTO my.notice (
+            title
+            , context
+            , create_id
+            , create_dt)
+        VALUES(
+                #{title}
+               , #{context}
+               , #{createID}
+               , DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
+        );
+    </insert>
+
+    <select id="getAddNoticeIndex"
+            resultType="int">
+        Select (MAX(no)+1) from my.notice;
+    </select>
+
+    <update id="deleteNotice" parameterType="int">
+        UPDATE my.notice AS n
+               SET n.delete_dt = DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
+        <where>
+            AND n.no = #{param}
+            AND n.delete_dt IS NULL
+        </where>
+    </update>
+</mapper>

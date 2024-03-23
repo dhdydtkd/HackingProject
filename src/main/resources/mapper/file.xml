@@ -1,0 +1,54 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.FileDAO">
+
+    <select id="getFileList" resultType="com.example.hackingproject.file.vo.FileVO">
+        SELECT
+        f.no
+        , f.file_name
+        , f.file_size
+        , DATE_FORMAT(f.create_dt, "%Y-%m-%d %H:%m:%s") AS create_dt
+        FROM my.file as f
+    </select>
+
+    <insert id="uploadFile" parameterType="com.example.hackingproject.file.dto.FileReq">
+        INSERT INTO my.file (
+            file_name
+            , file_size
+            , file_url
+            , file_save_name
+            , create_dt)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.fileName}
+            , #{item.fileSize}
+            , #{item.fileUrl}
+            , #{item.fileSaveName}
+            , DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
+            )
+        </foreach>
+    </insert>
+
+    <delete id="fileDelete" parameterType="int">
+        DELETE FROM my.file AS f
+        <where>
+            and f.no = #{param};
+        </where>
+    </delete>
+
+    <select id="fileFind" parameterType="int"
+            resultType="com.example.hackingproject.file.dto.FileReq">
+        SELECT
+            f.file_name
+            , f.file_size
+            , f.file_url
+            , f.file_save_name
+        FROM my.file as f
+        <where>
+            AND f.no = #{param}
+        </where>
+    </select>
+</mapper>
