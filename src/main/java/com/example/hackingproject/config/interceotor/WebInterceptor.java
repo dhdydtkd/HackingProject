@@ -24,35 +24,34 @@ public class WebInterceptor extends HandlerInterceptorAdapter {
     // 요청 들어가기 전
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(request.getRequestURL());
-        return false;
-//        return super.preHandle(request, response, handler);
-////        logger.info("================ URL 요청 전 인터셉터 ==================");
-//        Cookie[] cookies = request.getCookies();
-//        String JWTToken = null;
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals(HeaderJWTTokenName)) {
-//                    JWTToken = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-////        request.getRequestURL()
-//        System.out.println("request.getRequestURL() = "+request.getRequestURL());
-//        if(JWTToken==null||JWTToken==""){
-//            System.out.println("JWTToken = null");
-////            response.sendRedirect("/login");
-//        }else{
-//            if(jwtTokenUtil.validateToken(JWTToken)){
-////            jwtTokenUtil.getUserIdFromToken(token);
-////            jwtTokenUtil.validateTokenForUser(auth);
-//                System.out.println("JWTToken에 데이터 있음");
-//            }else{
-//                System.out.println("JWTToken에 데이터 없음");
-////            response.sendRedirect("/login");
-//            }
-//        }
-//        return super.preHandle(request, response, handler);
+        Cookie[] cookies = request.getCookies();
+        String JWTToken = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(HeaderJWTTokenName)) {
+                    JWTToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if(JWTToken==null||JWTToken==""){
+            System.out.println("JWT 없음");
+            response.sendRedirect("/login");
+            return false;
+        }else{
+            if(jwtTokenUtil.validateToken(JWTToken)){
+                // JWT 정상 인증
+//            jwtTokenUtil.getUserIdFromToken(token);
+//            jwtTokenUtil.validateTokenForUser(auth);
+                System.out.println("JWT 정상 인증");
+                return true;
+            }else{
+                // JWT 검증 실패
+                System.out.println("JWT 검증 실패");
+                response.sendRedirect("/login");
+                return false;
+            }
+        }
     }
 }

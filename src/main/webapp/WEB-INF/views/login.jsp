@@ -50,8 +50,9 @@
 			$.ajaxPOST("login/login", data, function(result){
 				if (result.state.code == "0000") {
 					console.log(result.body);
-					document.cookie = "SKJWTToken=" + result.body.jwtToken + "; path=/"; // 쿠키에 JWT 토큰 저장
-
+					if(result.body.jwtToken!=null&&result.body.jwtToken==''){
+						document.cookie = "SKJWTToken=" + result.body.jwtToken + "; path=/"; // 쿠키에 JWT 토큰 저장
+					}
 
 					if(result.body.userData != null){
 						$('#login_success').show();

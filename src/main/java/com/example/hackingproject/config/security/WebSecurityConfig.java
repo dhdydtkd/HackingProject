@@ -7,12 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static String[] matchPatten = {
-            "/"
-            ,"/css/**"
-            , "/js/**"
-            , "/login"
-            , "/login/login"
-            , "/**"
+            "/**"
     };
     @Override
     public void configure(HttpSecurity http) throws Exception {

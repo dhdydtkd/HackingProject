@@ -46,18 +46,19 @@ public class LoginService {
 
         UserVO user = loginDAO.getUserInfo(loginReq);
 
+        Map<String, Object> result = new HashMap<String,Object>();
+
         if(user == null){
         }else{
             user.setAuth("user");
             loginDAO.updateUserLogin(user);
+            // JWT 셋팅
+            result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
         }
 
         //session.removeAttribute(RSA_WEB_KEY);
-        Map<String, Object> result = new HashMap<String,Object>();
         result.put("userData",user);
         result.put("decryptionData",decryptionData);
-        // JWT 셋팅
-        result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
         result.put("sha256pass",loginReq.getPass());
 
         return result;
