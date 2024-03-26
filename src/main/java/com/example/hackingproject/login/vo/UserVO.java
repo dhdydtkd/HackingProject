@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class UserVO {
     private String id;
+    private String auth;
     private String pass;
     private String name;
 }
