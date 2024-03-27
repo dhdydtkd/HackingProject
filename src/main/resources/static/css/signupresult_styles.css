@@ -1,0 +1,70 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .logo {
+    color: #fb923c;
+    margin-bottom: 20px;
+  }
+  
+  .instruction {
+    font-size: 0.95em;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  
+  .code-input {
+    padding: 10px;
+    border: 1px solid #d1d8e0;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+    margin-bottom: 20px;
+  }
+  
+  .confirm-btn, .login-btn {
+    background-color: #fb923c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95em;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .confirm-btn:hover, .login-btn:hover {
+    background-color: #fb7425;
+  }
+  
+  /* 추가된 로그인 바로가기 버튼 스타일 */
+  .login-btn {
+    background-color: #edba4b; /* 로그인 버튼은 다른 색으로 설정 */
+    margin-bottom: 0; /* 마지막 요소이므로 여백 없음 */
+  }
+  
+  .login-btn:hover {
+    background-color: #b48520;
+  }
+  /* 기존 스타일에 추가 */
+.confirmation-message {
+    display: none;
+    margin-top: 10px;
+  }
+  

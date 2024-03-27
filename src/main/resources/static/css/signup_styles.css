@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 40px; /* 패딩을 늘려 컨텐츠에 공간을 더 줍니다 */
+}
+
+.signup-container {
+    max-width: 600px; /* 컨테이너의 최대 너비 */
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px; /* 넉넉한 패딩 */
+    border-radius: 12px; /* 둥근 모서리 */
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fb923c; /* 진한 글씨색 */
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.info-text {
+    font-size: 16px;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 95%;
+    padding: 16px; /* 넓은 패딩 */
+    border: 1px solid #cbd5e0; /* 연한 테두리 색상 */
+    border-radius: 8px; /* 둥근 모서리 */
+    font-size: 16px;
+    background-color: #edf2f7; /* 입력 필드 배경색 */
+}
+
+
+.input-group select {
+    width: 100%;
+    padding: 16px; /* 넓은 패딩 */
+    border: 1px solid #cbd5e0; /* 연한 테두리 색상 */
+    border-radius: 8px; /* 둥근 모서리 */
+    font-size: 16px;
+    background-color: #edf2f7; /* 입력 필드 배경색 */
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="password"]:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #fb923c; /* 포커스 시 테두리 색상 변경 */
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* 포커스 시 그림자 효과 */
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #a0aec0; /* 플레이스홀더 색상 */
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background-color: #fb923c; /* 버튼 색상 */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* 부드러운 색상 전환 효과 */
+}
+
+button:hover {
+    background-color: #fb923c; /* 호버 시 버튼 색상 변경 */
+}
+

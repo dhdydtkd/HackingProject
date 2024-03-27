@@ -26,5 +26,15 @@ public class TestController {
     public String sample() {
         return "test_sample";
     }
+    
+    @RequestMapping(value = "/test_login", method = RequestMethod.GET)
+    public String login() {
+        return "test_login";
+    }
+    
+    @RequestMapping(value = "/test_signup", method = RequestMethod.GET)
+    public String signup() {
+        return "test_signup";
+    }
 
 }

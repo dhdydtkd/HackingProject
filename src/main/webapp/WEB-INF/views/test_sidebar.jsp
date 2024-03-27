@@ -9,8 +9,12 @@
             <ul>
                 <li><a href="/">Index</a></li>
                 <li><a href="/test_login">로그인 구현</a></li>
+                <li><a href="/test_signup">회원가입 구현</a></li>
                 <li><a href="/test_notice">게시판 구현</a></li>
                 <li><a href="/test_file">첨부파일 구현</a></li>
+                <li><a href="/login">로그인 구현</a></li>
+                <li><a href="/signup">회원가입 구현</a></li>
+                <li><a href="/signupresult">회원가입 완료 구현</a></li>
 <%--                <li><a href="/scheduled">스케쥴러 구현</a></li>--%>
                 <li><a href="/test_map">지도 구현</a></li>
 <%--                <li><a href="/fcm">FCM 구현</a></li>--%>

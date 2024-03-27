@@ -1,0 +1,68 @@
+
+body, html {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 100%;
+    margin: 0;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.logo {
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 700;
+    color: #fb923c; /* Rookie */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    width: calc(100% - 40px);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.login-btn {
+    background-color: #fb923c; /* Rookie */
+}
+
+.login-btn:hover {
+    background-color: #fb923c;
+}
+
+.signup-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.signup-btn:hover {
+    background-color: #e0e0e0;
+}
