@@ -1,11 +1,20 @@
 package com.example.hackingproject.TestController;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.hackingproject.signup.service.SignupService;
+
 @Controller
 public class TestController {
+    private SignupService signupService;
+    
+    @Autowired
+    public void signupController(SignupService signupService) {
+        this.signupService = signupService;
+    }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String index() {
@@ -34,7 +43,7 @@ public class TestController {
     
     @RequestMapping(value = "/test_signup", method = RequestMethod.GET)
     public String signup() {
-        return "test_signup";
+        return "signup";
     }
 
 }

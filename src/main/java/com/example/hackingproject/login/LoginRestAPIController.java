@@ -20,11 +20,11 @@ public class LoginRestAPIController {
     @Value("${rsa_instance}")
     private String RSA_INSTANCE; // rsa transformation
 
-    @RequestMapping(value = "/test_login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         initRsa(request);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("test_login");
+        mav.setViewName("login");
         return mav;
     }
 
