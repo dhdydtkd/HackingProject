@@ -19,7 +19,7 @@
 
             <!-- Header -->
             <header id="header">
-                <a href="index.jsp" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+                <a href="test_index.jsp" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
             </header>
 
             <!-- Content -->
@@ -404,7 +404,7 @@ print 'It took ' + i + ' iterations to sort the deck.';
         </div>
     </div>
     <!-- Sidebar -->
-    <jsp:include page="sidebar.jsp" flush="false"/>
+    <jsp:include page="test_sidebar.jsp" flush="false"/>
 </div>
 
 <!-- Scripts -->

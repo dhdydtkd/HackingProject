@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class NoticeRestAPIController {
 
-    @RequestMapping(value = "/notice", method = RequestMethod.GET)
+    @RequestMapping(value = "/test_notice", method = RequestMethod.GET)
     public ModelAndView notice(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("notice");
+        mav.setViewName("test_notice");
         return mav;
     }
 }

@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<!-- Sidebar -->
-				<jsp:include page="sidebar.jsp" flush="false"/>
+				<jsp:include page="test_sidebar.jsp" flush="false"/>
 			</div>
 		<!-- Scripts -->
 		<script src="/js/jquery.min.js"></script>
