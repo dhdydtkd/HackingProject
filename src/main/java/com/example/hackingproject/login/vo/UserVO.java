@@ -7,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserVO {
-    private String id;
-    private String auth;
-    private String pass;
-    private String name;
+    private String USER_ID;
+    private String USER_PW;
+    private String USER_NM;
+
+    private Integer ACCESS_LEVEL;
 }

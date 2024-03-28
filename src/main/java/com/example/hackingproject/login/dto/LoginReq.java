@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class LoginReq {
 
-    private String id;
-    private String pass;
+    private String user_id;
+    private String user_pw;
 }

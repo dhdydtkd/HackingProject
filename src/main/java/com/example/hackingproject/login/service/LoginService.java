@@ -31,18 +31,18 @@ public class LoginService {
         String userId = "";
         String userPw = "";
         try{
-            userId = decryptRsa(privateKey, loginReq.getId());
-            userPw = decryptRsa(privateKey, loginReq.getPass());
+            userId = decryptRsa(privateKey, loginReq.getUser_id());
+            userPw = decryptRsa(privateKey, loginReq.getUser_pw());
         }catch (Exception e){
 
         }
         // 복호화된 데이터
         LoginReq decryptionData = new LoginReq();
-        decryptionData.setId(userId);
-        decryptionData.setPass(userPw);
+        decryptionData.setUser_id(userId);
+        decryptionData.setUser_pw(userPw);
 
-        loginReq.setId(userId);
-        loginReq.setPass(SHA256Encrypt(userPw));
+        loginReq.setUser_id(userId);
+        loginReq.setUser_pw(SHA256Encrypt(userPw));
 
         UserVO user = loginDAO.getUserInfo(loginReq);
 
@@ -50,16 +50,12 @@ public class LoginService {
 
         if(user == null){
         }else{
-            user.setAuth("user");
-            loginDAO.updateUserLogin(user);
             // JWT 셋팅
             result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
         }
 
         //session.removeAttribute(RSA_WEB_KEY);
         result.put("userData",user);
-        result.put("decryptionData",decryptionData);
-        result.put("sha256pass",loginReq.getPass());
 
         return result;
     }

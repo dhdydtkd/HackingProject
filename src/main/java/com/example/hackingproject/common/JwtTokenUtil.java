@@ -30,7 +30,7 @@ public class JwtTokenUtil {
 
     public String getUserAuthFromToken(String token) {
         Claims claims =  getClaimFromToken(token);
-        return claims.get("auth").toString();
+        return claims.get("access_level").toString();
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -70,9 +70,9 @@ public class JwtTokenUtil {
     private String doGenerateTokenForUser(UserVO user, String subject) {
 
         Claims claims = Jwts.claims();
-        claims.put("id", user.getId());
-        claims.put("auth", user.getAuth());
-        claims.put("type", "web");
+        claims.put("id", user.getUSER_ID());
+        claims.put("name", user.getUSER_NM());
+        claims.put("access_level", user.getACCESS_LEVEL());
         claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("ROLE_SELLER")));
 
         return Jwts.builder()

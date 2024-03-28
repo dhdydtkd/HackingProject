@@ -44,8 +44,8 @@
             const rsa = new RSAKey();
             rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
             let data = {
-                id: rsa.encrypt(id.val())
-                , pass: rsa.encrypt(pass.val())
+                user_id: rsa.encrypt(id.val())
+                , user_pw: rsa.encrypt(pass.val())
             }
             $('#RSAid').val(data.id);
             $('#RSApass').val(data.pass);
