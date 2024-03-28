@@ -10,11 +10,11 @@
         , f.file_name
         , f.file_size
         , DATE_FORMAT(f.create_dt, "%Y-%m-%d %H:%m:%s") AS create_dt
-        FROM my.file as f
+        FROM rookie.file as f
     </select>
 
     <insert id="uploadFile" parameterType="com.example.hackingproject.file.dto.FileReq">
-        INSERT INTO my.file (
+        INSERT INTO rookie.file (
             file_name
             , file_size
             , file_url
@@ -33,7 +33,7 @@
     </insert>
 
     <delete id="fileDelete" parameterType="int">
-        DELETE FROM my.file AS f
+        DELETE FROM rookie.file AS f
         <where>
             and f.no = #{param};
         </where>
@@ -46,7 +46,7 @@
             , f.file_size
             , f.file_url
             , f.file_save_name
-        FROM my.file as f
+        FROM rookie.file as f
         <where>
             AND f.no = #{param}
         </where>

@@ -37,4 +37,9 @@ public class TestController {
         return "test_signup";
     }
 
+    @RequestMapping(value = "/test_chart", method = RequestMethod.GET)
+    public String chart() {
+        return "test_chart";
+    }
+
 }

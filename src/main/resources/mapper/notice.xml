@@ -13,7 +13,7 @@
             , n.create_id
             , DATE_FORMAT(n.create_dt, "%Y-%m-%d %H:%m:%s") AS create_dt
             , DATE_FORMAT(n.update_dt, "%Y-%m-%d %H:%m:%s") AS update_dt
-        FROM my.notice as n
+        FROM rookie.notice as n
         <where>
             AND n.delete_dt IS NULL
         </where>
@@ -25,14 +25,14 @@
             resultType="int">
         SELECT
             COUNT(*)
-        FROM my.notice as n
+        FROM rookie.notice as n
         <where>
             AND n.delete_dt IS NULL
         </where>
     </select>
 
     <insert id="addSchedulerNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
-        INSERT INTO my.notice (
+        INSERT INTO rookie.notice (
             title
             , context
             , create_id
@@ -47,11 +47,11 @@
 
     <select id="getAddNoticeIndex"
             resultType="int">
-        Select (MAX(no)+1) from my.notice;
+        Select (MAX(no)+1) from rookie.notice;
     </select>
 
     <update id="deleteNotice" parameterType="int">
-        UPDATE my.notice AS n
+        UPDATE rookie.notice AS n
                SET n.delete_dt = DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
         <where>
             AND n.no = #{param}

@@ -17,6 +17,7 @@
                 <li><a href="/signupresult">회원가입 완료 구현</a></li>
 <%--                <li><a href="/scheduled">스케쥴러 구현</a></li>--%>
                 <li><a href="/test_map">지도 구현</a></li>
+                <li><a href="/test_chart">차트 구현</a></li>
 <%--                <li><a href="/fcm">FCM 구현</a></li>--%>
 <%--                <li><a href="/jenkins">Jenkins 구현</a></li>--%>
 <%--                <li><a href="/sample">sample</a></li>--%>
