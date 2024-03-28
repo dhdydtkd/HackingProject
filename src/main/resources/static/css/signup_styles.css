@@ -89,3 +89,24 @@ button:hover {
     background-color: #fb923c; /* 호버 시 버튼 색상 변경 */
 }
 
+/* Webkit 브라우저용 (Chrome, Safari 등) */
+.input-group select {
+    -webkit-appearance: none; /* 화살표 제거 */
+    -moz-appearance: none; /* Firefox */
+    appearance: none; /* 최신 브라우저 */
+    background-color: #edf2f7;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    font-size: 16px;
+    background-image: url('your-custom-dropdown-icon.svg'); /* 사용자 정의 드롭다운 아이콘 */
+    background-repeat: no-repeat;
+    background-position: right 16px center; /* 아이콘 위치 조정 */
+    background-size: 12px; /* 아이콘 크기 */
+}
+
+/* Firefox용 */
+.input-group select::-ms-expand {
+    display: none; /* IE와 Edge에서 화살표 제거 */
+}
