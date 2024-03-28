@@ -17,6 +17,8 @@
                 <li><a href="/signupresult">회원가입 완료 구현</a></li>
                 <li><a href="/notice">공지사항 구현</a></li>
                 <li><a href="/notice-write">공지사항 글쓰기 구현</a></li>
+                <li><a href="/notice-write">주식 상세 구현</a></li>
+                <li><a href="/notice-write">커뮤니티 구현</a></li>
 <%--                <li><a href="/scheduled">스케쥴러 구현</a></li>--%>
                 <li><a href="/test_map">지도 구현</a></li>
                 <li><a href="/test_chart">차트 구현</a></li>
