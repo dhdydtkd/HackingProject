@@ -38,6 +38,25 @@
                  LIMIT 60 OFFSET #{param}) as mindata;
     </select>
 
+    <select id="getStockList" resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            s.STOCK_CODE,
+            s.STOCK_NAME,
+            sp.STOCK_PRICE,
+            DATE_FORMAT(sp.STOCK_DATE, "%Y-%m-%d %H:%i:%S") as STOCK_DATE
+        FROM
+            rookie.Stock s
+        LEFT JOIN
+        (
+            SELECT sp1.* FROM rookie.Stock_Price sp1
+            LEFT JOIN rookie.Stock_Price sp2 ON
+                sp1.STOCK_CODE = sp2.STOCK_CODE AND sp1.STOCK_DATE &lt; sp2.STOCK_DATE
+            WHERE
+                sp2.STOCK_DATE IS NULL
+        ) AS sp
+        ON s.STOCK_CODE = sp.STOCK_CODE;
+    </select>
+
 
 
 

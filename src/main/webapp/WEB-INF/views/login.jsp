@@ -54,25 +54,11 @@
                 if (result.state.code == "0000") {
                     if(result.body.jwtToken!=null&&result.body.jwtToken!=''){
                         document.cookie = "SKJWTToken=" + result.body.jwtToken + "; path=/"; // 쿠키에 JWT 토큰 저장
+                        window.location.href = '/main';
                         $("#login_fail").hide();
                     }else{
                         $("#login_fail").show();
                     }
-
-                    //
-                    // if(result.body.userData != null){
-                    //     $('#login_success').show();
-                    //     $('#login_fail').css("display","none");
-                    // }else{
-                    //     $('#login_success').css("display","none");
-                    //     $('#login_fail').show();
-                    // }
-                    // //복호화된 데이터 표출 (따로 분기해야함)
-                    // $('#private_id').val(result.body.decryptionData.id);
-                    // $('#private_pass').val(result.body.decryptionData.pass);
-                    // $('#sha256_pass').val(result.body.sha256pass);
-
-
                 }
             });
         });

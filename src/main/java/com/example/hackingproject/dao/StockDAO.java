@@ -3,6 +3,7 @@ package com.example.hackingproject.dao;
 import com.example.hackingproject.notice.dto.NoticeReq;
 import com.example.hackingproject.stock.dto.StockData;
 import com.example.hackingproject.stock.dto.StockHourData;
+import com.example.hackingproject.stock.vo.StockVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface StockDAO {
 
     StockHourData getStock1HourData(Integer offSet);
 //    List<User> selectUsersByIdList(List<Integer> idList);
+
+    List<StockVO> getStockList();
 
 
 }

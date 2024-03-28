@@ -13,12 +13,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 
     public static String[] matchPatten = {
-                "/"
-            ,"/css/**"
+            "/"
+            , "/image/**"
+            , "/css/**"
             , "/js/**"
             , "/login"
+            , "/main"
             , "/login/login"
-            , "/**"
+            , "/stock/stocklist"
+//            , "/**"
     };
     @Autowired
     private WebInterceptor webInterceptor;

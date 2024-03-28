@@ -19,13 +19,11 @@ import java.util.Random;
 public class Scheduler {
 
     @Autowired
-    private NoticeDAO noticeDAO;
-
-    @Autowired
     private StockDAO stockDAO;
 
-    @Value("${service_system_name}")
-    private String systemName ; // 개인키 session key
+    @Value("${oys_scheduler}")
+    private String oysScheduler ; // 개인키 session key
+
 
     // 오후 8시 0분 0초에 실행
 //    @Scheduled(cron = "0 0 20 * * ?")
@@ -46,37 +44,36 @@ public class Scheduler {
 
     @Scheduled(fixedRate = 1000)
     public void stockDataScheduled() {
-
-        StockData stock_1 = createStockData(1,"AAPL","Apple Inc.",1,0);
-//        stockDAO.addSchedulerStock(stock_1);
-        StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
-//        stockDAO.addSchedulerStock(stock_2);
-        StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
-//        stockDAO.addSchedulerStock(stock_3);
-        StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
-//        stockDAO.addSchedulerStock(stock_4);
-        StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
-//        stockDAO.addSchedulerStock(stock_5);
+        if(oysScheduler=="true"){
+            StockData stock_1 = createStockData(1,"AAPL","Apple Inc.",1,0);
+            stockDAO.addSchedulerStock(stock_1);
+            StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
+            stockDAO.addSchedulerStock(stock_2);
+            StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
+            stockDAO.addSchedulerStock(stock_3);
+            StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
+            stockDAO.addSchedulerStock(stock_4);
+            StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
+            stockDAO.addSchedulerStock(stock_5);
+        }
     }
 
     @Scheduled(fixedRate = 10000)
     public void test() {
-//
-//        offSetList.add(0);
-//        offSetList.add(60);
-//        List<String> getStockList = stockDAO.getStock1HourData(offSetList);
-//        System.out.println("getStockList");
-//        System.out.println(getStockList);
-        List<StockHourData> stockHourList = new ArrayList<StockHourData>();
-        for(int i=0 ;i<60; i++){
+        if(oysScheduler=="true") {
+            List<StockHourData> stockHourList = new ArrayList<StockHourData>();
+            for (int i = 0; i < 60; i++) {
 //            stockHourList.add(stockDAO.getStock1HourData(i*60));
+            }
         }
     }
 
     @Scheduled(cron = "0 0/10 * * * ?")
     public void stockDataDeleteScheduled() {
-        stockDAO.deleteSchedulerStock();
-        System.out.println("stockDataDeleteScheduled");
+        if(oysScheduler=="true") {
+            stockDAO.deleteSchedulerStock();
+            System.out.println("stockDataDeleteScheduled");
+        }
     }
 
     public StockData createStockData(int type, String code, String name, int price, int base_price){
