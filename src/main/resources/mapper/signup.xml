@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hackingproject.dao.SignupDAO">
+    
+    <insert id="insertUser" parameterType="com.example.hackingproject.signup.userentity.UserEntity">
+        INSERT INTO my.users (USER_ID, USER_PW, USER_TELNO, USER_NM, USER_BIRTH, USER_BANK, USER_ACCOUNT_NUMBER, USER_AGENCY, ACCESS_LEVEL, ACCOUNT_BALANCE)
+        VALUES (#{userId}, #{userPw}, #{userTelno}, #{userName}, #{userBirth}, #{userBank}, #{accountNumber}, #{userAgency}, #{accessLevel}, #{accountBalance})
+    </insert>
+
+</mapper>
