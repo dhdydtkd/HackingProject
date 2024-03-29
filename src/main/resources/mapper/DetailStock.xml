@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.example.hackingproject.dao.DetailStockDAO">
+    <insert id="buyStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+        INSERT INTO rookie.UserStock (USER_ID, SAMSUNG, TESLA, LG, SK, APPLE)
+        VALUES (#{userId}, #{SAMSUNG}, #{TESLA}, #{LG}, #{SK}, #{APPLE})
+        ON DUPLICATE KEY UPDATE 
+            SAMSUNG = SAMSUNG + VALUES(SAMSUNG), 
+            TESLA = TESLA + VALUES(TESLA),
+            LG = LG + VALUES(LG),
+            SK = SK + VALUES(SK),
+            APPLE = APPLE + VALUES(APPLE);
+    </insert>
+
+    <insert id="sellStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+        INSERT INTO rookie.UserStock (USER_ID, SAMSUNG, TESLA, LG, SK, APPLE)
+        VALUES (#{userId}, #{SAMSUNG}, #{TESLA}, #{LG}, #{SK}, #{APPLE})
+        ON DUPLICATE KEY UPDATE 
+            SAMSUNG = SAMSUNG - VALUES(SAMSUNG), 
+            TESLA = TESLA - VALUES(TESLA),
+            LG = LG - VALUES(LG),
+            SK = SK - VALUES(SK),
+            APPLE = APPLE - VALUES(APPLE);
+    </insert>
+    
+    <select id="haveStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO" resultType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+        SELECT * FROM rookie.UserStock WHERE USER_ID = #{userId}
+    </select>
+</mapper>

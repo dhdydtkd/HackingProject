@@ -8,11 +8,124 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/stocks.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+	
+	<script>
+		function setCompany(){
+		    var company = document.getElementById('companyName').textContent;
+		    var STOCK;
+		    if (company === "삼성전자") {
+		        STOCK = "SAMSUNG";
+		    } 
+		    else if(company === "LG") {
+		    	STOCK = "LG";
+		    }
+		    else if(company === "TESLA") {
+		    	STOCK = "TESLA";
+		    }
+		    else if(company === "SK") {
+		    	STOCK = "SK";
+		    }else{
+		    	STOCK = "APPLE";
+		    }
+		    return STOCK
+		}
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+	    $('#SELLINFO').click(function() {
+	        var USERID = $('#USER_ID').val();
+	        var STOCK = setCompany(); // setCompany() 함수는 현재 코드에서 정의되지 않았지만, 이 함수가 적절한 값을 반환한다고 가정합니다.
+	        $.ajax({
+	            url: '/haveStock',
+	            type: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify({ userId: USERID, stock: STOCK }),
+	            
+	            success: function(response){
+	                // 서버로부터 응답 받은 후 처리
+	                // response 객체에서 userId와 unit을 추출하여 alert로 표시
+	                //alert("Success: " + response.userId + ", Unit: " + response.unit);
+	                document.getElementById("OWN").innerHTML = "보유 주식: "+response.unit;
+	                
+	            },
+	            error: function(xhr, status, error){
+	                // 오류 발생 시 처리
+	                alert("Error: " + error);
+	            }
+	        });
+	    });
+	});
+	</script>
+	
+	<script>
+	$(document).ready(function() {
+	    $('#buyButton').click(function() {
+	        var PRICE = $('#PRICE').val();
+	        var UNIT = $('#UNIT').val();
+	        var USERID = $('#USER_ID').val();
+	        //alert(USERID);
+	        //var company = document.getElementById('companyName').textContent;
+	         var STOCK = setCompany();
+
+	        //alert(STOCK);
+	        
+	        $.ajax({
+	            url: '/detailBuy', // 컨트롤러 경로를 지정하세요.
+	            type: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify({ stock: STOCK, price: PRICE, userId: USERID, unit:UNIT }), // 데이터를 JSON 형식으로 전송
+	      
+	            success: function(response) {
+	                // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
+	                alert('서버 응답: ' + response.MSG);
+	            },
+	            error: function(xhr, status, error) {
+	                // 오류 발생 시 실행될 코드
+	                alert('오류 발생: ' + error);
+	            }
+	        });
+	    });
+	});
+	</script>
+	
+	<script>
+	$(document).ready(function() {
+	    $('#sellButton').click(function() {
+	        var PRICE = $('#PRICES').val();
+	        var UNIT = $('#UNITS').val();
+	        var USERID = $('#USER_ID').val();
+	        //alert(USERID);
+	        var company = document.getElementById('companyName').textContent;
+	        var STOCK = setCompany();
+	        //alert(STOCK);
+	        
+	        
+	        $.ajax({
+	            url: '/detailSell', // 컨트롤러 경로를 지정하세요.
+	            type: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify({ stock: STOCK, price: PRICE, userId: USERID, unit:UNIT }), // 데이터를 JSON 형식으로 전송
+	      
+	            success: function(response) {
+	                // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
+	                alert('판매완료');
+	            },
+	            error: function(xhr, status, error) {
+	                // 오류 발생 시 실행될 코드
+	                alert('오류 발생: ' + error);
+	            }
+	        });
+	    });
+	});
+	</script>
   </head>
   <body>
     <header class="px-5 mt-3 flex justify-between">
@@ -37,7 +150,8 @@
     </header>
     <main class="mt-16 px-6" >
       <div>
-        <div class="font-semibold">파로스아이바이오</div>
+        <div class="font-semibold">삼성전자</div>
+        <input type='hidden' id="USER_ID" value = "admin">
         <div class="text-3xl font-bold">20,000원</div>
       </div>
       <div class="flex justify-between mt-10 py-3">
@@ -68,7 +182,7 @@
           구매하기
         </button>
         <button
-        data-modal-target="sell-modal" data-modal-toggle="sell-modal"
+        data-modal-target="sell-modal" data-modal-toggle="sell-modal" id="SELLINFO"
           class="bg-blue-500 w-full mb-5 py-3 text-center text-white rounded-lg font-semibold"
         >
           판매하기
@@ -100,23 +214,23 @@
         <div class="relative bg-white rounded-lg shadow">
             <div class="flex flex-col w-full p-4 ">
                 <div class="text-center">
-                    <h1 class="text-sm text-gray-500">파로스아이바이오</h1>
+                    <h1 class="text-sm text-gray-500" id="companyName" >삼성전자</h1>
                     <div class="text-xl font-semibold">구매 하기</div>
-                    <from class="divide-y">
+                    <form class="divide-y">
                         <div class="flex items-center justify-between py-2">
                             <div>희망 가격</div>
                             <div>
-                                <input class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
+                                <input id="PRICE" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
                             <div>주식 개수</div>
                             <div>
-                                <input class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                                <input id="UNIT"class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
                             </div>
                         </div>
-                        <button data-modal-hide="buy-modal" type="submit" class="w-full bg-red-500 mt-3 text-white py-2 rounded-lg">구매하기</button>
-                    </from>
+                        <button data-modal-hide="buy-modal" id="buyButton" class="w-full bg-red-500 mt-3 text-white py-2 rounded-lg">구매하기</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -127,23 +241,27 @@
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <div class="flex flex-col w-full p-4 ">
-                <div class="text-center">
-                    <h1 class="text-sm text-gray-500">파로스아이바이오</h1>
+                <div class="text-center relative">
+            
+                    <h1 class="text-sm text-gray-500" id="companyNames" >삼성전자</h1>
                     <div class="text-xl font-semibold">판매 하기</div>
+                 
+                    <div id="OWN" class="absolute text-gray-500 top-0 right-0">보유주식</div>
+                    
                     <from class="divide-y">
                         <div class="flex items-center justify-between py-2">
                             <div>희망 가격</div>
                             <div>
-                                <input class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
+                                <input id="PRICES" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
                             <div>주식 수</div>
                             <div>
-                                <input class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                                <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
                             </div>
                         </div>
-                        <button data-modal-hide="sell-modal" type="submit" class="w-full bg-blue-500 mt-3 text-white py-2 rounded-lg">판매하기</button>
+                        <button data-modal-hide="sell-modal" id="sellButton" type="submit" class="w-full bg-blue-500 mt-3 text-white py-2 rounded-lg">판매하기</button>
                     </from>
                 </div>
             </div>
