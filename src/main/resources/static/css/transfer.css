@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem; /* Equals 16px */
+}
+
+body {
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.container {
+  width: 100%;
+  max-width: 50rem; /* 800px / 16px per rem */
+  margin: 0 auto;
+  padding: 2.5rem; /* 40px / 16px per rem */
+  min-height: 43.75rem; /* 700px / 16px per rem */
+}  
+
+.card {
+  background: #fff;
+  border-radius: 0.625rem; /* 10px / 16px per rem */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* X and Y offsets and blur radius converted to rem */
+  margin-bottom: 1.25rem; /* 20px / 16px per rem */
+  overflow: hidden;
+}
+
+
+  .header {
+    display: flex;
+    justify-content: space-between; /* 좌, 중앙, 우 공간을 균등하게 배분 */
+    align-items: center;
+    padding: 1rem;
+    background-color: #fafafa;
+    border-bottom: 0.01rem solid #e0e0e0;
+  }
+
+  .header .left,
+.header .center,
+.header .right {
+  flex: 1; /* 세 요소가 flex 컨테이너 공간을 균등하게 차지 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.header .left {
+  text-align: left; /* 왼쪽 요소의 텍스트를 왼쪽 정렬 */
+}
+
+.header .right {
+  text-align: right; /* 오른쪽 요소의 텍스트를 오른쪽 정렬 */
+}
+
+  .header .material-icons {
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .header .title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .form-box {
+    margin: 2rem;
+    padding: 1rem;
+    background-color: #fff;
+    border: none; /* 테두리 제거 */
+  }
+  
+  .form-row {
+    margin: 0.5rem 0;
+    position: relative; /* 화살표 이미지를 위한 위치 기준 */
+  }
+  
+  .form-row:not(:last-child):after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem); /* 내부 여백 만큼 좌우 길이 감소 */
+    height: 1px;
+    background-color: #ccc; /* 구분선 색상 */
+  }
+  
+  .form-row select,
+  .form-row input[type="text"],
+  .form-row input[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    border: none; /* 입력 필드 테두리 제거 */
+    border-radius: 0.2rem; /* 입력 필드 둥근 모서리 제거 */
+    box-shadow: none; /* 입력 필드 그림자 제거 */
+  }
+  
+
+  
+  input[type="submit"] {
+    background-color: #fb923c;
+    color: white;
+    cursor: pointer;
+    margin-top: 2rem;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #f97316; /* 버튼 호버 색상 변경 */
+  }
+    
