@@ -24,7 +24,19 @@
 
 
   </head>
+<style>
+    /* 그래프 제목 숨기기 */
+    #myChart {
+        position: relative;
+    }
 
+    #myChart .chartjs-size-monitor,
+    #myChart .chartjs-size-monitor-expand,
+    #myChart .chartjs-size-monitor-shrink {
+        display: none !important;
+    }
+
+</style>
   <script type="text/javascript">
       // 초기 데이터
       var initialData = {
@@ -33,8 +45,10 @@
               // label: 'Test Dataset',
               fill: false,
               data: [], // 초기 데이터 배열
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255, 99, 132, 1)',
+              backgroundColor: 'rgba(99,130,255,0.2)',
+              borderColor: 'rgb(79,115,255)',
+              // backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              // borderColor: 'rgba(255, 99, 132, 1)',
               borderWidth: 1
           }]
       };
@@ -65,9 +79,15 @@
               type: 'line',
               data: initialData,
               options: {
-                  title: {
-                      display: true
-                      , text: ' ' // 공백으로 설정하여 숨김
+                  legend: {
+                      display: false
+                  },
+                  tooltips: {
+                      callbacks: {
+                          label: function(tooltipItem) {
+                              return tooltipItem.yLabel;
+                          }
+                      }
                   },
                   scales: {
                       xAxes: [{
@@ -110,17 +130,23 @@
                           break;
                       }
                   }
+                  $('#buy_name').text(result.body.stockDetail.STOCK_NAME);
+                  $('#sell_name').text(result.body.stockDetail.STOCK_NAME);
                   var percentage = (result.body.stockDetail.STOCK_PRICE / stockbasePrice) * 100 -100;
                   if(percentage<0){
                       $('#persent').text(percentage.toFixed(2)+"%");
                       var element = document.getElementById("persent");
                       element.classList.remove("text-red-500");
                       element.classList.add("text-blue-500");
+                      myChart.data.datasets[0].backgroundColor = 'rgba(99,130,255,0.2)';
+                      myChart.data.datasets[0].borderColor = 'rgb(79,115,255)';
                   }else{
                       $('#persent').text("+"+percentage.toFixed(2)+"%");
                       var element = document.getElementById("persent");
                       element.classList.remove("text-blue-500");
                       element.classList.add("text-red-500");
+                      myChart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)';
+                      myChart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)';
                   }
 
                   var stockMinuteData = result.body.stockMinute;
@@ -171,11 +197,15 @@
                           var element = document.getElementById("persent");
                           element.classList.remove("text-red-500");
                           element.classList.add("text-blue-500");
+                          myChart.data.datasets[0].backgroundColor = 'rgba(99,130,255,0.2)';
+                          myChart.data.datasets[0].borderColor = 'rgb(79,115,255)';
                       }else{
                           $('#persent').text("+"+percentage.toFixed(2)+"%");
                           var element = document.getElementById("persent");
                           element.classList.remove("text-blue-500");
                           element.classList.add("text-red-500");
+                          myChart.data.datasets[0].backgroundColor = 'rgba(255, 99, 132, 0.2)';
+                          myChart.data.datasets[0].borderColor = 'rgba(255, 99, 132, 1)';
                       }
 
 
@@ -351,8 +381,8 @@
         <div class="font-semibold text-3xl">${stockName}</div>
         <p id="stock_code" style="display: none;">${stockCode}</p>
         <input type='hidden' id="USER_ID" value = "admin">
-        <div class="text-3xl mt-7 font-bold"><span id="stcok_price">0원</span>
-            <span id="persent" class="text-red-500 inline-block text-xl ml-3">1.15%</span>
+        <div class="text-3xl mt-7 font-bold"><span id="stcok_price"></span>
+            <span id="persent" class="text-red-500 inline-block text-xl ml-3"></span>
         </div>
       </div>
       <div class="flex justify-between mt-10 py-3">
@@ -383,7 +413,7 @@
                 <button class="border-r border-black py-1 pl-1 pr-2">1년</button>
             </div>
         </div>
-        <div class="mt-2 pr-20 pl-5 h-96 border border-black">
+        <div class="mt-2 pr-20 pl-5 h-96">
             <canvas id="myChart"></canvas>
         </div>
         <div class="flex text-center text-xl mt-5">
@@ -419,7 +449,7 @@
         <div class="relative bg-white rounded-lg shadow">
             <div class="flex flex-col w-full p-4 ">
                 <div class="text-center">
-                    <h1 class="text-sm text-gray-500" id="companyName" >삼성전자</h1>
+                    <h1 id="buy_name" class="text-sm text-gray-500" id="companyName" >삼성전자</h1>
                     <div class="text-xl font-semibold">구매 하기</div>
                     <form class="divide-y">
                         <div class="flex items-center justify-between py-2">
@@ -448,7 +478,7 @@
             <div class="flex flex-col w-full p-4 ">
                 <div class="text-center relative">
             
-                    <h1 class="text-sm text-gray-500" id="companyNames" >삼성전자</h1>
+                    <h1 id="sell_name" class="text-sm text-gray-500" id="companyNames" >삼성전자</h1>
                     <div class="text-xl font-semibold">판매 하기</div>
                  
                     <div id="OWN" class="absolute text-gray-500 top-0 right-0">보유주식</div>

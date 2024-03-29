@@ -1,0 +1,238 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.section {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 0.625rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2.5rem;
+  min-height: 43.75rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fafafa;
+  border-top: 0.063rem solid #e0e0e0;
+  border-bottom: 0.063rem solid #e0e0e0;
+}
+
+.header .material-icons {
+  color: #333;
+  cursor: pointer;
+}
+
+.header .left {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.header .center,
+.header .right {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.account-info {
+  padding: 1.875rem;
+  text-align: center;
+  border-bottom: 0.063rem solid #e0e0e0;
+}
+
+.account-number {
+  color: #888;
+  font-size: 0.875rem;
+}
+
+.balance {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.button-group button {
+  background-color: #f4f4f4;
+  color: #888;
+  border: none;
+  border-radius: 0.938rem;
+  padding: 0.313rem 0.938rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.grid-container {
+  display: grid;
+  place-items: center;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-container {
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid-container .title {
+  flex-grow: 1;
+  color: #666;
+  font-size: 1rem;
+}
+
+.grid-container .change {
+  color: red;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* 버튼들을 중앙에 정렬합니다 */
+  gap: 0.625rem; /* 버튼 사이의 간격을 설정합니다 */
+}
+
+.button,
+.button-group button,
+.grid-container > button {
+  background-color: #faaa55; /* 버튼 배경색 */
+  color: white; /* 버튼 텍스트 색상 */
+  border: none;
+  border-radius: 1.25rem; /* 버튼 모서리를 둥글게 처리 */
+  padding: 0.625rem 1.25rem; /* 내부 패딩으로 버튼 크기 조정 */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.875rem;
+  transition: background-color 0.3s, box-shadow 0.3s; /* 배경색과 그림자 효과의 전환 효과 */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2); /* 버튼에 그림자 효과 추가 */
+  margin: 0; /* 기존의 margin-left를 제거하고 모든 버튼의 마진을 0으로 설정 */
+}
+
+.button:hover,
+.button-group button:hover,
+.grid-container > button:hover {
+  flex-shrink: 0;
+  background-color: #fcbd89; /* 호버 상태에서의 배경색 변경 */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3); /* 호버 상태에서 그림자 효과 강조 */
+}
+
+.grid-container .material-icons {
+  color: blue;
+}
+
+.more-info {
+  color: #666;
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: #fafafa;
+  width: 100%;
+}
+
+.more-info span {
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+.more-info .material-icons {
+  color: #333;
+  cursor: pointer;
+  margin-left: 0.625rem;
+}
+
+/* 기본 스타일은 모든 화면 크기에 적용됩니다. */
+
+/* 미디어 쿼리 - 태블릿 화면 */
+@media (max-width: 48rem) {
+  .header,
+  .account-info,
+  .button-group button,
+  .grid-container > button,
+  .more-info {
+    padding: 0.75rem;
+  }
+
+  .header .left,
+  .header .center,
+  .header .right {
+    font-size: 1.125rem;
+  }
+
+  .account-number,
+  .balance {
+    font-size: 1.25rem;
+  }
+
+  .button,
+  .button-group button,
+  .grid-container > button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: 1rem;
+  }
+
+  .more-info span,
+  .more-info .material-icons {
+    font-size: 0.9rem;
+  }
+}
+
+/* 미디어 쿼리 - 모바일 화면 */
+@media (max-width: 36rem) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header,
+  .account-info,
+  .button-group button,
+  .grid-container > button,
+  .more-info {
+    padding: 0.5rem;
+  }
+
+  .header .left,
+  .header .center,
+  .header .right,
+  .account-number,
+  .balance,
+  .button,
+  .button-group button,
+  .grid-container > button,
+  .more-info span,
+  .more-info .material-icons {
+    font-size: 0.75rem;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
+  }
+}

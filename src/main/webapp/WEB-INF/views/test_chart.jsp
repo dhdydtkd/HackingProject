@@ -15,6 +15,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <body class="is-preload">
+<style>
+    /* 그래프 제목 숨기기 */
+    #main {
+        position: relative;
+    }
+
+    #main .chartjs-size-monitor,
+    #main .chartjs-size-monitor-expand,
+    #main .chartjs-size-monitor-shrink {
+        display: none !important;
+    }
+
+</style>
 <script type="text/javascript">
     // 초기 데이터
     var initialData = {
@@ -42,19 +55,30 @@
             type: 'line',
             data: initialData,
             options: {
-                title: {
+                legend: {
                     display: false
                 },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.yLabel;
+                        }
+                    }
+                },
+
                 scales: {
                     xAxes: [{
+                        display: false, // x축 눈금 제거
                         gridLines: {
                             display: false
                         }
                     }],
                     yAxes: [{
+                        display: false, // y축 눈금 제거
                         ticks: {
                             beginAtZero: true,
-                            min: 25*0, // y 축의 최대값 설정
+                            display: false, // y축 눈금 제거
+                            min: 0, // y 축의 최대값 설정
                             max: 25*4 // y 축의 최대값 설정
                         },
                         gridLines: {

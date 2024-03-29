@@ -153,7 +153,7 @@
 
     <main>
         <section id="myStocks" class="tab-content">
-            <a href="계좌_생성_페이지_URL" class="alert-section">
+            <a href="/mypage" class="alert-section">
                 <div class="text">
                     <p>마이페이지에서 내 정보를 확인하세요<br></p>
                     <button>마이페이지</button>
