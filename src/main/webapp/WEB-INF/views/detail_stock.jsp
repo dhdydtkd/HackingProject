@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>루키증권</title>
     <link rel="stylesheet" href="/css/stocks.css" />
     <!-- Scripts -->
     <script src="/js/jquery.min.js"></script>
@@ -41,6 +41,20 @@
 
       // 최대 표시할 데이터 수
       var maxDataPoints = 60;
+
+      var stockBaseList = []
+      function addStock(name, price) {
+          var stock = {
+              name: name,
+              price: price
+          };
+          stockBaseList.push(stock);
+      }
+      addStock("AAPL", 100);
+      addStock("AMZN", 1000);
+      addStock("FB", 1500);
+      addStock("GOOGL", 22000);
+      addStock("MSFT", 100000);
 
       document.addEventListener('DOMContentLoaded', function() {
           var context = document
@@ -89,8 +103,29 @@
           // 초기 데이터를 생성합니다.
           $.ajaxGET("stock/stock?stockCode="+stock_code, null, function(result){
               if (result.state.code == "0000") {
+                  var stockbasePrice = 0;
+                  for(let j = 0 ;j<stockBaseList.length; j++){
+                      if(stockBaseList[j].name == result.body.stockDetail.STOCK_CODE){
+                          stockbasePrice = stockBaseList[j].price;
+                          break;
+                      }
+                  }
+                  var percentage = (result.body.stockDetail.STOCK_PRICE / stockbasePrice) * 100 -100;
+                  if(percentage<0){
+                      $('#persent').text(percentage.toFixed(2)+"%");
+                      var element = document.getElementById("persent");
+                      element.classList.remove("text-red-500");
+                      element.classList.add("text-blue-500");
+                  }else{
+                      $('#persent').text("+"+percentage.toFixed(2)+"%");
+                      var element = document.getElementById("persent");
+                      element.classList.remove("text-blue-500");
+                      element.classList.add("text-red-500");
+                  }
+
                   var stockMinuteData = result.body.stockMinute;
                   $('#stcok_price').text(formattedString(result.body.stockDetail.STOCK_PRICE)+"원");
+
                   var now_stock_price = result.body.stockDetail.STOCK_PRICE;
                   myChart.options.scales.yAxes[0].ticks.min = now_stock_price-now_stock_price/5;
                   myChart.options.scales.yAxes[0].ticks.max = now_stock_price+now_stock_price/3;
@@ -100,6 +135,18 @@
                       myChart.data.labels.push('');
                       myChart.data.datasets[0].data.push(newDataPoint);
                   }
+                  max = 0;
+                  min = 99999999;
+                  for(let i=0;i<myChart.data.datasets[0].data.length;i++){
+                      if(max<myChart.data.datasets[0].data[i]){
+                          max = myChart.data.datasets[0].data[i];
+                      }
+                      if(min>myChart.data.datasets[0].data[i]){
+                          min = myChart.data.datasets[0].data[i];
+                      }
+                  }
+                  $('#max_price').text(formattedString(max)+"원");
+                  $('#min_price').text(formattedString(min)+"원");
                   myChart.update();
               }
           });
@@ -110,6 +157,28 @@
               $.ajaxGET("stock/newstock?stockCode="+stock_code, null, function(result){
                   if (result.state.code == "0000") {
                       var newStockData = result.body.stockNewDetail;
+
+                      var stockbasePrice = 0;
+                      for(let j = 0 ;j<stockBaseList.length; j++){
+                          if(stockBaseList[j].name == newStockData.STOCK_CODE){
+                              stockbasePrice = stockBaseList[j].price;
+                              break;
+                          }
+                      }
+                      var percentage = (newStockData.STOCK_PRICE / stockbasePrice) * 100 -100;
+                      if(percentage<0){
+                          $('#persent').text(percentage.toFixed(2)+"%");
+                          var element = document.getElementById("persent");
+                          element.classList.remove("text-red-500");
+                          element.classList.add("text-blue-500");
+                      }else{
+                          $('#persent').text("+"+percentage.toFixed(2)+"%");
+                          var element = document.getElementById("persent");
+                          element.classList.remove("text-blue-500");
+                          element.classList.add("text-red-500");
+                      }
+
+
                       $('#stcok_price').text(formattedString(newStockData.STOCK_PRICE)+"원");
 
                       var newDataPoint = newStockData.STOCK_PRICE;
@@ -120,6 +189,18 @@
                       if (myChart.data.datasets[0].data.length > maxDataPoints) {
                           myChart.data.datasets[0].data.shift();
                       }
+                      max = 0;
+                      min = 99999999;
+                      for(let i=0;i<myChart.data.datasets[0].data.length;i++){
+                          if(max<myChart.data.datasets[0].data[i]){
+                              max = myChart.data.datasets[0].data[i];
+                          }
+                          if(min>myChart.data.datasets[0].data[i]){
+                              min = myChart.data.datasets[0].data[i];
+                          }
+                      }
+                      $('#max_price').text(formattedString(max)+"원");
+                      $('#min_price').text(formattedString(min)+"원");
                       myChart.update();
                   }
               });
@@ -266,11 +347,13 @@
         </div>
     </header>
     <main class="mt-16 px-6" >
-      <div>
-        <div class="font-semibold">${stockName}</div>
+      <div class="flex items-center flex-col">
+        <div class="font-semibold text-3xl">${stockName}</div>
         <p id="stock_code" style="display: none;">${stockCode}</p>
         <input type='hidden' id="USER_ID" value = "admin">
-        <div id="stcok_price" class="text-3xl font-bold">20,000원</div>
+        <div class="text-3xl mt-7 font-bold"><span id="stcok_price">0원</span>
+            <span id="persent" class="text-red-500 inline-block text-xl ml-3">1.15%</span>
+        </div>
       </div>
       <div class="flex justify-between mt-10 py-3">
         <a
@@ -290,10 +373,29 @@
           커뮤니티
         </a>
       </div>
-        <div class="mt-10 pr-20 h-96 ">
+        <div class="flex justify-end mt-10 ">
+            <div class="border border-black rounded">
+                <button class="border-r border-black py-1 px-2">1분</button>
+                <button class="border-r border-black py-1 pl-1 pr-2">1시간</button>
+                <button class="border-r border-black py-1 pl-1 pr-2">하루</button>
+                <button class="border-r border-black py-1 pl-1 pr-2">일주일</button>
+                <button class="border-r border-black py-1 pl-1 pr-2">한달</button>
+                <button class="border-r border-black py-1 pl-1 pr-2">1년</button>
+            </div>
+        </div>
+        <div class="mt-2 pr-20 pl-5 h-96 border border-black">
             <canvas id="myChart"></canvas>
         </div>
-
+        <div class="flex text-center text-xl mt-5">
+            <div class="w-full">
+                <div>최고가</div>
+                <div id="max_price" class="text-red-500 font-semibold mt-1">0원</div>
+            </div>
+            <div class="w-full">
+                <div>최저가</div>
+                <div id="min_price" class="text-blue-500 font-semibold mt-1">0원</div>
+            </div>
+        </div>
       <div class="fixed flex space-x-5 w-full pr-12 bottom-0 bg-white">
         <button
           data-modal-target="buy-modal" data-modal-toggle="buy-modal"
