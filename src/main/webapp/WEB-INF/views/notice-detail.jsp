@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.hackingproject.notice.dto.NoticeReq" %> <!-- NoticeReq 클래스 import -->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,16 +22,20 @@
 <body>
 <div class="notice-container">
     <header class="header">
-        <p id="NOTICE_TITLE">공지사항 제목</p>
+        <!-- 공지사항 제목 -->
+        <p id="NOTICE_TITLE">${noticeTitle}</p>
     </header>
     <div class="noticeDetail">
-        <p id="NOTICE_DATE">2024.03.29</p>
-        <p id="NOTICE_CONTEXT">내용</p>
-        <a href="다운로드 링크" id="NOTICE_FILE">첨부파일</a>
+        <!-- 공지사항 날짜 -->
+        <p id="NOTICE_DATE">${noticeDate}</p>
+        <!-- 공지사항 내용 -->
+        <p id="NOTICE_CONTEXT">${noticeContext}</p>
+        <!-- 첨부 파일 다운 -->
+        <a href="${downloadLink}" id="NOTICE_FILE">첨부파일</a>
     </div>
     <div class="submit-btn">
-        <!--공지사항 페이지로 가는 링크 넣어주기-->
-        <a href="notice.html" class="on">목록으로</a>
+        <!-- 공지사항 목록으로 이동 -->
+        <a href="/notice" class="on">목록으로</a>
     </div>
 </div>
 </body>
