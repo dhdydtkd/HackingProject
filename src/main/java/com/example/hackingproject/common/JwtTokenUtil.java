@@ -23,7 +23,7 @@ public class JwtTokenUtil {
 
     private String SIGNING_KEY;
 
-    private int ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60 * 1000;
+    private int ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60 * 10000;
 
     public String getUserIdFromToken(String token) {
         Claims claims =  getClaimFromToken(token);

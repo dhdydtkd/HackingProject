@@ -51,6 +51,7 @@
         clearInterval(intervalId);
     }
     function stockListSearch(){
+        console.log("stockListSearch");
         $.ajaxGET("stock/stocklist", null, function(result){
             if (result.state.code == "0000") {
                 let stockList = result.body;
@@ -82,6 +83,8 @@
                         }
                     }
                     var percentage = calculatePercentage(stockbasePrice,stockList[i].STOCK_PRICE) -100;
+                    var detailstockdata = "/detailstock?stockCode="+stockList[i].STOCK_CODE+"&stockName="+stockList[i].STOCK_NAME;
+                    stockBodyHTML += "<a href="+detailstockdata+">";
                     stockBodyHTML += "<li>";
                     stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
                     stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
@@ -93,6 +96,7 @@
                         stockBodyHTML += "<p class='rate positive' name='STOCK_RATE'>+"+percentage.toFixed(2)+"%</p>";
                     }
                     stockBodyHTML += "</li>";
+                    stockBodyHTML += "</a>";
                 }
 
                 $('#stock_list').empty();

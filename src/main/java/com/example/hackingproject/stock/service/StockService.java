@@ -21,5 +21,14 @@ public class StockService {
         return stockDAO.getStockList();
     }
 
+    public StockVO getStockDetail(String stockCode){
+
+        return stockDAO.getStockDetail(stockCode);
+    }
+
+    public List<StockVO> getStockMinute(String stockCode){
+
+        return stockDAO.getStockMinute(stockCode);
+    }
 
 }

@@ -19,5 +19,8 @@ public interface StockDAO {
 
     List<StockVO> getStockList();
 
+    StockVO getStockDetail(String stockCode);
+    List<StockVO> getStockMinute(String stockCode);
+
 
 }

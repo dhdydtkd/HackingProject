@@ -58,6 +58,34 @@
     </select>
 
 
+    <select id="getStockDetail"
+            parameterType="String"
+            resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            sp.STOCK_CODE
+             , sp.STOCK_NAME
+             , sp.STOCK_PRICE
+        FROM rookie.Stock_Price sp
+        WHERE
+            sp.STOCK_CODE = #{param}
+        ORDER BY sp.STOCK_DATE DESC
+            LIMIT 1;
+    </select>
+
+    <select id="getStockMinute"
+            parameterType="String"
+            resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            sp.STOCK_CODE
+             , sp.STOCK_NAME
+             , sp.STOCK_PRICE
+        FROM rookie.Stock_Price sp
+        WHERE
+            sp.STOCK_CODE = #{param}
+        ORDER BY sp.STOCK_DATE DESC
+            LIMIT 60;
+    </select>
+
 
 
 </mapper>
