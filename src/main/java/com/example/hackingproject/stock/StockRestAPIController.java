@@ -20,7 +20,7 @@ public class StockRestAPIController {
     public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView();
 
-//        mav.addObject("login", jwtTokenUtil.JWTTokenCheck(request));
+        mav.addObject("login", jwtTokenUtil.JWTTokenCheck(request));
 
         mav.setViewName("main_menu");
         return mav;

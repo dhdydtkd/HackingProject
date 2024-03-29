@@ -44,36 +44,31 @@ public class Scheduler {
 
     @Scheduled(fixedRate = 1000)
     public void stockDataScheduled() {
-        if(oysScheduler=="true"){
-            StockData stock_1 = createStockData(1,"AAPL","Apple Inc.",1,0);
-            stockDAO.addSchedulerStock(stock_1);
-            StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
-            stockDAO.addSchedulerStock(stock_2);
-            StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
-            stockDAO.addSchedulerStock(stock_3);
-            StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
-            stockDAO.addSchedulerStock(stock_4);
-            StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
-            stockDAO.addSchedulerStock(stock_5);
-        }
+        StockData stock_1 = createStockData(1,"AAPL","Apple Inc.",2,1);
+        StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
+        StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
+        StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
+        StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
+
+//        stockDAO.addSchedulerStock(stock_1);
+//        stockDAO.addSchedulerStock(stock_2);
+//        stockDAO.addSchedulerStock(stock_3);
+//        stockDAO.addSchedulerStock(stock_4);
+//        stockDAO.addSchedulerStock(stock_5);
     }
 
     @Scheduled(fixedRate = 10000)
     public void test() {
-        if(oysScheduler=="true") {
-            List<StockHourData> stockHourList = new ArrayList<StockHourData>();
-            for (int i = 0; i < 60; i++) {
+        List<StockHourData> stockHourList = new ArrayList<StockHourData>();
+        for (int i = 0; i < 60; i++) {
 //            stockHourList.add(stockDAO.getStock1HourData(i*60));
-            }
         }
     }
 
     @Scheduled(cron = "0 0/10 * * * ?")
     public void stockDataDeleteScheduled() {
-        if(oysScheduler=="true") {
-            stockDAO.deleteSchedulerStock();
-            System.out.println("stockDataDeleteScheduled");
-        }
+        stockDAO.deleteSchedulerStock();
+        System.out.println("stockDataDeleteScheduled");
     }
 
     public StockData createStockData(int type, String code, String name, int price, int base_price){

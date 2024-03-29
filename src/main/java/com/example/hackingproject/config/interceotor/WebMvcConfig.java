@@ -21,8 +21,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
             , "/main"
             , "/login/login"
             , "/stock/stocklist"
+            , "/favicon.ico"
+            , "/error"
 //            , "/**"
     };
+
     @Autowired
     private WebInterceptor webInterceptor;
 

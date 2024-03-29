@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>루키증권</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/main_menu.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -21,80 +21,83 @@
 <script src="/js/common.js"></script>
 <script src="/js/main_menu.js"></script>
 <script>
+    var intervalId = null
+
+
     $(() => {
         stockListSearch();
+        intervalId = setInterval(stockListSearch, 2000); // 1000 밀리초 = 1초
+        window.addEventListener("blur", stopInterval);
 
-        // var login_flag = $('#login_flag').text();
-        // console.log(login_flag);
-        // if(!login_flag){
-        //     $('#recently_viewed_stocks').hide();
-        //     $('#login').show();
-        //     $('#logout').hide();
-        //     console.log("토큰 없음");
-        // }else{
-        //     $('#login').hide();
-        //     $('#logout').show();
-        //     console.log("토큰 있음");
-        // }
+        var login_flag = $('#login_flag').text();
+        if(login_flag=='false'){
+            $('#recently_viewed_stocks').hide();
+            $('#login').show();
+            $('#logout').hide();
+        }else{
+            $('#login').hide();
+            $('#logout').show();
+        }
         $("#logout").click(function() {
             //쿠키 삭제
-            // document.cookie = "SKJWTToken" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = "SKJWTToken" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             console.log("logout");
             alert("로그아웃 되었습니다.");
-            // location.reload();
+            location.reload();
         });
 
     });
+    function stopInterval() {
+        clearInterval(intervalId);
+    }
     function stockListSearch(){
         $.ajaxGET("stock/stocklist", null, function(result){
             if (result.state.code == "0000") {
                 let stockList = result.body;
-
                 let stockBodyHTML = "";
+                var stockBaseList = []
+                function addStock(name, price) {
+                    var stock = {
+                        name: name,
+                        price: price
+                    };
+                    stockBaseList.push(stock);
+                }
+                addStock("AAPL", 100);
+                addStock("AMZN", 1000);
+                addStock("FB", 1500);
+                addStock("GOOGL", 22000);
+                addStock("MSFT", 100000);
 
-                // <li>
-                //     <span class="stock-number">1</span>
-                //     <p name="STOCK_NAME">BOIL</p>
-                //     <p name="STOCK_PRICE">16,580원</p>
-                //     <p class="rate negative" name="STOCK_RATE">-1.0%</p>
-                // </li>
+                function calculatePercentage(base, value) {
+                    return (value / base) * 100;
+                }
 
                 for(let i = 0 ; i<stockList.length ; i++){
+                    var stockbasePrice = 0;
+                    for(let j = 0 ;j<stockBaseList.length; j++){
+                        if(stockBaseList[j].name == stockList[i].STOCK_CODE){
+                            stockbasePrice = stockBaseList[j].price;
+                            break;
+                        }
+                    }
+                    var percentage = calculatePercentage(stockbasePrice,stockList[i].STOCK_PRICE) -100;
                     stockBodyHTML += "<li>";
                     stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
                     stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
                     stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockList[i].STOCK_PRICE)+"원</p>";
-                    stockBodyHTML += "<p class='rate negative' name='STOCK_RATE'>-1.0%"+"</p>";
+
+                    if(percentage<0){
+                        stockBodyHTML += "<p class='rate negative' name='STOCK_RATE'>"+percentage.toFixed(2)+"%</p>";
+                    }else{
+                        stockBodyHTML += "<p class='rate positive' name='STOCK_RATE'>+"+percentage.toFixed(2)+"%</p>";
+                    }
                     stockBodyHTML += "</li>";
                 }
 
-                // <li>
-                //     <span class="stock-number">1</span>
-                //     <p name="STOCK_NAME">BOIL</p>
-                //     <p name="STOCK_PRICE">16,580원</p>
-                //     <p class="rate negative" name="STOCK_RATE">-1.0%</p>
-                // </li>
                 $('#stock_list').empty();
                 $('#stock_list').append(stockBodyHTML);
 
-                // $(document).off('click',"a[name='notice_delete']").on("click","a[name='notice_delete']",function(){
-                //     $.ajaxPOST("notice/noticedelete", parseInt(this.id), function(result){
-                //         if(result.state.code == "0000" || result.state.code == "0100"){
-                //             if(result.state.desc!=null){
-                //                 alert(result.state.desc);
-                //             }else{
-                //                 currentPage = Math.ceil(pageMaxCount*currentPage/pageMaxCount);
-                //                 totalPage = Math.ceil(totalCount/pageMaxCount);
-                //                 if((currentPage*pageMaxCount)>totalCount){
-                //                     currentPage=totalPage;
-                //                 }
-                //                 // 여기서 currentPage에 데이터가 없는걸 알아야함
-                //                 // -1을 하기엔 다른 사람이 한 20개를 지웠으면?
-                //                 search(currentPage);
-                //             }
-                //         }
-                //     });
-                // });
             }
         });
     }
@@ -104,7 +107,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>루키증권</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -123,7 +126,7 @@
                 <div class="content right-content">
                     <a id="logout" class="logout">로그아웃</a>
                     <a id="login" href="/login" class="logout">로그인</a>
-<%--                    <p id="login_flag" style="display: none;">${login}</p>--%>
+                    <p id="login_flag" style="display: none;">${login}</p>
                 </div>
             </div>
         </div>
@@ -139,7 +142,7 @@
     </header>
     <nav class="tab-menu">
         <button class="tab" id="tab-myStocks" onclick="showTab('myStocks')">내 주식</button>
-        <button class="tab" id="tab-todayStocks" onclick="showTab('todayStocks')">오늘의 발견</button>
+        <button class="tab" id="tab-todayStocks" onclick="showTab('todayStocks')">종목</button>
         <button class="tab" id="tab-news" onclick="showTab('news')">공지사항</button>
     </nav>
 
@@ -220,33 +223,9 @@
                 </div>
             </div>
             <div class="popular-stocks-section">
-                <h2>실시간 차트</h2>
+                <h2>종목 리스트</h2>
                 <ol id="stock_list" class="stock-list">
 
-                    <li>
-                        <span class="stock-number">2</span>
-                        <p name="STOCK_NAME">씨씨엠스</p>
-                        <p name="STOCK_PRICE">4,625원</p>
-                        <p class="rate negative" name="STOCK_RATE">-7.3%</p>
-                    </li>
-                    <li>
-                        <span class="stock-number">3</span>
-                        <p name="STOCK_NAME">트럼프 미디어 & 테크놀로지 그룹</p>
-                        <p name="STOCK_PRICE">90,168원</p>
-                        <p class="rate positive" name="STOCK_RATE">+1.1%</p>
-                    </li>
-                    <li>
-                        <span class="stock-number">4</span>
-                        <p name="STOCK_NAME">NVDL</p>
-                        <p name="STOCK_PRICE">55,850원</p>
-                        <p class="rate negative" name="STOCK_RATE">-0.2%</p>
-                    </li>
-                    <li>
-                        <span class="stock-number">5</span>
-                        <p name="STOCK_NAME">제주반도체</p>
-                        <p name="STOCK_PRICE">28,600원</p>
-                        <p class="rate positive" name="STOCK_RATE">+22.4%</p>
-                    </li>
                 </ol>
             </div>
         </section>

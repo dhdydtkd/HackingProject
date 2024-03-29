@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Function;
@@ -100,5 +102,37 @@ public class JwtTokenUtil {
     	final String userId = getUserIdFromToken(token);
     	return (!userId.isEmpty() && !isTokenExpired(token));
     }
+
+    public Boolean JWTTokenCheck(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String JWTToken = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("SKJWTToken")) {
+                    JWTToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if(JWTToken==null||JWTToken==""){
+            System.out.println("JWTTokenCheck - JWT 없음");
+            return false;
+        }else{
+            if(validateToken(JWTToken)){
+                // JWT 정상 인증
+//            jwtTokenUtil.getUserIdFromToken(token);
+//            jwtTokenUtil.validateTokenForUser(auth);
+                System.out.println("JWTTokenCheck - JWT 정상 인증");
+                return true;
+            }else{
+                // JWT 검증 실패
+                return false;
+            }
+        }
+    }
+
+
+
 
 }
