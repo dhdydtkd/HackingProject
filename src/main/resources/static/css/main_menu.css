@@ -14,7 +14,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 37.5rem;
     width: 100%;
     margin: auto;
     min-height: 100vh;
@@ -71,7 +71,7 @@ body {
     margin: 0; /* 마진 제거 */
     padding: 0.4rem; /* 내부 여백 설정 */
     border: none; /* 모든 테두리 제거 */
-    border-bottom: 1px solid #000; /* 검정색 밑줄만 추가 */
+    border-bottom: 0.0625rem solid #000; /* 검정색 밑줄만 추가 */
     outline: none; /* 선택됐을 때의 테두리 제거 */
     max-width: 70%; /* 최대 너비를 70%로 설정 */
 }
@@ -100,7 +100,7 @@ body {
 section{
     padding: 1rem;
     /* border: 1px solid #000; */
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 footer {
     padding: 1rem;
@@ -110,9 +110,10 @@ footer {
     justify-content: space-between;
     text-align: center;
 }
+
 .flex-item {
     flex: 1;
-    margin: 0 5px;
+    margin: 0 0.3125rem;
 }
 
 
@@ -125,7 +126,7 @@ footer {
     text-decoration: none; /* 밑줄 제거 */
     color: black; /* 텍스트 색상 */
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     cursor: pointer;
     background-color: #f4f4f8; /* 배경색 */
 }
@@ -152,12 +153,12 @@ footer {
     border: none; /* 테두리 제거 */
     cursor: pointer; /* 포인터 */
     padding: 0; /* 패딩 제거 */
-    margin-left: 10px; /* 버튼과 텍스트 사이의 간격 */
+    margin-left: 0.625rem; /* 버튼과 텍스트 사이의 간격 */
 }
 
 .plus-icon {
     display: block;
-    font-size: 24px; /* 아이콘 크기 */
+    font-size: 1.5rem; /* 아이콘 크기 */
     line-height: 1; /* 아이콘 높이 */
 }
 
@@ -169,7 +170,7 @@ footer {
     padding: 2rem; /* 내부 여백 */
     background: #f4f4f8; /* 배경색 */
     margin-top: 1rem; /* 상단 여백 */
-    border-radius: 10px; /* 모서리 둥글게 */
+    border-radius: 0.625rem; /* 모서리 둥글게 */
 }
 
 .recent-stocks-list {
@@ -182,8 +183,8 @@ footer {
 .stock-item {
     padding: 0.5rem; /* 주식 아이템 내부 여백 */
     background: white; /* 배경색 */
-    border: 1px solid #ddd; /* 테두리 */
-    border-radius: 10px; /* 모서리 둥글게 */
+    border: 0.0625rem solid #ddd; /* 테두리 */
+    border-radius: 0.625rem; /* 모서리 둥글게 */
 }
 
 .stock-name {
@@ -194,26 +195,26 @@ footer {
 .news-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 
 .news-item img {
-    width: 80px; /* or the size you prefer */
-    height: 50px; /* or the size you prefer */
-    margin-right: 10px;
+    width: 5rem; /* or the size you prefer */
+    height: 3.125rem; /* or the size you prefer */
+    margin-right: 0.625rem;
 }
 
 .news-item a {
     font-weight: bold;
     color: #000; /* or any color you prefer */
-    margin-right: 10px;
+    margin-right: 0.625rem;
     text-decoration: none; /* to remove the underline */
 }
 
 .news-item .news-source {
     font-style: italic;
     color: #666; /* or any color you prefer */
-    margin-right: 10px;
+    margin-right: 0.625rem;
 }
 
 .news-item .news-time {
@@ -243,7 +244,7 @@ footer {
 
 
 .tab.active {
-    border-bottom: 2px solid #000; /* 활성 탭 하단 테두리 추가 */
+    border-bottom: 0.125rem solid #000; /* 활성 탭 하단 테두리 추가 */
 }
 
 .tab-content {
@@ -277,7 +278,7 @@ footer {
 }
 
 .indices-section, .popular-stocks-section {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .indices {
@@ -316,7 +317,7 @@ footer {
 }
 
 .index-graph {
-    height: 20px;
+    height: 1.25rem;
     /* 배경 그래프 이미지를 추가합니다. */
 }
 
@@ -334,8 +335,8 @@ footer {
 }
 
 .popular-stocks li {
-    padding: 5px;
-    border-bottom: 1px solid #ddd; /* 각 항목을 구분짓는 선 */
+    padding: 0.3125rem;
+    border-bottom: 0.0625rem solid #ddd; /* 각 항목을 구분짓는 선 */
 }
 
 .stock-name {
@@ -360,14 +361,15 @@ footer {
 .stock-list li {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
     background-color: #f9f9f9; /* Light grey background */
-    border-radius: 8px;
+    border-radius: 0.5rem;
     padding: 1rem;
 }
 
+
 .stock-number {
-    min-width: 20px; /* Ensure the width stays constant */
+    min-width: 1.25rem; /* Ensure the width stays constant */
     font-size: 1rem;
     font-weight: bold;
     color: #333; /* Dark grey color */
