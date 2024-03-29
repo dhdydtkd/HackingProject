@@ -21,7 +21,6 @@
                 <li><a href="/notice-write">커뮤니티 구현</a></li>
                 <li><a href="/main1">로그인 전 메인페이지</a></li>
                 <li><a href="/main2">로그인 후 메인페이지</a></li>
-                <li><a href="/transfer">송금 페이지</a></li>
 <%--                <li><a href="/scheduled">스케쥴러 구현</a></li>--%>
                 <li><a href="/test_map">지도 구현</a></li>
                 <li><a href="/test_chart">차트 구현</a></li>
