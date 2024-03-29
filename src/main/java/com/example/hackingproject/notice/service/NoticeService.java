@@ -1,43 +1,37 @@
 package com.example.hackingproject.notice.service;
 
-import com.example.hackingproject.common.vo.TableSearchVO;
 import com.example.hackingproject.dao.NoticeDAO;
-import com.example.hackingproject.notice.vo.NoticeVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.hackingproject.notice.dto.NoticeReq;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Service("NoticeService")
+@Service
+@RequiredArgsConstructor
 public class NoticeService {
 
-    @Autowired
-    private NoticeDAO noticeDAO;
+    private final NoticeDAO noticeDAO;
 
-    public List<NoticeVO> getNoticeList(TableSearchVO tableSearchVO){
-        if(tableSearchVO.getPageMaxCount()<=0){
-            tableSearchVO.setPageMaxCount(10);
-        }
-        tableSearchVO.setCurrentPage((tableSearchVO.getCurrentPage()-1)*tableSearchVO.getPageMaxCount());
-        return noticeDAO.getNoticeList(tableSearchVO);
+    public List<NoticeReq> getNoticeList() {
+        return noticeDAO.getNoticeList();
     }
 
-    public TableSearchVO getNoticeListCount(TableSearchVO tableSearchVO){
-        if(tableSearchVO.getPageMaxCount()<=0){
-            tableSearchVO.setPageMaxCount(10);
-        }
-        tableSearchVO.setCurrentPage((tableSearchVO.getCurrentPage()-1)*tableSearchVO.getPageMaxCount());
-        Integer searchTotalCount = noticeDAO.getNoticeListCount(tableSearchVO);
-
-        TableSearchVO tableSearch = new TableSearchVO(tableSearchVO, searchTotalCount);
-
-        return tableSearch;
+    public void registerNotice(NoticeReq noticeReq, MultipartFile file) {
+        // 파일 업로드 추가
+        noticeDAO.registerNotice(noticeReq);
     }
 
-    public Integer deleteNotice(Integer noticeNo){
-        return noticeDAO.deleteNotice(noticeNo);
+    public void modifyNotice(NoticeReq noticeReq) {
+        noticeDAO.modifyNotice(noticeReq);
     }
 
+    public void deleteNotice(int NOTICE_NO) {
+        noticeDAO.deleteNotice(NOTICE_NO);
+    }
 
-
+    public NoticeReq getNoticeByNo(int noticeNo) {
+        return noticeDAO.getNoticeByNo(noticeNo);
+    }
 }
