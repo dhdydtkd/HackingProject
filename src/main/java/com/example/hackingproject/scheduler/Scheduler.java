@@ -50,11 +50,11 @@ public class Scheduler {
         StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
         StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
 
-        stockDAO.addSchedulerStock(stock_1);
-        stockDAO.addSchedulerStock(stock_2);
-        stockDAO.addSchedulerStock(stock_3);
-        stockDAO.addSchedulerStock(stock_4);
-        stockDAO.addSchedulerStock(stock_5);
+//        stockDAO.addSchedulerStock(stock_1);
+//        stockDAO.addSchedulerStock(stock_2);
+//        stockDAO.addSchedulerStock(stock_3);
+//        stockDAO.addSchedulerStock(stock_4);
+//        stockDAO.addSchedulerStock(stock_5);
     }
 
     @Scheduled(fixedRate = 10000)
