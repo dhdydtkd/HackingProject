@@ -1,5 +1,5 @@
 $.ajaxGET = function (url, data= null, successCallBack = null, failCallBack = null, type = null) {
-    let fullURL = "http://localhost:8080/"+url;
+    let fullURL = window.location.origin+"/"+url;
     let ajaxSuccessCallBack = null;
     let ajaxFailCallBack = null;
     let contentType = "application/json;charset=UTF-8";
@@ -32,7 +32,7 @@ $.ajaxGET = function (url, data= null, successCallBack = null, failCallBack = nu
 }
 
 $.ajaxPOST = function (url, data= null, successCallBack = null, failCallBack = null, type = null) {
-    let fullURL = "http://localhost:8080/"+url;
+    let fullURL = window.location.origin+"/"+url;
     let ajaxSuccessCallBack = null;
     let ajaxFailCallBack = null;
     let contentType = "application/json;charset=UTF-8";
@@ -61,7 +61,7 @@ $.ajaxPOST = function (url, data= null, successCallBack = null, failCallBack = n
 }
 
 $.ajaxFormPOST = function (url, data= null, successCallBack = null, failCallBack = null, type = null) {
-    let fullURL = "http://localhost:8080/"+url;
+    let fullURL = window.location.origin+"/"+url;
     let header = null;
     let ajaxSuccessCallBack = null;
     let ajaxFailCallBack = null;
