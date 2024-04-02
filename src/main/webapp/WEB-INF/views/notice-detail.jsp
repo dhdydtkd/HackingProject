@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.hackingproject.notice.dto.NoticeReq" %> <!-- NoticeReq 클래스 import -->
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<!-- NoticeReq 클래스 import -->
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -32,11 +34,24 @@
     </header>
     <div class="noticeDetail">
         <!-- 공지사항 날짜 -->
-        <p id="NOTICE_DATE">${noticeDate}</p>
+        <%
+            Date noticeDate = (Date) request.getAttribute("noticeDate");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+            String formattedDate = dateFormat.format(noticeDate);
+        %>
+        <p id="NOTICE_DATE"><%= formattedDate %></p>
         <!-- 공지사항 내용 -->
         <p id="NOTICE_CONTEXT">${noticeContext}</p>
         <!-- 첨부 파일 다운 -->
-        <a href="${downloadLink}" id="NOTICE_FILE">첨부파일</a>
+        <%
+            Integer noticeNo = (Integer) request.getAttribute("noticeNo");
+            String noticeFileName = (String) request.getAttribute("noticeFileName");
+            String noticeFilePath = (String) request.getAttribute("noticeFilePath");
+            if (noticeFileName != null && !noticeFileName.isEmpty() && noticeFilePath != null && !noticeFilePath.isEmpty()) {
+        %>
+        첨부파일 : <a href="/download?noticeNo=<%= noticeNo %>&fileName=<%= noticeFileName %>"><%= noticeFileName %></a>
+        <% } %>
+
     </div>
     <div class="submit-btn">
         <!-- 공지사항 목록으로 이동 -->
