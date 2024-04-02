@@ -300,9 +300,6 @@
               var company = document.getElementById('companyName').textContent;
               var STOCK = setCompany();
               //alert(STOCK);
-<<<<<<< Updated upstream
-
-=======
 			  
               OWN = parseInt(OWN, 10);
 			  UNIT = parseInt(UNIT, 10);
@@ -310,8 +307,6 @@
 				  
 				  return alert("보유 개수 보다 많이 매도 할 수 없습니다.");			  
 			  }
->>>>>>> Stashed changes
-
               $.ajax({
                   url: '/detailSell', // 컨트롤러 경로를 지정하세요.
                   type: 'POST',
