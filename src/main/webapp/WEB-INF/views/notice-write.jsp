@@ -17,7 +17,7 @@
 
 <!-- 공지사항 추가 폼 -->
 <div class="form-container">
-  <form action="/submit-notice" method="post">
+  <form action="/submit-notice" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label for="title">제목:</label>
       <input type="text" id="title" name="NOTICE_TITLE" required>

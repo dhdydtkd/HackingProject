@@ -6,34 +6,29 @@
 
         <!--공지사항 목록 -->
         <select id="getNoticeList" resultType="com.example.hackingproject.notice.dto.NoticeReq">
-            SELECT NOTICE_NO, USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE FROM rookie.Notice
+                SELECT NOTICE_NO, USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE_PATH, NOTICE_FILE_NAME FROM rookie.Notice
         </select>
 
         <!--공지사항 확인-->
         <select id="getNoticeByNo" resultType="com.example.hackingproject.notice.dto.NoticeReq">
-                SELECT * FROM rookie.Notice WHERE NOTICE_NO = #{noticeNo}
-
-        </select>
-
-        <select id="getNoticeInfo" resultType="com.example.hackingproject.notice.dto.NoticeReq">
-        SELECT NOTICE_NO, USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
+                SELECT * FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
         </select>
 
         <!--공지사항 등록-->
         <insert id="registerNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
-        INSERT INTO rookie.Notice (NOTICE_NO, USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE)
-        VALUES (#{NOTICE_NO}, #{USER_ID}, #{NOTICE_TITLE}, #{NOTICE_CONTEXT}, #{NOTICE_DATE}, #{NOTICE_FILE})
+                INSERT INTO rookie.Notice (USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE_PATH, NOTICE_FILE_NAME)
+                VALUES (#{USER_ID}, #{NOTICE_TITLE}, #{NOTICE_CONTEXT}, #{NOTICE_DATE}, #{NOTICE_FILE_PATH}, #{NOTICE_FILE_NAME})
         </insert>
 
         <!--공지사항 수정-->
         <update id="modifyNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
-        UPDATE rookie.Notice
-        SET NOTICE_TITLE = #{NOTICE_TITLE}, NOTICE_CONTEXT = #{NOTICE_CONTEXT}, NOTICE_DATE = #{NOTICE_DATE}, NOTICE_FILE = #{NOTICE_FILE}
-        WHERE NOTICE_NO = #{NOTICE_NO}
+                UPDATE rookie.Notice
+                SET NOTICE_TITLE = #{NOTICE_TITLE}, NOTICE_CONTEXT = #{NOTICE_CONTEXT}, NOTICE_DATE = #{NOTICE_DATE}, NOTICE_FILE_PATH = #{NOTICE_FILE_PATH}, NOTICE_FILE_NAME = #{NOTICE_FILE_NAME}}
+                WHERE NOTICE_NO = #{NOTICE_NO}
         </update>
 
         <!--공지사항 삭제-->
         <delete id="deleteNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
-        DELETE FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
+                DELETE FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
         </delete>
 </mapper>

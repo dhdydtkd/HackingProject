@@ -68,9 +68,10 @@ body {
     min-height: 30rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #ccc; /* 위쪽에 회색 선 추가 */
+    white-space: pre-line; /* 개행 문자를 유지하고 줄 바꿈 적용 */
 }
 
-#NOTICE_FILE {
+#NOTICE_FILE_PATH {
     padding-top: 1rem; /* 위쪽 패딩 설정 */
     text-decoration: none; /* 텍스트 밑줄 제거 */
     color: #333; /* 글자 색상 설정, 필요에 따라 변경 가능 */
@@ -118,5 +119,10 @@ body {
     .notice-container {
         max-width: 50%;
     }
+}
+
+a:any-link {
+    text-decoration: none;
+    color: #333; /* 글자 색상 설정, 필요에 따라 변경 가능 */
 }
 

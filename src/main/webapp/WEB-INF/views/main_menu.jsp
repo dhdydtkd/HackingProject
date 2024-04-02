@@ -243,24 +243,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr onclick="window.location='공지사항1_URL';">
-                    <td name="NOTICE_TITLE">공지사항 1</td>
+                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=1';">
+                    <td name="NOTICE_TITLE">[중요] 시스템 보안 강화 안내</td>
                     <td name="USER_ID">관리자</td>
                     <td name="NOTICE_DATE">2024.03.27</td>
                 </tr>
-                <tr onclick="window.location='공지사항2_URL';">
-                    <td name="NOTICE_TITLE">공지사항 2</td>
+                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=2';">
+                    <td name="NOTICE_TITLE">[서버점검] 서버 점검 예정 안내</td>
                     <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
+                    <td name="NOTICE_DATE">2024.03.28</td>
                 </tr>
-                <tr onclick="window.location='공지사항3_URL';">
-                    <td name="NOTICE_TITLE">공지사항 3</td>
+                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=3';">
+                    <td name="NOTICE_TITLE">[주식시장 안내] 시장 변동성 증가 예상</td>
                     <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
+                    <td name="NOTICE_DATE">2024.03.30</td>
                 </tr>
                 </tbody>
             </table>
-            <a href="공지사항_페이지_URL" class="more-link">더보기</a>
+            <a href="/notice" class="more-link">더보기</a>
         </section>
 
 
