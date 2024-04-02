@@ -42,6 +42,7 @@
         function setCurrent() {
             var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
             pri = pri.replace("원", "");
+            //pri = pri.replace(",","");
             $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
             $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
         }
@@ -289,7 +290,7 @@
           });
           $('#buyButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICE').text();
+              var PRICE = $('#PRICE').text().replace(",","");
               var UNIT = $('#UNIT').val();
               var USERID = $('#USER_ID').val();
               //alert(USERID);
@@ -317,7 +318,7 @@
           });
           $('#sellButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICES').text();
+              var PRICE = $('#PRICES').text().replace(',',"");
               var UNIT = $('#UNITS').val();
               var USERID = $('#USER_ID').val();
               var OWN = $('#OWNN').text();
@@ -326,8 +327,6 @@
               var STOCK = document.getElementById('stock_code').textContent;
               //alert(STOCK);
 			  
-              OWN = parseInt(OWN, 10);
-			  UNIT = parseInt(UNIT, 10);
               parseInt(OWN, 10);
 			  
 			 if (OWN < UNIT){
@@ -399,7 +398,7 @@
       <div class="flex items-center flex-col">
         <div class="font-semibold text-3xl">${stockName}</div>
         <p id="stock_code" style="display: none;">${stockCode}</p>
-        <input type='hidden' id="USER_ID" value = "${id}">
+        <input type='hidden' id="USER_ID" value = "admin">
         <div class="text-3xl mt-7 font-bold"><span id="stcok_price"></span>
             <span id="persent" class="text-red-500 inline-block text-xl ml-3"></span>
         </div>
