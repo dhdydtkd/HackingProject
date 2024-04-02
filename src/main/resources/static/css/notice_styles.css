@@ -1,3 +1,4 @@
+/* Resetting default styles */
 * {
   margin: 0;
   padding: 0;
@@ -17,6 +18,31 @@ body {
   margin: 0 auto;
   padding: 2.5rem;
   background: #ffffff;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between; /* 좌, 중앙, 우 공간을 균등하게 배분 */
+  margin-bottom: 1rem;
+  line-height: 100%;
+}
+
+.top .left,
+.top .right {
+  flex: 1; /* 세 요소가 flex 컨테이너 공간을 균등하게 차지 */
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.top .right {
+  text-align: right; /* 오른쪽 요소의 텍스트를 오른쪽 정렬 */
+}
+.top .center{
+  font-size: 1.5rem;
+  text-align: center;
+  color: #fb923c;
+  font-weight: bold;
+  line-height: 100%;
 }
 
 .header {
@@ -86,3 +112,4 @@ body {
     max-width: 50%;
   }
 }
+

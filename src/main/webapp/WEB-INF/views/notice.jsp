@@ -16,6 +16,11 @@
 </head>
 <body>
 <div class="notice-container">
+    <div class="top">
+        <div class="left"><i class="material-icons">arrow_back</i></div>
+        <div class="center">루키증권</div>
+        <div class="right"></div>
+    </div>
     <header class="header">
         <h1>공지사항</h1>
     </header>
