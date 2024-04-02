@@ -21,6 +21,11 @@
 </head>
 <body>
 <div class="notice-container">
+    <div class="top">
+        <div class="left"></div>
+        <div class="center">루키증권</div>
+        <div class="right"></div>
+    </div>
     <header class="header">
         <!-- 공지사항 제목 -->
         <p id="NOTICE_TITLE">${noticeTitle}</p>
