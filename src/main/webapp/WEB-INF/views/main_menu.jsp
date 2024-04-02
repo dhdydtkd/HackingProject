@@ -88,6 +88,7 @@
                     stockBodyHTML += "<li>";
                     stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
                     stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
+                    //stockBodyHTML += "<p name='STOCK_PRICE'> 5000원</p>";
                     stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockList[i].STOCK_PRICE)+"원</p>";
 
                     if(percentage<0){

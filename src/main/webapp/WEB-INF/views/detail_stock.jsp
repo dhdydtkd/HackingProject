@@ -37,6 +37,18 @@
     }
 
 </style>
+<script>
+
+        function setCurrent() {
+            var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
+            pri = pri.replace("원", "");
+            $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
+            $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
+        }
+
+ 
+</script>
+
   <script type="text/javascript">
       // 초기 데이터
       var initialData = {
@@ -151,7 +163,7 @@
 
                   var stockMinuteData = result.body.stockMinute;
                   $('#stcok_price').text(formattedString(result.body.stockDetail.STOCK_PRICE)+"원");
-
+					
                   var now_stock_price = result.body.stockDetail.STOCK_PRICE;
                   myChart.options.scales.yAxes[0].ticks.min = now_stock_price-now_stock_price/5;
                   myChart.options.scales.yAxes[0].ticks.max = now_stock_price+now_stock_price/3;
@@ -210,7 +222,7 @@
 
 
                       $('#stcok_price').text(formattedString(newStockData.STOCK_PRICE)+"원");
-
+					  setCurrent();
                       var newDataPoint = newStockData.STOCK_PRICE;
                       // 현재 시간을 레이블로 추가
                       myChart.data.datasets[0].data.push(newDataPoint);
@@ -235,16 +247,25 @@
                   }
               });
           }
+          
           intervalId = setInterval(updateChartData, 2000);
           window.addEventListener("blur", stopInterval);
           function stopInterval() {
               clearInterval(intervalId);
           }
       });
+      
   </script>
   <script>
+  
+  $(document).ready(function(){
+      $('#BUYINFO').click(function() {
+    	  setCurrent();
+      });
+  });
       $(document).ready(function(){
           $('#SELLINFO').click(function() {
+        	  setCurrent();
               var USERID = $('#USER_ID').val();
               var STOCK = setCompany(); // setCompany() 함수는 현재 코드에서 정의되지 않았지만, 이 함수가 적절한 값을 반환한다고 가정합니다.
               $.ajax({
@@ -257,7 +278,7 @@
                       // 서버로부터 응답 받은 후 처리
                       // response 객체에서 userId와 unit을 추출하여 alert로 표시
                       //alert("Success: " + response.userId + ", Unit: " + response.unit);
-                      document.getElementById("OWN").innerHTML = "보유 주식: "+response.unit;
+                      document.getElementById("OWN").innerHTML = "보유 주식: "+ "<span id='OWNN'>" +response.unit + "</span>";
 
                   },
                   error: function(xhr, status, error){
@@ -267,12 +288,14 @@
               });
           });
           $('#buyButton').click(function() {
-              var PRICE = $('#PRICE').val();
+        	  event.preventDefault();
+              var PRICE = $('#PRICE').text();
               var UNIT = $('#UNIT').val();
               var USERID = $('#USER_ID').val();
               //alert(USERID);
               //var company = document.getElementById('companyName').textContent;
-              var STOCK = setCompany();
+              var STOCK = document.getElementById('stock_code').textContent;
+              //alert(PRICE);
 
               //alert(STOCK);
 
@@ -284,7 +307,7 @@
 
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
-                      alert('서버 응답: ' + response.MSG);
+                      alert(response.MSG);
                   },
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
@@ -293,20 +316,25 @@
               });
           });
           $('#sellButton').click(function() {
-              var PRICE = $('#PRICES').val();
+        	  event.preventDefault();
+              var PRICE = $('#PRICES').text();
               var UNIT = $('#UNITS').val();
               var USERID = $('#USER_ID').val();
+              var OWN = $('#OWNN').text();
               //alert(USERID);
-              var company = document.getElementById('companyName').textContent;
-              var STOCK = setCompany();
+              //var company = document.getElementById('companyName').textContent;
+              var STOCK = document.getElementById('stock_code').textContent;
               //alert(STOCK);
 			  
               OWN = parseInt(OWN, 10);
 			  UNIT = parseInt(UNIT, 10);
+              parseInt(OWN, 10);
+			  
 			 if (OWN < UNIT){
 				  
 				  return alert("보유 개수 보다 많이 매도 할 수 없습니다.");			  
 			  }
+
               $.ajax({
                   url: '/detailSell', // 컨트롤러 경로를 지정하세요.
                   type: 'POST',
@@ -325,22 +353,8 @@
           });
       });
       function setCompany(){
-          var company = document.getElementById('companyName').textContent;
-          var STOCK;
-          if (company === "삼성전자") {
-              STOCK = "SAMSUNG";
-          }
-          else if(company === "LG") {
-              STOCK = "LG";
-          }
-          else if(company === "TESLA") {
-              STOCK = "TESLA";
-          }
-          else if(company === "SK") {
-              STOCK = "SK";
-          }else{
-              STOCK = "APPLE";
-          }
+          var STOCK=$('#stock_code').text();
+          
           return STOCK
       }
       function clickButton(buttonType) {
@@ -432,7 +446,7 @@
             </div>
         </div>
       <div class="fixed flex space-x-5 w-full pr-12 bottom-0 bg-white">
-        <button
+        <button id='BUYINFO'
           data-modal-target="buy-modal" data-modal-toggle="buy-modal"
           class="bg-red-500 w-full mb-5 py-3 text-center text-white rounded-lg font-semibold"
         >
@@ -460,7 +474,7 @@
                         <div class="flex items-center justify-between py-2">
                             <div>희망 가격</div>
                             <div>
-                                <input id="PRICE" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
+                                <span id="PRICE"> </span><span>원</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
@@ -490,9 +504,9 @@
                     
                     <from class="divide-y">
                         <div class="flex items-center justify-between py-2">
-                            <div>희망 가격</div>
+                            <div>시장 가격</div>
                             <div>
-                                <input id="PRICES" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" min="0" placeholder="1000" />원
+                                <span id="PRICES"> </span><span>원</span>
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
