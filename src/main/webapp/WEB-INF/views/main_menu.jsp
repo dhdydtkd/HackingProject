@@ -234,33 +234,42 @@
             </div>
         </section>
         <section id="news" class="tab-content hidden">
-            <table class="news-table" >
-                <thead>
-                <tr>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">일시</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr onclick="window.location='공지사항1_URL';">
-                    <td name="NOTICE_TITLE">공지사항 1</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
-                </tr>
-                <tr onclick="window.location='공지사항2_URL';">
-                    <td name="NOTICE_TITLE">공지사항 2</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
-                </tr>
-                <tr onclick="window.location='공지사항3_URL';">
-                    <td name="NOTICE_TITLE">공지사항 3</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
-                </tr>
-                </tbody>
-            </table>
-            <a href="공지사항_페이지_URL" class="more-link">더보기</a>
+            <%
+                List<NoticeReq> noticeList = (List<NoticeReq>) request.getAttribute("noticeList");
+
+                for (NoticeReq notice : noticeList) {
+                    java.util.Date date = notice.getNOTICE_DATE();
+                    SimpleDateFormat sdf = new SimpleDateFormat("M월 d일", Locale.KOREA);
+                    String formattedDate = sdf.format(date);
+            %>
+            <div class="announcement">
+                <a href="notice-detail?noticeNo=<%= notice.getNOTICE_NO() %>"><h2 class="NOTICE_TITLE"><%= notice.getNOTICE_TITLE() %></h2></a>
+                <p class="NOTICE_DATE"><%= formattedDate %></p>
+            </div>
+            <% } %>
+            <!-- 가운데 정렬을 위한 컨테이너 -->
+            <div class="center-container">
+                <!-- 등록 버튼 컨테이너 -->
+                <div class="submit-btn-container">
+                    <div class="submit-btn">
+                        <a href="notice-write" class="on">등록</a>
+                    </div>
+                </div>
+                <!-- 페이지네이션 컨테이너 -->
+                <div class="pagination-container">
+                    <div class="pagination">
+                        <a href="#" class="page-link">&laquo;</a>
+                        <a href="#" class="page-link">&lt;</a>
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">&gt;</a>
+                        <a href="#" class="page-link">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+            <!--<a href="#">수정</a>
+            </div>
+                <a href="공지사항_페이지_URL" class="more-link">더보기</a>
+                -->
         </section>
 
 
