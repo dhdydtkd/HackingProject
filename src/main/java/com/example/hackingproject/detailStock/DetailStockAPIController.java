@@ -30,7 +30,7 @@ public class DetailStockAPIController {
         String user_id = detailStockVO.getUserId();
         
         // 비즈니스 로직 처리 후 결과 메시지 생성
-        String message = user_id+"님의 구매 가격 : " + price + ", 구매 수량 : " + unit; 
+        String message = user_id+"님의 구매 가격 : " + price + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " + unit; 
         System.out.println(message);
         
         detailStockService.buyStock(detailStockVO);
@@ -54,34 +54,74 @@ public class DetailStockAPIController {
     }
     
     @PostMapping("/haveStock")
-    public ResponseEntity<?> haveStock(@RequestBody DetailStockVO detailStockVO){
+    public ResponseEntity<?> haveStock(@RequestBody(required = false) DetailStockVO detailStockVO){
+        // detailStockVO 객체가 null인 경우의 처리
+        if (detailStockVO == null) {
+            return ResponseEntity.badRequest().body("요청 본문이 비어 있습니다.");
+        }
         
-        //받은 정보를 service 로 넘긴다.
+        // 받은 정보를 서비스로 넘긴다.
         int unit = 0;
         String stock = detailStockVO.getStock();
         String user_id = detailStockVO.getUserId();
         String message = user_id + "님 :" + stock; 
-        //System.out.println(message);
-        
+        System.out.println(message);
+
         detailStockVO = detailStockService.haveStock(detailStockVO);    
-        
+
         if (stock != null) {
-            if (stock.equals("SAMSUNG")) {
-                unit = detailStockVO.getSAMSUNG();
-            } else if (stock.equals("TESLA")) {
-                unit = detailStockVO.getTESLA();
-            } else if (stock.equals("LG")) {
-                unit = detailStockVO.getLG();
-            } else if (stock.equals("SK")) {
-                unit = detailStockVO.getSK();
-            } else {
-                unit = detailStockVO.getAPPLE();
+            switch (stock) {
+                case "AAPL":
+                    unit = detailStockVO.getAAPL();
+                    break;
+                case "AMZN":
+                    unit = detailStockVO.getAMZN();
+                    break;
+                case "FB":
+                    unit = detailStockVO.getFB();
+                    break;
+                case "GOOGL":
+                    unit = detailStockVO.getGOOGL();
+                    break;
+                default:
+                    unit = detailStockVO.getMSFT();
+                    break;
             }
         }
-        
         
         // user_id와 unit을 Map에 담아 반환
         return ResponseEntity.ok(Map.of("userId", user_id, "unit", unit));
     }
-    
+
+//    @PostMapping("/haveStock")
+//    public ResponseEntity<?> haveStock(@RequestBody DetailStockVO detailStockVO){
+//        
+//        //받은 정보를 service 로 넘긴다.
+//        int unit = 0;
+//        String stock = detailStockVO.getStock();
+//        String user_id = detailStockVO.getUserId();
+//        String message = user_id + "님 :" + stock; 
+//        System.out.println(message);
+//        
+//        detailStockVO = detailStockService.haveStock(detailStockVO);    
+//        
+//        if (stock != null) {
+//            if (stock.equals("AAPL")) {
+//                unit = detailStockVO.getAAPL();
+//            } else if (stock.equals("AMZN")) {
+//                unit = detailStockVO.getAMZN();
+//            } else if (stock.equals("FB")) {
+//                unit = detailStockVO.getFB();
+//            } else if (stock.equals("GOOGL")) {
+//                unit = detailStockVO.getGOOGL();
+//            } else {
+//                unit = detailStockVO.getMSFT();
+//            }
+//        }
+//        
+//        
+//        // user_id와 unit을 Map에 담아 반
+//        return ResponseEntity.ok(Map.of("userId", user_id, "unit", unit));
+//    }
+//    
 }
