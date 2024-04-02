@@ -300,7 +300,17 @@
               var company = document.getElementById('companyName').textContent;
               var STOCK = setCompany();
               //alert(STOCK);
+<<<<<<< Updated upstream
 
+=======
+			  
+              OWN = parseInt(OWN, 10);
+			  UNIT = parseInt(UNIT, 10);
+			 if (OWN < UNIT){
+				  
+				  return alert("보유 개수 보다 많이 매도 할 수 없습니다.");			  
+			  }
+>>>>>>> Stashed changes
 
               $.ajax({
                   url: '/detailSell', // 컨트롤러 경로를 지정하세요.
@@ -380,7 +390,7 @@
       <div class="flex items-center flex-col">
         <div class="font-semibold text-3xl">${stockName}</div>
         <p id="stock_code" style="display: none;">${stockCode}</p>
-        <input type='hidden' id="USER_ID" value = "admin">
+        <input type='hidden' id="USER_ID" value = "${id}">
         <div class="text-3xl mt-7 font-bold"><span id="stcok_price"></span>
             <span id="persent" class="text-red-500 inline-block text-xl ml-3"></span>
         </div>
