@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>루키증권</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/main_menu.css">
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>루키증권</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main_menu.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
@@ -88,7 +88,6 @@
                     stockBodyHTML += "<li>";
                     stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
                     stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
-                    //stockBodyHTML += "<p name='STOCK_PRICE'> 5000원</p>";
                     stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockList[i].STOCK_PRICE)+"원</p>";
 
                     if(percentage<0){
@@ -235,33 +234,42 @@
             </div>
         </section>
         <section id="news" class="tab-content hidden">
-            <table class="news-table" >
-                <thead>
-                <tr>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">일시</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=1';">
-                    <td name="NOTICE_TITLE">[중요] 시스템 보안 강화 안내</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.27</td>
-                </tr>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=2';">
-                    <td name="NOTICE_TITLE">[서버점검] 서버 점검 예정 안내</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.28</td>
-                </tr>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=3';">
-                    <td name="NOTICE_TITLE">[주식시장 안내] 시장 변동성 증가 예상</td>
-                    <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.30</td>
-                </tr>
-                </tbody>
-            </table>
-            <a href="/notice" class="more-link">더보기</a>
+            <%
+                List<NoticeReq> noticeList = (List<NoticeReq>) request.getAttribute("noticeList");
+
+                for (NoticeReq notice : noticeList) {
+                    java.util.Date date = notice.getNOTICE_DATE();
+                    SimpleDateFormat sdf = new SimpleDateFormat("M월 d일", Locale.KOREA);
+                    String formattedDate = sdf.format(date);
+            %>
+            <div class="announcement">
+                <a href="notice-detail?noticeNo=<%= notice.getNOTICE_NO() %>"><h2 class="NOTICE_TITLE"><%= notice.getNOTICE_TITLE() %></h2></a>
+                <p class="NOTICE_DATE"><%= formattedDate %></p>
+            </div>
+            <% } %>
+            <!-- 가운데 정렬을 위한 컨테이너 -->
+            <div class="center-container">
+                <!-- 등록 버튼 컨테이너 -->
+                <div class="submit-btn-container">
+                    <div class="submit-btn">
+                        <a href="notice-write" class="on">등록</a>
+                    </div>
+                </div>
+                <!-- 페이지네이션 컨테이너 -->
+                <div class="pagination-container">
+                    <div class="pagination">
+                        <a href="#" class="page-link">&laquo;</a>
+                        <a href="#" class="page-link">&lt;</a>
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">&gt;</a>
+                        <a href="#" class="page-link">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+            <!--<a href="#">수정</a>
+            </div>
+                <a href="공지사항_페이지_URL" class="more-link">더보기</a>
+                -->
         </section>
 
 
@@ -276,3 +284,4 @@
 
 </body>
 </html>
+
