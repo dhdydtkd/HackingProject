@@ -79,12 +79,7 @@ public class Scheduler {
         base_stock.setStock_name(name);
         int randomChange = random.nextInt(price) + base_price; // 1~5 사이의 랜덤 값 생성
         boolean add = random.nextBoolean(); // true 또는 false 랜덤 생성
-
-
-        StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
-        StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
-        StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
-        StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
+        
         if(type==1){
             if (add) { stockBaseValue_1 += randomChange;}
             else if(stockBaseValue_1 > 2) { stockBaseValue_1 -= randomChange;}
