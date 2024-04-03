@@ -55,7 +55,7 @@
     </div>
     <div class="submit-btn">
         <!-- 공지사항 목록으로 이동 -->
-        <a href="/notice" class="on">목록으로</a>
+        <a href="/main" class="on">목록으로</a>
     </div>
 </div>
 </body>

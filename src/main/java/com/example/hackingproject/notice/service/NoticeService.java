@@ -59,7 +59,7 @@ public class NoticeService {
 
                 //파일 경로를 NoticeReq 객체에 설정
                 noticeReq.setNOTICE_FILE_PATH(filePath.toString());
-                noticeReq.setNOTICE_FILE_NAME(fileName); // 원본 파일명
+                noticeReq.setNOTICE_FILE_NAME(fileName);
 
                 logger.info("파일 업로드 성공: {}", filePath);
             } catch (IOException e) {

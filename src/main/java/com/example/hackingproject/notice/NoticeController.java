@@ -64,10 +64,8 @@ public class NoticeController {
         Resource resource = new UrlResource(file.toUri());
 
         if (resource.exists() && resource.isReadable()) {
-            // 파일이 존재하고 읽을 수 있는 경우
             logger.info("다운로드할 파일을 찾았습니다: {}", file);
 
-            // 원본 파일명 가져오기
             String originalFileName = notice.getNOTICE_FILE_NAME();
 
             return ResponseEntity.ok()
@@ -75,13 +73,12 @@ public class NoticeController {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + originalFileName + "\"") // 원본 파일명 사용
                     .body(resource);
         } else {
-            // 파일이 존재하지 않거나 읽을 수 없는 경우에 대한 예외 처리
             String errorMessage = "파일을 찾을 수 없습니다: " + file;
             logger.error(errorMessage);
             throw new FileNotFoundException(errorMessage);
         }
     }
-    
+
     //공지사항 작성
     @GetMapping("/notice-write")
     public String getNoticeWritePage() {
@@ -95,7 +92,7 @@ public class NoticeController {
         ModelAndView mav = new ModelAndView();
         List<NoticeReq> noticeList = noticeService.getNoticeList();
         mav.addObject("noticeList", noticeList);
-        mav.setViewName("redirect:/notice");
+        mav.setViewName("redirect:/main");
         return mav;
     }
 
