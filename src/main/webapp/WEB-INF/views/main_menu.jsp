@@ -1,3 +1,7 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.example.hackingproject.notice.dto.NoticeReq" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -237,16 +241,21 @@
             <%
                 List<NoticeReq> noticeList = (List<NoticeReq>) request.getAttribute("noticeList");
 
-                for (NoticeReq notice : noticeList) {
-                    java.util.Date date = notice.getNOTICE_DATE();
-                    SimpleDateFormat sdf = new SimpleDateFormat("M월 d일", Locale.KOREA);
-                    String formattedDate = sdf.format(date);
+                if (noticeList != null) {
+                    for (NoticeReq notice : noticeList) {
+                        java.util.Date date = notice.getNOTICE_DATE();
+                        SimpleDateFormat sdf = new SimpleDateFormat("M월 d일", Locale.KOREA);
+                        String formattedDate = sdf.format(date);
             %>
             <div class="announcement">
                 <a href="notice-detail?noticeNo=<%= notice.getNOTICE_NO() %>"><h2 class="NOTICE_TITLE"><%= notice.getNOTICE_TITLE() %></h2></a>
                 <p class="NOTICE_DATE"><%= formattedDate %></p>
             </div>
-            <% } %>
+            <%
+                    }
+                }
+            %>
+
             <!-- 가운데 정렬을 위한 컨테이너 -->
             <div class="center-container">
                 <!-- 등록 버튼 컨테이너 -->

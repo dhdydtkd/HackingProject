@@ -35,14 +35,6 @@ public class NoticeController {
 
     private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 
-    //공지사항 목록
-    @GetMapping("/notice")
-    public String notice(Model model) {
-        List<NoticeReq> noticeList = noticeService.getNoticeList();
-        model.addAttribute("noticeList", noticeList);
-        return "notice";
-    }
-
     //공지사항 세부
     @GetMapping("/notice-detail")
     public ModelAndView getNoticeDetailPage(@RequestParam("noticeNo") int NOTICE_NO) {
@@ -89,8 +81,7 @@ public class NoticeController {
             throw new FileNotFoundException(errorMessage);
         }
     }
-
-
+    
     //공지사항 작성
     @GetMapping("/notice-write")
     public String getNoticeWritePage() {
