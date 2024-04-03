@@ -15,6 +15,7 @@ import com.example.hackingproject.common.JwtTokenUtil;
 
 @Controller
 public class DetailStockRESTAPIController {
+	
 	@Autowired
     private JwtTokenUtil jwtTokenUtil;
 	
@@ -23,10 +24,6 @@ public class DetailStockRESTAPIController {
     , @RequestParam(value = "stockCode")String stockCode
     , @RequestParam(value = "stockName")String stockName) {
         ModelAndView mav = new ModelAndView();
-
-        mav.addObject("stockCode", stockCode);
-        mav.addObject("stockName", stockName);
-        
         Cookie[] cookies = request.getCookies();
         String JWTToken = null;
         if (cookies != null) {
@@ -36,12 +33,12 @@ public class DetailStockRESTAPIController {
                 }
             }
         }
+        jwtTokenUtil.getUserIdFromToken(JWTToken);
+        System.out.println("id : "+ jwtTokenUtil.getUserIdFromToken(JWTToken));
+        mav.addObject("id", jwtTokenUtil.getUserIdFromToken(JWTToken));
+        mav.addObject("stockCode", stockCode);
+        mav.addObject("stockName", stockName);
         
-       System.out.println("id : "+jwtTokenUtil.getUserIdFromToken(JWTToken));
-        
-        mav.addObject("id",jwtTokenUtil.getUserIdFromToken(JWTToken));
-        
-
         mav.setViewName("detail_stock");
         return mav;
     }
