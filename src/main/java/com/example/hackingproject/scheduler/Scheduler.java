@@ -80,25 +80,35 @@ public class Scheduler {
         int randomChange = random.nextInt(price) + base_price; // 1~5 사이의 랜덤 값 생성
         boolean add = random.nextBoolean(); // true 또는 false 랜덤 생성
 
+
+        StockData stock_2 = createStockData(2,"AMZN","Amazon.com Inc.",20,6);
+        StockData stock_3 = createStockData(3,"FB","Meta Platforms Inc.",20,6);
+        StockData stock_4 = createStockData(4,"GOOGL","Alphabet Inc.",200,100);
+        StockData stock_5 = createStockData(5,"MSFT","Microsoft Corp.",1000,100);
         if(type==1){
             if (add) { stockBaseValue_1 += randomChange;}
-            else { stockBaseValue_1 -= randomChange;}
+            else if(stockBaseValue_1 > 2) { stockBaseValue_1 -= randomChange;}
+            else {stockBaseValue_1 += randomChange;}
             base_stock.setStock_price(stockBaseValue_1);
         }else if(type==2){
             if (add) { stockBaseValue_2 += randomChange;}
-            else { stockBaseValue_2 -= randomChange;}
+            else if(stockBaseValue_2 > 20) { stockBaseValue_2 -= randomChange;}
+            else {stockBaseValue_2 += randomChange;}
             base_stock.setStock_price(stockBaseValue_2);
         }else if(type==3){
             if (add) { stockBaseValue_3 += randomChange;}
-            else { stockBaseValue_3 -= randomChange;}
+            else if(stockBaseValue_3 > 20) { stockBaseValue_3 -= randomChange;}
+            else {stockBaseValue_3 += randomChange;}
             base_stock.setStock_price(stockBaseValue_3);
         }else if(type==4){
             if (add) { stockBaseValue_4 += randomChange;}
-            else { stockBaseValue_4 -= randomChange;}
+            else if(stockBaseValue_4 > 200) { stockBaseValue_4 -= randomChange;}
+            else {stockBaseValue_4 += randomChange;}
             base_stock.setStock_price(stockBaseValue_4);
         }else if(type==5){
             if (add) { stockBaseValue_5 += randomChange;}
-            else { stockBaseValue_5 -= randomChange;}
+            else if(stockBaseValue_5 > 1000) { stockBaseValue_5 -= randomChange;}
+            else {stockBaseValue_5 += randomChange;}
             base_stock.setStock_price(stockBaseValue_5);
         }
         return base_stock;

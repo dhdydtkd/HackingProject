@@ -19,6 +19,11 @@ public class LoginRestAPIController {
     @Value("${rsa_web_key}")
     private String RSA_WEB_KEY ; // 개인키 session key
 
+    @Value("${rsa_modulus_key}")
+    private String RSAModulus ; // 개인키 session key
+    @Value("${rsa_exponent_key}")
+    private String RSAExponent ; // 개인키 session key
+
     @Value("${rsa_instance}")
     private String RSA_INSTANCE; // rsa transformation
 
@@ -35,6 +40,10 @@ public class LoginRestAPIController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+
+        String path = System.getProperty("user.dir");
+        System.out.println("현재 작업 경로: " + path);
+
         initRsa(request);
         ModelAndView mav = new ModelAndView();
         Boolean loginFlag = jwtTokenUtil.JWTTokenCheck(request);
@@ -70,9 +79,11 @@ public class LoginRestAPIController {
             RSAPublicKeySpec publicSpec = keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
             String publicKeyModulus = publicSpec.getModulus().toString(16);
             String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+            session.setAttribute(RSAModulus, publicKeyModulus);
+            session.setAttribute(RSAExponent, publicKeyExponent);
 
-            request.setAttribute("RSAModulus", publicKeyModulus); // rsa modulus 를 request 에 추가
-            request.setAttribute("RSAExponent", publicKeyExponent); // rsa exponent 를 request 에 추가
+            request.setAttribute(RSAModulus, publicKeyModulus); // rsa modulus 를 request 에 추가
+            request.setAttribute(RSAExponent, publicKeyExponent); // rsa exponent 를 request 에 추가
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

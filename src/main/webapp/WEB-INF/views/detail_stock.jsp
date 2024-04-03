@@ -14,6 +14,11 @@
     <script src="/js/util.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/common.js"></script>
+
+    <script src="/js/rsa/jsbn.js"></script>
+    <script src="/js/rsa/prng4.js"></script>
+    <script src="/js/rsa/rng.js"></script>
+    <script src="/js/rsa/rsa.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <link
@@ -302,12 +307,21 @@
  				 return alert("음수는 입력 탐지 ADR CAPS 출동!! ");
  			 }
              // alert(STOCK);
+              const rsa = new RSAKey();
+              rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+              let data = {
+                  stock : STOCK
+                  , price : PRICE
+                  , userId : USERID
+                  , unit : UNIT
+              }
+              let e2eData = rsa.encrypt(JSON.stringify(data));
 
               $.ajax({
                   url: '/detailBuy', // 컨트롤러 경로를 지정하세요.
                   type: 'POST',
                   contentType: 'application/json',
-                  data: JSON.stringify({ stock: STOCK, price: PRICE, userId: USERID, unit:UNIT }), // 데이터를 JSON 형식으로 전송
+                  data: e2eData, // 데이터를 JSON 형식으로 전송
 
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
@@ -340,12 +354,20 @@
 			 if (UNIT < 0){
 				 return alert("음수는 입력 탐지 ADR CAPS 출동!! ");
 			 }
-
+              const rsa = new RSAKey();
+              rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+              let data = {
+                  stock : STOCK
+                  , price : PRICE
+                  , userId : USERID
+                  , unit : UNIT
+              }
+              let e2eData = rsa.encrypt(JSON.stringify(data));
               $.ajax({
                   url: '/detailSell', // 컨트롤러 경로를 지정하세요.
                   type: 'POST',
                   contentType: 'application/json',
-                  data: JSON.stringify({ stock: STOCK, price: PRICE, userId: USERID, unit:UNIT }), // 데이터를 JSON 형식으로 전송
+                  data: e2eData, // 데이터를 JSON 형식으로 전송
 
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
@@ -466,6 +488,12 @@
         </button>
       </div>
     </main>
+    <div style="display: none;" class="col-12 col-12-xsmall">
+        공개키 : RSAModulus<input type="text" id="RSAModulus" value="${RSAModulus}" readonly/>
+    </div>
+    <div style="display: none;" class="col-12 col-12-xsmall">
+        공개키 : RSAExponent<input type="text" id="RSAExponent" value="${RSAExponent}" readonly/>
+    </div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <div id="buy-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

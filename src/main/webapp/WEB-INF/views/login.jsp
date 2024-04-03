@@ -28,7 +28,6 @@
 <script>
     $(() => {
         $("#login").click(function() {
-            console.log("login")
             let id = $('#userid');
             let pass = $('#password');
             if(id.val() == ""){
