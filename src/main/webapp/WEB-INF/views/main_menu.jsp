@@ -26,9 +26,7 @@
 
     $(() => {
         stockListSearch();
-        getStockIndex();
         intervalId = setInterval(stockListSearch, 2000); // 1000 밀리초 = 1초
-        intervalId2 = setInterval(getStockIndex, 20000);
         window.addEventListener("blur", stopInterval);
 
         var login_flag = $('#login_flag').text();
@@ -90,6 +88,7 @@
                     stockBodyHTML += "<li>";
                     stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
                     stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
+                    //stockBodyHTML += "<p name='STOCK_PRICE'> 5000원</p>";
                     stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockList[i].STOCK_PRICE)+"원</p>";
 
                     if(percentage<0){
@@ -106,48 +105,6 @@
 
             }
         });
-    }
-
-    function getStockIndex(){
-        console.log("getStockIndex");
-        index_string = ["kospi","kosdaq","nasdaq","snp500","exchange_rate"]
-        $.ajaxGET("stock/stockindex", null, function(result){
-            if (result.state.code == "0000") {
-                let stockIndexList = result.body;
-
-                for(let i=0;i<stockIndexList.length;i++){
-
-
-                    var index_name = index_string[i];
-                    var index_updown = stockIndexList[i].index_UPDOWN;
-
-                    var index_num = stockIndexList[i].index_NUM;
-
-                    if(index_updown == "상승"){
-                        var index_change = "+" + stockIndexList[i].index_CHANGE;
-                    } else{
-                        var index_change = "-" + stockIndexList[i].index_CHANGE;
-                    }
-
-                    if(index_name != "exchange_rate"){
-                        index_change += " (" + stockIndexList[i].index_CHANGE_PERSENT+")";
-                    }
-
-
-                    var Element = document.getElementById(index_string[i]);
-                    Element.querySelector(".index-value").innerText=index_num;
-                    Element.querySelector(".index-change").innerText=index_change;
-
-                    if(index_updown=="상승"){
-                        Element.querySelector(".index-change").classList.remove("negative");
-                        Element.querySelector(".index-change").classList.add("positive");
-                    }
-
-                }
-
-            }
-        });
-
     }
 </script>
 <!DOCTYPE html>
@@ -233,35 +190,35 @@
             <div class="indices-section">
                 <h2>주요 지수</h2>
                 <div class="indices">
-                    <div class="index-item" id="kospi">
+                    <div class="index-item">
                         <p class="index-name">코스피</p>
                         <p class="index-value">2,755.11</p>
                         <p class="index-change negative">-1.98 (-0.07%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item" id="kosdaq">
+                    <div class="index-item">
                         <p class="index-name">코스닥</p>
                         <p class="index-value">911.25</p>
                         <p class="index-change negative">-4.84 (-0.5%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item" id = "exchange_rate">
+                    <div class="index-item">
                         <p class="index-name">환율</p>
                         <p class="index-value">1,352.75</p>
-                        <p class="index-change negative">+14.15 (1.0%)</p>
+                        <p class="index-change positive">+14.15 (1.0%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item" id = "nasdaq">
+                    <div class="index-item">
                         <p class="index-name">나스닥</p>
                         <p class="index-value">16,315.70</p>
                         <p class="index-change negative">-68.77 (0.4%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item" id = "snp500">
+                    <div class="index-item">
                         <p class="index-name">S&P 500</p>
                         <p class="index-value">5,203.58</p>
                         <p class="index-change negative">-14.61 (0.2%)</p>
@@ -287,24 +244,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=1';">
-                    <td name="NOTICE_TITLE">[중요] 시스템 보안 강화 안내</td>
+                <tr onclick="window.location='공지사항1_URL';">
+                    <td name="NOTICE_TITLE">공지사항 1</td>
                     <td name="USER_ID">관리자</td>
                     <td name="NOTICE_DATE">2024.03.27</td>
                 </tr>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=2';">
-                    <td name="NOTICE_TITLE">[서버점검] 서버 점검 예정 안내</td>
+                <tr onclick="window.location='공지사항2_URL';">
+                    <td name="NOTICE_TITLE">공지사항 2</td>
                     <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.28</td>
+                    <td name="NOTICE_DATE">2024.03.27</td>
                 </tr>
-                <tr onclick="window.location='http://localhost:8080/notice-detail?noticeNo=3';">
-                    <td name="NOTICE_TITLE">[주식시장 안내] 시장 변동성 증가 예상</td>
+                <tr onclick="window.location='공지사항3_URL';">
+                    <td name="NOTICE_TITLE">공지사항 3</td>
                     <td name="USER_ID">관리자</td>
-                    <td name="NOTICE_DATE">2024.03.30</td>
+                    <td name="NOTICE_DATE">2024.03.27</td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/notice" class="more-link">더보기</a>
+            <a href="공지사항_페이지_URL" class="more-link">더보기</a>
         </section>
 
 
