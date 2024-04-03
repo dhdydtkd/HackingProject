@@ -9,5 +9,4 @@ public interface DetailStockDAO {
 	void buyStock(DetailStockVO detailStockVO);
 	void sellStock(DetailStockVO detailStockVO);
 	DetailStockVO haveStock(DetailStockVO detailStockVO);
-	void insertUser (DetailStockVO detailStockVO);
 }

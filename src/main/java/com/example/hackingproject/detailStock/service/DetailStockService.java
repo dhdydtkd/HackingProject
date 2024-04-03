@@ -20,36 +20,28 @@ public class DetailStockService {
     	detailStockVO.setStockQuantity();
     	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 구매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""; 
     	System.out.println(message);
-    	detailStockDAO.buyStock(detailStockVO);
-        detailStockDAO.insertUser(detailStockVO);
+        detailStockDAO.buyStock(detailStockVO);
     }
     
     public void sellStock(DetailStockVO detailStockVO) {
-    	detailStockVO.setStockSellQuantity();
-    	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 판매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""+detailStockVO.getAAPL(); 
+    	detailStockVO.setStockQuantity();
+    	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 판매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""; 
     	System.out.println(message);
-    	//음수로 바꾸
-    	detailStockVO.setUnit("-"+detailStockVO.getUnit());
-    	DetailStockVO pivot = this.haveStock(detailStockVO);
-
         detailStockDAO.sellStock(detailStockVO);
-        detailStockDAO.insertUser(detailStockVO);
     }
     
     public DetailStockVO haveStock(DetailStockVO detailStockVO) {
-    	String user_id = detailStockVO.getUserId();
     	
     	detailStockVO = detailStockDAO.haveStock(detailStockVO);
     	//detailStockVO.setStockQuantity();
-    	int S = detailStockVO.getAAPL();
-    	int L = detailStockVO.getAMZN();
-    	int T = detailStockVO.getFB();
-    	int A = detailStockVO.getGOOGL();
-    	int SK = detailStockVO.getMSFT();
-    	System.out.println(user_id+"님의 보유 주식 개수 \nAAPL: "+S+"\nAMZN: "+L+"\nFB: "+T+"\nGOOGL: "+A+"\nMSFT: "+SK);
-
+    	String user_id = detailStockVO.getUserId();
+    	int S = detailStockVO.getSAMSUNG();
+    	int L = detailStockVO.getLG();
+    	int T = detailStockVO.getTESLA();
+    	int A = detailStockVO.getAPPLE();
+    	int SK = detailStockVO.getSK();
     	
-    	
+    	System.out.println(user_id+"님의 보유 주식 개수 \nSAMSUNG: "+S+"\nLG: "+L+"\nTESLA: "+T+"\nAPPLE: "+A+"\nSK: "+SK);
     	return detailStockVO;
     }
 	

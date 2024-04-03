@@ -3,50 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.example.hackingproject.dao.DetailStockDAO">
-
-  <insert id="insertUser" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
-    INSERT INTO rookie.StockHistory (USER_ID, STOCK_CODE, UNIT, STOCK_PRICE)
-    VALUES (#{userId}, #{stock}, #{unit}, #{price})
-  </insert>
-
     <insert id="buyStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
-        INSERT INTO rookie.UserStock (USER_ID, AAPL, AMZN, FB, GOOGL, MSFT)
-        VALUES (#{userId}, #{AAPL}, #{AMZN}, #{FB}, #{GOOGL}, #{MSFT})
+        INSERT INTO rookie.UserStock (USER_ID, SAMSUNG, TESLA, LG, SK, APPLE)
+        VALUES (#{userId}, #{SAMSUNG}, #{TESLA}, #{LG}, #{SK}, #{APPLE})
         ON DUPLICATE KEY UPDATE 
-            AAPL = AAPL + VALUES(AAPL), 
-            AMZN = AMZN + VALUES(AMZN),
-            FB = FB + VALUES(FB),
-            GOOGL = GOOGL + VALUES(GOOGL),
-            MSFT = MSFT + VALUES(MSFT);
+            SAMSUNG = SAMSUNG + VALUES(SAMSUNG), 
+            TESLA = TESLA + VALUES(TESLA),
+            LG = LG + VALUES(LG),
+            SK = SK + VALUES(SK),
+            APPLE = APPLE + VALUES(APPLE);
     </insert>
 
-<insert id="sellStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
-    INSERT INTO rookie.UserStock (USER_ID, AAPL, AMZN, FB, GOOGL, MSFT)
-    VALUES (#{userId}, #{AAPL}, #{AMZN}, #{FB}, #{GOOGL}, #{MSFT})
-    ON DUPLICATE KEY UPDATE 
-        AAPL = CASE 
-            WHEN AAPL + VALUES(AAPL) >= 0 THEN AAPL + VALUES(AAPL)
-            ELSE AAPL
-        END, 
-        AMZN = CASE 
-            WHEN AMZN + VALUES(AMZN) >= 0 THEN AMZN + VALUES(AMZN)
-            ELSE AMZN
-        END,
-        FB = CASE 
-            WHEN FB + VALUES(FB) >= 0 THEN FB + VALUES(FB)
-            ELSE FB
-        END,
-        GOOGL = CASE 
-            WHEN GOOGL + VALUES(GOOGL) >= 0 THEN GOOGL + VALUES(GOOGL)
-            ELSE GOOGL
-        END,
-        MSFT = CASE 
-            WHEN MSFT + VALUES(MSFT) >= 0 THEN MSFT + VALUES(MSFT)
-            ELSE MSFT
-        END;
-</insert>
-
-
+    <insert id="sellStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+        INSERT INTO rookie.UserStock (USER_ID, SAMSUNG, TESLA, LG, SK, APPLE)
+        VALUES (#{userId}, #{SAMSUNG}, #{TESLA}, #{LG}, #{SK}, #{APPLE})
+        ON DUPLICATE KEY UPDATE 
+            SAMSUNG = SAMSUNG - VALUES(SAMSUNG), 
+            TESLA = TESLA - VALUES(TESLA),
+            LG = LG - VALUES(LG),
+            SK = SK - VALUES(SK),
+            APPLE = APPLE - VALUES(APPLE);
+    </insert>
     
     <select id="haveStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO" resultType="com.example.hackingproject.detailStock.vo.DetailStockVO">
         SELECT * FROM rookie.UserStock WHERE USER_ID = #{userId}
