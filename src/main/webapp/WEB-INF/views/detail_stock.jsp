@@ -289,15 +289,19 @@
           });
           $('#buyButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICE').text();
+              var PRICE = $('#PRICE').text().replace(",", "");;
               var UNIT = $('#UNIT').val();
               var USERID = $('#USER_ID').val();
               //alert(USERID);
               //var company = document.getElementById('companyName').textContent;
               var STOCK = document.getElementById('stock_code').textContent;
               //alert(PRICE);
-
-              //alert(STOCK);
+				
+              UNIT = parseInt(UNIT, 10);
+              if (UNIT < 0){
+ 				 return alert("음수는 입력 탐지 ADR CAPS 출동!! ");
+ 			 }
+             // alert(STOCK);
 
               $.ajax({
                   url: '/detailBuy', // 컨트롤러 경로를 지정하세요.
@@ -317,7 +321,7 @@
           });
           $('#sellButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICES').text();
+              var PRICE = $('#PRICES').text().replace(",", "");;
               var UNIT = $('#UNITS').val();
               var USERID = $('#USER_ID').val();
               var OWN = $('#OWNN').text();
@@ -328,12 +332,14 @@
 			  
               OWN = parseInt(OWN, 10);
 			  UNIT = parseInt(UNIT, 10);
-              parseInt(OWN, 10);
-			  
 			 if (OWN < UNIT){
 				  
 				  return alert("보유 개수 보다 많이 매도 할 수 없습니다.");			  
 			  }
+			 
+			 if (UNIT < 0){
+				 return alert("음수는 입력 탐지 ADR CAPS 출동!! ");
+			 }
 
               $.ajax({
                   url: '/detailSell', // 컨트롤러 경로를 지정하세요.
