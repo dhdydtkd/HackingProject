@@ -40,6 +40,7 @@ public class DetailStockAPIController {
 	public DetailStockAPIController(DetailStockService detailStockService) {
 		this.detailStockService = detailStockService;
 	}
+
     @PostMapping("/detailBuy")
     public ResponseEntity<?> buyStock(HttpServletRequest request,@RequestBody String E2EdetailStockData) {
         // payload에서 price와 unit을 추출
@@ -84,7 +85,7 @@ public class DetailStockAPIController {
         try{
             detailStockJsonData = decryptRsa(privateKey, E2EdetailStockData);
         }catch (Exception e){
-            System.out.println("[주식 구매]복호화 에러");
+            System.out.println("[주식 판매]복호화 에러");
         }
         try {
             // JSON 데이터를 StockData 객체로 변환

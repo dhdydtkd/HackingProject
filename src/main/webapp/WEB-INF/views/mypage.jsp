@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -26,7 +27,60 @@
   <script src="/js/main.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/main_menu.js"></script>
-    <div class="container">
+  <c:set var="myUserDataJson" value="${myUserDataJson}" />
+  <script type="text/javascript">
+    var myUserDataJsonString = '${myUserDataJson}';
+    var myUserDataJson = JSON.parse(myUserDataJsonString.replaceAll('&quot;', '"'));
+
+    $(document).ready(function(){
+      userDataSetting(myUserDataJson);
+      function updateUserData() {
+        $.ajaxPOST("mypage/userinfo", null, function(result){
+          if (result.state.code == "0000") {
+            userDataSetting(result.body);
+          }
+        });
+      }
+
+      let intervalId = setInterval(updateUserData, 2000);
+      window.addEventListener("blur", stopInterval);
+      window.addEventListener("focus", startInterval);
+      function stopInterval() {
+        clearInterval(intervalId);
+      }
+      function startInterval() {
+        intervalId = setInterval(updateUserData, 2000);
+      }
+
+      function userDataSetting(userData) {
+        var percent = (userData.nowTotalPrice / userData.buyTotalPrice) * 100 -100;
+        $('#account_balance').text(formattedString(userData.ACCOUNT_BALANCE)+"원");
+
+        $('#now_total_price').text(formattedString(userData.nowTotalPrice)+"원");
+        $('#buy_total_price').text(formattedString(userData.buyTotalPrice)+"원");
+        $('#invest_pl_price').text(formattedString(userData.nowTotalPrice-userData.buyTotalPrice)+"원");
+
+        $('#pl_percent').text(percent.toFixed(2)+"%");
+        var pl_percent_element = document.getElementById("pl_percent");
+        var invest_pl_price_element = document.getElementById("invest_pl_price");
+        if(percent<0){
+          pl_percent_element.classList.remove("change1");
+          pl_percent_element.classList.add("change2");
+          invest_pl_price_element.classList.remove("change1");
+          invest_pl_price_element.classList.add("change2");
+        }else{
+          pl_percent_element.classList.remove("change2");
+          pl_percent_element.classList.add("change1");
+          invest_pl_price_element.classList.remove("change2");
+          invest_pl_price_element.classList.add("change1");
+        }
+      }
+    });
+
+  </script>
+
+
+  <div class="container">
       <div class="card">
         <div class="header">
           <div class="left"><i class="material-icons">arrow_back</i></div>
@@ -35,8 +89,9 @@
         </div>
 
         <div class="account-info">
-          <div class="account-number">루키증권 000-00-000000</div>
-          <div class="balance">618,074원</div>
+          <div class="account-number">${user_bank_name}은행 ${user_account_number}</div>
+
+          <div id="account_balance" class="balance">0원</div>
           <div class="button-group">
             <button class="button deposit">채우기</button>
             <button
@@ -52,25 +107,31 @@
         <div class="grid-container">
           <span class="title">보유 주식</span>
           <div>
-            <span class="value">613,978원</span>
-            <span class="change positive">+10.7%</span>
+            <span id="now_total_price" class="value">0원</span>
+            <span id="pl_percent" class="change1 positive">+10.7%</span>
           </div>
 
           <div>
             <button class="button detail">현황</button>
           </div>
 
-          <span class="title">주문 가능 금액</span>
-          <span class="value">4,096원</span>
+          <span class="title">투자 금액</span>
+          <span id="buy_total_price" class="value">0원</span>
           <div>
-            <button class="button detail">확인</button>
+<%--            <button class="button detail">구매내역</button>--%>
+          </div>
+
+          <span class="title">투자 손익 금액</span>
+          <span id="invest_pl_price" class="value">0원</span>
+          <div>
+<%--            <button class="button detail">확인</button>--%>
           </div>
 
           <div>
             <span class="material-icons">trending_up</span>
             <span class="title">환율 · 미국달러</span>
           </div>
-          <span class="value">7원</span>
+          <span class="value">1$ = 1349.68</span>
           <div>
             <button class="button detail">구매내역</button>
           </div>
@@ -79,7 +140,7 @@
             <span class="material-icons">attach_money</span>
             <span class="title">달러 · 환전</span>
           </div>
-          <span class="value">$3.05</span>
+          <span class="value">3.05$</span>
           <div>
             <button class="button detail">구매내역</button>
           </div>

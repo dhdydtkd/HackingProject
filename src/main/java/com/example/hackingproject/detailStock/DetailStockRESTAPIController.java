@@ -33,15 +33,8 @@ public class DetailStockRESTAPIController {
     , @RequestParam(value = "stockCode")String stockCode
     , @RequestParam(value = "stockName")String stockName) {
         ModelAndView mav = new ModelAndView();
-        Cookie[] cookies = request.getCookies();
-        String JWTToken = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("SKJWTToken")) {
-                    JWTToken = cookie.getValue();
-                }
-            }
-        }
+        String JWTToken = jwtTokenUtil.GetJWTCookie(request);
+
         HttpSession session = request.getSession();
         String RSA_Modulus = (String)session.getAttribute(RSAModulus);
         String RSA_Exponent = (String)session.getAttribute(RSAExponent);

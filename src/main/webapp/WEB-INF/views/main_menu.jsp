@@ -30,8 +30,16 @@
 
     $(() => {
         stockListSearch();
-        intervalId = setInterval(stockListSearch, 2000); // 1000 밀리초 = 1초
+        let intervalId = setInterval(stockListSearch, 2000); // 1000 밀리초 = 1초
         window.addEventListener("blur", stopInterval);
+        window.addEventListener("focus", startInterval);
+        function stopInterval() {
+            clearInterval(intervalId);
+        }
+        function startInterval() {
+            intervalId = setInterval(updateUserData, 2000);
+        }
+
 
         var login_flag = $('#login_flag').text();
         if(login_flag=='false'){
@@ -51,9 +59,7 @@
         });
 
     });
-    function stopInterval() {
-        clearInterval(intervalId);
-    }
+
     function stockListSearch(){
         console.log("stockListSearch");
         $.ajaxGET("stock/stocklist", null, function(result){
@@ -138,7 +144,7 @@
                 </div>
             </div>
         </div>
-        <div class="search" style="float: center;">
+        <div class="search" style="float:center;">
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="검색...">
                 <button id="search-button">
@@ -258,12 +264,6 @@
 
             <!-- 가운데 정렬을 위한 컨테이너 -->
             <div class="center-container">
-                <!-- 등록 버튼 컨테이너 -->
-                <div class="submit-btn-container">
-                    <div class="submit-btn">
-                        <a href="notice-write" class="on">등록</a>
-                    </div>
-                </div>
                 <!-- 페이지네이션 컨테이너 -->
                 <div class="pagination-container">
                     <div class="pagination">

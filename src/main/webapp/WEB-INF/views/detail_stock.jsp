@@ -252,11 +252,15 @@
                   }
               });
           }
-          
-          intervalId = setInterval(updateChartData, 2000);
+
+          let intervalId = setInterval(updateChartData, 2000);
           window.addEventListener("blur", stopInterval);
+          window.addEventListener("focus", startInterval);
           function stopInterval() {
               clearInterval(intervalId);
+          }
+          function startInterval() {
+              intervalId = setInterval(updateUserData, 2000);
           }
       });
       

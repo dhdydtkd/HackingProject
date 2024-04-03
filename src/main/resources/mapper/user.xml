@@ -1,0 +1,48 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.UserDAO">
+<!--    param-->
+    <select id="getUserInfo" parameterType="String"
+            resultType="com.example.hackingproject.mypage.dto.MyUserData">
+        SELECT
+            u.USER_ID
+            , u.USER_NM
+            , u.USER_BANK
+            , u.USER_ACCOUNT_NUMBER
+            , u.ACCOUNT_BALANCE
+        FROM rookie.Users as u
+        <where>
+            u.USER_ID = #{param}
+        </where>
+    </select>
+
+    <select id="getNowStockTotalPrice" parameterType="String"
+            resultType="int">
+        SELECT
+            (SELECT AAPL FROM rookie.UserStock WHERE USER_ID = #{param})
+            * (SELECT sp.STOCK_PRICE FROM rookie.Stock_Price sp WHERE sp.STOCK_CODE = 'AAPL' ORDER BY sp.STOCK_DATE DESC LIMIT 1) +
+            (SELECT AMZN FROM rookie.UserStock WHERE USER_ID = #{param})
+            * (SELECT sp.STOCK_PRICE FROM rookie.Stock_Price sp WHERE sp.STOCK_CODE = 'AMZN' ORDER BY sp.STOCK_DATE DESC LIMIT 1) +
+            (SELECT FB FROM rookie.UserStock WHERE USER_ID = #{param})
+            * (SELECT sp.STOCK_PRICE FROM rookie.Stock_Price sp WHERE sp.STOCK_CODE = 'FB' ORDER BY sp.STOCK_DATE DESC LIMIT 1) +
+            (SELECT GOOGL FROM rookie.UserStock WHERE USER_ID = #{param})
+            * (SELECT sp.STOCK_PRICE FROM rookie.Stock_Price sp WHERE sp.STOCK_CODE = 'GOOGL' ORDER BY sp.STOCK_DATE DESC LIMIT 1) +
+            (SELECT MSFT FROM rookie.UserStock WHERE USER_ID = #{param})
+            * (SELECT sp.STOCK_PRICE FROM rookie.Stock_Price sp WHERE sp.STOCK_CODE = 'MSFT' ORDER BY sp.STOCK_DATE DESC LIMIT 1) AS totalPrice;
+    </select>
+
+    <select id="getBuyStockTotalPrice" parameterType="String"
+            resultType="int">
+        Select
+            SUM( sh.UNIT * sh.STOCK_PRICE ) AS totalPrice
+        from rookie.StockHistory sh
+        <where>
+            sh.USER_ID = #{param}
+        </where>
+    </select>
+
+
+
+</mapper>

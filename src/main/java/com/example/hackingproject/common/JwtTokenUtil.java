@@ -132,6 +132,19 @@ public class JwtTokenUtil {
         }
     }
 
+    public String GetJWTCookie(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        String JWTToken = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("SKJWTToken")) {
+                    JWTToken = cookie.getValue();
+                }
+            }
+        }
+        return JWTToken;
+    }
+
 
 
 

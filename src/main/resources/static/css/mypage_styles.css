@@ -106,8 +106,11 @@
   font-size: 1rem;
 }
 
-.grid-container .change {
+.grid-container .change1 {
   color: red;
+}
+.grid-container .change2 {
+  color: blue;
 }
 
 .button-group {
