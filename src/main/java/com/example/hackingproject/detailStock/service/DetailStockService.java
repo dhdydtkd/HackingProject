@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hackingproject.dao.DetailStockDAO;
 import com.example.hackingproject.detailStock.vo.DetailStockVO;
+import com.example.hackingproject.mypage.dto.MyUserData;
 
 @Service("DetailStockService")
 public class DetailStockService {
@@ -17,11 +18,21 @@ public class DetailStockService {
 	
     public void buyStock(DetailStockVO detailStockVO) {
         // UserEntity 객체의 데이터를 로그로 출력
+    	
     	detailStockVO.setStockQuantity();
     	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 구매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""; 
-    	System.out.println(message);
-    	detailStockDAO.buyStock(detailStockVO);
-        detailStockDAO.insertUser(detailStockVO);
+    	int cal = Integer.parseInt(detailStockVO.getPrice())* Integer.parseInt(detailStockVO.getUnit());
+    	detailStockVO.setCal(cal);
+    	System.out.println(message+"합 : "+ cal);
+    	
+    	int balance = detailStockDAO.getUserData(detailStockVO.getUserId()).getACCOUNT_BALANCE();
+    	if(balance > 0  && balance - cal > 0) {
+    		detailStockDAO.minusAccount(detailStockVO);
+    		detailStockDAO.buyStock(detailStockVO);
+            detailStockDAO.insertUser(detailStockVO);
+    	}
+    	
+    	
     }
     
     public void sellStock(DetailStockVO detailStockVO) {
@@ -31,9 +42,11 @@ public class DetailStockService {
     	//음수로 바꾸
     	detailStockVO.setUnit("-"+detailStockVO.getUnit());
     	DetailStockVO pivot = this.haveStock(detailStockVO);
-
+    	
+    	
         detailStockDAO.sellStock(detailStockVO);
         detailStockDAO.insertUser(detailStockVO);
+        
     }
     
     public DetailStockVO haveStock(DetailStockVO detailStockVO) {
@@ -51,6 +64,16 @@ public class DetailStockService {
     	
     	
     	return detailStockVO;
+    }
+    
+    public MyUserData getUserData(MyUserData user) {
+    	String user_id = user.getUSER_ID();
+    	System.out.println("service Level =>"+user_id);
+    	user = detailStockDAO.getUserData(user_id);
+    	
+    	System.out.println("가져 왔습니다. : " + user.getUSER_ID()+"\n"+user.getUSER_BANK()+"\n"+user.getACCOUNT_BALANCE());
+    	
+    	return user;
     }
 	
 }

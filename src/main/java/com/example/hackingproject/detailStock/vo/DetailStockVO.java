@@ -17,6 +17,7 @@ public class DetailStockVO {
     private int FB=0;
     private int GOOGL=0;
     private int MSFT=0;
+    private int cal;
     
     
     
