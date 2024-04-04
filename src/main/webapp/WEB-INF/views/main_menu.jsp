@@ -125,7 +125,7 @@
         $('#stock_list').append(stockBodyHTML);
     }
     function getStockIndex(){
-        index_string = ["kospi","kosdaq","nasdaq","snp500","exchange_rate"]
+        index_string = ["kospi","kosdaq"]
         $.ajaxGET("stock/stockindex", null, function(result){
             if (result.state.code == "0000") {
                 let stockIndexList = result.body;

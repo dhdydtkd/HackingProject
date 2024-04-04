@@ -23,7 +23,7 @@ public interface RestInterface {
             @Query("resultType") String resultType,
             @Query("pageNo") int pageNo,
             @Query("numOfRows") int numOfRows,
-            @Query("likeIdxNm") String idxNm
+            @Query("IdxNm") String idxNm
     );
 
 }

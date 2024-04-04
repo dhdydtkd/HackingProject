@@ -51,7 +51,7 @@
       var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
       var isValid = true;
 
-      // 확장자 비허용 목록 비교
+      // 확장자 허용 목록 비교
       for (var i = 1; i < fileExtensions.length; i++) {
         if (!allowedExtensions.includes(fileExtensions[i].toLowerCase())) {
           isValid = false;

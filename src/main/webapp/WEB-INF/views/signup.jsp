@@ -85,7 +85,7 @@
     
     <div class="input-group">
         <label for="USER_TELNO">휴대폰 번호</label>
-        <input type="text" id="USER_TELNO" name="phone-number" placeholder="휴대폰 번호 입력" value="01012341234">
+        <input type="text" id="USER_TELNO" name="phone-number" placeholder="휴대폰 번호 입력">
     </div>
     
     <div class="input-group">
@@ -100,27 +100,27 @@
     
     <div class="input-group">
         <label for="USER_NM">이름</label>
-        <input type="text" id="USER_NM" name="full-name" placeholder="이름 입력" value="한승주">
+        <input type="text" id="USER_NM" name="full-name" placeholder="이름 입력">
     </div>
     
     <div class="input-group">
         <label for="USER_BIRTH">주민등록번호</label>
-        <input type="text" id="USER_BIRTH" name="ssn" placeholder="주민등록번호 입력" value="999999">
+        <input type="text" id="USER_BIRTH" name="ssn" placeholder="주민등록번호 입력">
     </div>
     
     <div class="input-group">
         <label for="USER_ID">아이디</label>
-        <input type="text" id="USER_ID" name="id" placeholder="아이디 입력" value="hsj">
+        <input type="text" id="USER_ID" name="id" placeholder="아이디 입력">
     </div>
     
     <div class="input-group">
         <label for="USER_PW">비밀번호</label>
-        <input type="password" id="USER_PW" name="password" placeholder="비밀번호 입력" value="1234">
+        <input type="password" id="USER_PW" name="password" placeholder="비밀번호 입력">
     </div>
     
     <div class="input-group">
         <label for="password-confirm">비밀번호 확인</label>
-        <input type="password" id="password-confirm" name="password-confirm" placeholder="비밀번호 재입력" value="1234">
+        <input type="password" id="password-confirm" name="password-confirm" placeholder="비밀번호 재입력">
     </div>
     
     <div class="input-group">
@@ -138,7 +138,7 @@
     
     <div class="input-group">
         <label for="USER_ACCOUNT_NUM">계좌번호</label>
-        <input type="text" id="USER_ACCOUNT_NUM" name="account-number" placeholder="계좌번호 입력" value="1234">
+        <input type="text" id="USER_ACCOUNT_NUM" name="account-number" placeholder="계좌번호 입력">
     </div>
     
     <button type="submit" class="submit-btn" onclick="sendData()">회원가입</button>

@@ -8,6 +8,7 @@ import com.example.hackingproject.stock.vo.StockIndexVO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -29,9 +30,9 @@ public class StockIndexService {
     private RestInterface restService;
 
 
-    //@Scheduled(fixedRate = 100000000)
+    @Scheduled(fixedRate = 100000000)
     public void updateStockIndexList(){
-        String[] search_word = {"코스피", "코스닥", "KRX", "KRX ESG", "코스피 100"};
+        String[] search_word = {"코스피", "코스닥", "KRX 100", "KRX ESG Leaders 150", "코스피 100"};
         String[] index_string = {"KOSPI", "KOSDAQ", "NASDAQ", "S&P500", "EXCHANGE_RATE"};
 
         RestInterface apiInterface = RetrofitAPI.getApiClient().create(RestInterface.class);
