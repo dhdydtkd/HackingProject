@@ -21,6 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
             , "/login"
             , "/main"
             , "/login/login"
+            , "/signup"
+            , "/signup/signup_confirm"
             , "/stock/stocklist"
             , "/stock/stockindex"
             , "/favicon.ico"

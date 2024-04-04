@@ -27,6 +27,9 @@
 
 <script>
     $(() => {
+        $("#signup").click(function(){
+            window.location.href = '/signup';
+        });
         $("#login").click(function() {
             let id = $('#userid');
             let pass = $('#password');
@@ -83,7 +86,7 @@
         <p id="login_fail" style="display:none; color:red;">로그인 실패!</p>
         <button type="submit" id="login" class="login-btn">로그인</button>
 <%--    </form>--%>
-    <button class="signup-btn">회원가입</button>
+    <button class="signup-btn" id="signup">회원가입</button>
 </div>
 </body>
 </html>
