@@ -10,4 +10,6 @@ public class SendData {
     public String transfer_bankagency;
     public String account_number;
     public Integer price;
+
+    public String send_id;
 }

@@ -52,7 +52,7 @@
         SELECT * FROM rookie.UserStock WHERE USER_ID = #{userId}
     </select>
     
-        <select id="getUserData" parameterType="String"
+    <select id="getUserData" parameterType="String"
             resultType="com.example.hackingproject.mypage.dto.MyUserData">
         SELECT
             u.USER_ID
@@ -66,14 +66,15 @@
         </where>
     </select>
     
-    <update id="minusAccount" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+    <update id="minusAccount"
+            parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
         UPDATE rookie.Users
-    SET ACCOUNT_BALANCE = CASE 
-        WHEN ACCOUNT_BALANCE - #{cal} >= 0 THEN ACCOUNT_BALANCE - #{cal}
-        ELSE ACCOUNT_BALANCE
-    END
-    WHERE USER_ID = #{userId}
-</update>
+        SET ACCOUNT_BALANCE = CASE
+            WHEN ACCOUNT_BALANCE - #{cal} >= 0 THEN ACCOUNT_BALANCE - #{cal}
+            ELSE ACCOUNT_BALANCE
+        END
+        WHERE USER_ID = #{userId}
+    </update>
     
     
 </mapper>

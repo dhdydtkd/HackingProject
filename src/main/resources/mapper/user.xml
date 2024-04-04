@@ -43,6 +43,38 @@
         </where>
     </select>
 
+    <select id="getSendAccount" parameterType="com.example.hackingproject.mypage.dto.SendData"
+            resultType="com.example.hackingproject.mypage.dto.MyUserData">
+        SELECT
+        u.USER_ID
+        , u.USER_NM
+        , u.USER_BANK
+        , u.USER_ACCOUNT_NUMBER
+        , u.ACCOUNT_BALANCE
+        FROM rookie.Users as u
+        <where>
+            u.USER_NM = #{name}
+            AND u.USER_BANK = #{transfer_bankagency}
+            AND u.USER_ACCOUNT_NUMBER = #{account_number}
+        </where>
+    </select>
 
+    <update id="AccountPriceMinus"
+            parameterType="com.example.hackingproject.mypage.dto.SendData">
+        UPDATE rookie.Users
+        SET ACCOUNT_BALANCE = ACCOUNT_BALANCE - #{price}
+        where
+            USER_ID = #{send_id}
+    </update>
+
+    <update id="AccountPricePlus"
+            parameterType="com.example.hackingproject.mypage.dto.SendData">
+        UPDATE rookie.Users
+        SET ACCOUNT_BALANCE = ACCOUNT_BALANCE + #{price}
+        where
+            USER_NM = #{name}
+            AND USER_BANK = #{transfer_bankagency}
+            AND USER_ACCOUNT_NUMBER = #{account_number}
+    </update>
 
 </mapper>

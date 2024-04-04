@@ -2,6 +2,7 @@ package com.example.hackingproject.mypage;
 
 import com.example.hackingproject.BaseModel;
 import com.example.hackingproject.common.JwtTokenUtil;
+import com.example.hackingproject.dao.UserDAO;
 import com.example.hackingproject.detailStock.vo.DetailStockVO;
 import com.example.hackingproject.login.dto.LoginReq;
 import com.example.hackingproject.mypage.dto.MyUserData;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
+import java.text.DecimalFormat;
 
 @RestController
 @RequestMapping("/mypage")
@@ -32,6 +34,9 @@ public class MyPageAPIController {
 
     @Autowired
     private MyPageService myPageService;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Value("${rsa_web_key}")
     private String RSA_WEB_KEY ; // 개인키 session key
@@ -75,10 +80,32 @@ public class MyPageAPIController {
             e.printStackTrace();
         }
 
-        // 금액 확인
-        // 상대 계좌 존재 확인
 
-        baseModel.setBody(sendJsonData);
+        if(myPageService.AccountPriceCheck(user_id, sendJsonData)){
+            System.out.println("[송금] 금액 확인 완료");
+            MyUserData sendUserData = myPageService.SendAccountCheck(sendJsonData);
+            if(sendUserData!=null){
+                System.out.println("[송금] 상대 계좌 존재 확인");
+                sendJsonData.setSend_id(user_id);
+                MyUserData myUserData = myPageService.AccountPriceMinus(user_id, sendJsonData);
+                myPageService.AccountPricePlus(sendJsonData);
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                baseModel.setBody("[송금 성공]"
+                        +"\n은행 : "+sendJsonData.getTransfer_bankagency()
+                        +"\n이름 : "+sendJsonData.getName()
+                        +"\n계좌번호 : "+sendJsonData.getAccount_number()
+                        +"\n이체금액 : "+decimalFormat.format(sendJsonData.getPrice())+"원"
+                        +"\n\n남은금액 : "+decimalFormat.format(myUserData.getACCOUNT_BALANCE())+"원"
+                        +"\n송금되었습니다.");
+            }else{
+                System.out.println("[송금] 상대 계좌 존재 확인 불가");
+                baseModel.setBody("[송금 실패]\n입력한 상대 계좌 존재하지 않는걸로 확인되었습니다.\n입력한 상대 계좌를 확인해주세요. ");
+            }
+        }else{
+            System.out.println("[송금] 송금할 금액이 부족합니다.");
+            baseModel.setBody("[송금 실패]\n송금할 금액이 부족합니다.");
+        }
+
         return baseModel;
     }
 

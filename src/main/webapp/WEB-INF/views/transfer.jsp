@@ -30,36 +30,34 @@
   $(document).ready(function(){
 
     $('#submit').click(function() {
-
-      const rsa = new RSAKey();
-      rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
-      let data = {
-        name : $('#name').val()
-        , account_number : $('#account_number').val()
-        , price : parseInt($('#price').val().replace(/,/g, '').replace('원', ''))
-        , transfer_bankagency : $('#transfer_bankagency').find("option:selected").text()
-      }
-      let e2eData = rsa.encrypt(JSON.stringify(data));
-      $.ajax({
-        url: '/mypage/send', // 컨트롤러 경로를 지정하세요.
-        type: 'POST',
-        contentType: 'application/json',
-        data: e2eData, // 데이터를 JSON 형식으로 전송
-
-        success: function(response) {
-          // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
-          console.log(response);
-        },
-        error: function(xhr, status, error) {
-          // 오류 발생 시 실행될 코드
-          alert('오류 발생: ' + error);
+      var confirmFlag = confirm("정말 송금 하시겠습니까?");
+      if(confirmFlag){
+        const rsa = new RSAKey();
+        rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+        let data = {
+          name : $('#name').val()
+          , account_number : $('#account_number').val()
+          , price : parseInt($('#price').val().replace(/,/g, '').replace('원', ''))
+          , transfer_bankagency : $('#transfer_bankagency').find("option:selected").text()
         }
-      });
-      // $.ajaxPOST("mypage/send", e2eData, function(result){
-      //   if (result.state.code == "0000") {
-      //     console.log(result);
-      //   }
-      // });
+        let e2eData = rsa.encrypt(JSON.stringify(data));
+        $.ajax({
+          url: '/mypage/send', // 컨트롤러 경로를 지정하세요.
+          type: 'POST',
+          contentType: 'application/json',
+          data: e2eData, // 데이터를 JSON 형식으로 전송
+
+          success: function(response) {
+            alert(response.body);
+          },
+          error: function(xhr, status, error) {
+            // 오류 발생 시 실행될 코드
+            alert('오류 발생: ' + error);
+          }
+        });
+      }else{
+
+      }
     });
 
 
@@ -72,11 +70,8 @@
     });
 
     $('#account_number').on('input', function() {
-      // 현재 입력된 값을 가져옴
       var input = $(this).val();
-      // 숫자만 남도록 필터링
       var filteredInput = input.replace(/[^0-9-]/g, '');
-      // 필터링된 값으로 입력 필드 업데이트
       $(this).val(filteredInput);
     });
 
@@ -102,27 +97,31 @@
       <div class="form-box">
         <form action="transferForm" method="post">
           <div class="form-row">
+            <p>은행</p>
             <select id="transfer_bankagency">
               <option value="" selected disabled>은행 선택</option>
               <option value="option1">카카오뱅크</option>
               <option value="option2">신한은행</option>
-              <option value="option3">Sh수협은행</option>
+              <option value="option3">우리은행</option>
               <option value="option4">KB국민은행</option>
               <option value="option5">NH농협은행</option>
               <option value="option6">RK루키은행</option>
             </select>
           </div>
           <div class="form-row">
+            <p>이름</p>
             <input id="name" type="text" id="TRANSFER_NAME" placeholder="받는 분">
           </div>
           <div class="form-row">
+            <p>계좌번호</p>
             <input id="account_number" type="text" id="TRANSFER_DEPO" placeholder="계좌번호 입력">
           </div>
           <div class="form-row">
+            <p>이체 금액</p>
             <input id="price" type="text" id="TRANSFER_AMOUNT" placeholder="이체 금액">
           </div>
           <div class="form-row">
-            <input id="submit" type="button" value="확인">
+            <input id="submit" type="button" value="이체하기">
           </div>
         </form>
       </div>
