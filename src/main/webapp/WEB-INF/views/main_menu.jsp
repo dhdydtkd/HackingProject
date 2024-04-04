@@ -35,14 +35,16 @@
         stockListSetting(stockListJson);
         getStockIndex();
         let intervalId = setInterval(StockListSearch, 2000); // 1000 밀리초 = 1초
-        let intervalId2 = setInterval(getStockIndex, 200000);
+        let intervalId2 = setInterval(getStockIndex, 10000);
         window.addEventListener("blur", stopInterval);
         window.addEventListener("focus", startInterval);
         function stopInterval() {
             clearInterval(intervalId);
+            clearInterval(intervalId2);
         }
         function startInterval() {
             intervalId = setInterval(StockListSearch, 2000);
+            intervalId2 = setInterval(StockListSearch, 10000);
         }
 
 

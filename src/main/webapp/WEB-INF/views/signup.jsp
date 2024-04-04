@@ -61,10 +61,12 @@
         <label for="bank">은행사</label>
         <select id="bank" name="bank">
             <option value="">은행사 선택</option>
-            <option value="IBK">기업은행</option>
-            <option value="KB">KB국민은행</option>
-            <option value="Shinhan">신한은행</option>
-            <option value="Woori">우리은행</option>
+            <option value="option1">카카오뱅크</option>
+            <option value="option2">신한은행</option>
+            <option value="option3">Sh수협은행</option>
+            <option value="option4">KB국민은행</option>
+            <option value="option5">NH농협은행</option>
+            <option value="option6">RK루키은행</option>
         </select>
     </div>
     

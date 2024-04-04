@@ -46,8 +46,6 @@
                 user_id: rsa.encrypt(id.val())
                 , user_pw: rsa.encrypt(pass.val())
             }
-            $('#RSAid').val(data.id);
-            $('#RSApass').val(data.pass);
 
             $.ajaxPOST("login/login", data, function(result){
                 if (result.state.code == "0000") {

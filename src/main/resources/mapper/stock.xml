@@ -47,14 +47,14 @@
         FROM
             rookie.Stock s
         LEFT JOIN
-        (
-            SELECT sp1.* FROM rookie.Stock_Price sp1
-            LEFT JOIN rookie.Stock_Price sp2 ON
-                sp1.STOCK_CODE = sp2.STOCK_CODE AND sp1.STOCK_DATE &lt; sp2.STOCK_DATE
-            WHERE
-                sp2.STOCK_DATE IS NULL
-        ) AS sp
-        ON s.STOCK_CODE = sp.STOCK_CODE;
+            rookie.Stock_Price sp
+        ON
+            s.STOCK_CODE = sp.STOCK_CODE
+            AND sp.STOCK_DATE = (
+            SELECT MAX(STOCK_DATE)
+            FROM rookie.Stock_Price
+            WHERE STOCK_CODE = s.STOCK_CODE
+        );
     </select>
 
 

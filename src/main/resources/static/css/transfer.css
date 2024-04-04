@@ -91,7 +91,7 @@ body {
   
   .form-row select,
   .form-row input[type="text"],
-  .form-row input[type="submit"] {
+  .form-row input[type="button"] {
     width: 100%;
     padding: 1rem;
     border: none; /* 입력 필드 테두리 제거 */
@@ -101,14 +101,14 @@ body {
   
 
   
-  input[type="submit"] {
+  input[type="button"] {
     background-color: #fb923c;
     color: white;
     cursor: pointer;
     margin-top: 2rem;
   }
   
-  input[type="submit"]:hover {
+  input[type="button"]:hover {
     background-color: #f97316; /* 버튼 호버 색상 변경 */
   }
     

@@ -75,15 +75,23 @@
           invest_pl_price_element.classList.add("change1");
         }
       }
+        $('#back').click(function() {
+            window.history.back();
+        });
+        $('#fill').click(function() {
+            // window.location.href = 'transfer';
+        });
+        $('#send').click(function() {
+            window.location.href = 'mypage/transfer';
+        });
     });
-
   </script>
 
 
   <div class="container">
       <div class="card">
         <div class="header">
-          <div class="left"><i class="material-icons">arrow_back</i></div>
+          <div id="back" class="left"><i class="material-icons">arrow_back</i></div>
           <div class="center">마이페이지</div>
           <div class="right"></div>
         </div>
@@ -93,12 +101,11 @@
 
           <div id="account_balance" class="balance">0원</div>
           <div class="button-group">
-            <button class="button deposit">채우기</button>
-            <button
-              class="button transfer"
-              onclick="window.location.href = 'transfer.html';"
-            >
-              보내기
+            <button id="fill" class="button deposit">
+                충전
+            </button>
+            <button id="send" class="button transfer" onclick="">
+              송금
             </button>
             <button class="button history">환전</button>
           </div>
