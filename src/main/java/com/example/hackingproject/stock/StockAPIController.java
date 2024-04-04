@@ -4,6 +4,7 @@ import com.example.hackingproject.BaseModel;
 import com.example.hackingproject.dao.StockDAO;
 import com.example.hackingproject.login.dto.LoginReq;
 import com.example.hackingproject.stock.service.StockService;
+import com.example.hackingproject.stock.service.StockIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,8 @@ import java.util.Map;
 public class StockAPIController {
     @Autowired
     private StockService stockService;
+    @Autowired
+    private StockIndexService stockIndexService;
 
 
     @RequestMapping(method = RequestMethod.GET, path = "/stocklist")
@@ -53,6 +56,15 @@ public class StockAPIController {
         result.put("stockNewDetail",stockService.getStockDetail(stockCode));
 
         baseModel.setBody(result);
+
+        return baseModel;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/stockindex")
+    public BaseModel getStockIndex(HttpServletRequest request, HttpServletResponse response) {
+        BaseModel baseModel = new BaseModel();
+
+        baseModel.setBody(stockIndexService.getStockIndexList());
 
         return baseModel;
     }

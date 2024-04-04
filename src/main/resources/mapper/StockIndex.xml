@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.StockIndexDAO">
+
+
+    <insert id="updateStockIndex" parameterType="com.example.hackingproject.stock.dto.StockIndexData">
+        INSERT INTO rookie.stock_index (
+             STOCK_INDEX_CODE
+             , STOCK_INDEX_NUM
+             , STOCK_INDEX_UPDOWN
+             , STOCK_INDEX_CNG
+             , STOCK_INDEX_CNG_PERCENT
+             , STOCK_INDEX_DT
+        )
+        VALUES
+        (
+              #{index_code}
+            , #{index_num}
+            , #{index_updown}
+            , #{index_change}
+            , #{index_change_percent}
+            , CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <select id="getStockIndex" parameterType="String" resultType="com.example.hackingproject.stock.vo.StockIndexVO">
+        SELECT
+            STOCK_INDEX_CODE,
+            STOCK_INDEX_NUM,
+            STOCK_INDEX_UPDOWN,
+            STOCK_INDEX_CNG_PERCENT,
+            STOCK_INDEX_CNG
+
+        FROM
+            rookie.stock_index
+        WHERE STOCK_INDEX_CODE = #{code}
+        ORDER BY STOCK_INDEX_DT DESC
+        LIMIT 1;
+
+    </select>
+
+
+
+</mapper>

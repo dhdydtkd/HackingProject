@@ -33,7 +33,9 @@
 
     $(() => {
         stockListSetting(stockListJson);
+        getStockIndex();
         let intervalId = setInterval(StockListSearch, 2000); // 1000 밀리초 = 1초
+        let intervalId2 = setInterval(getStockIndex, 200000);
         window.addEventListener("blur", stopInterval);
         window.addEventListener("focus", startInterval);
         function stopInterval() {
@@ -119,6 +121,40 @@
         $('#stock_list').empty();
         $('#stock_list').append(stockBodyHTML);
     }
+    function getStockIndex(){
+        index_string = ["kospi","kosdaq","nasdaq","snp500","exchange_rate"]
+        $.ajaxGET("stock/stockindex", null, function(result){
+            if (result.state.code == "0000") {
+                let stockIndexList = result.body;
+                for(let i=0;i<stockIndexList.length;i++){
+
+                    var index_name = index_string[i];
+                    var index_updown = stockIndexList[i].stock_INDEX_UPDOWN;
+
+                    var index_num = stockIndexList[i].stock_INDEX_NUM;
+
+                    if(index_updown == "상승"){
+                        var index_change = "+" + stockIndexList[i].stock_INDEX_CNG;
+                    } else{
+                        var index_change = stockIndexList[i].stock_INDEX_CNG;
+                    }
+
+                    if(index_name != "exchange_rate"){
+                        index_change += " (" + stockIndexList[i].stock_INDEX_CNG_PERCENT+")";
+                    }
+
+                    var Element = document.getElementById(index_string[i]);
+                    Element.querySelector(".index-value").innerText=index_num;
+                    Element.querySelector(".index-change").innerText=index_change;
+
+                    if(index_updown=="상승"){
+                        Element.querySelector(".index-change").classList.remove("negative");
+                        Element.querySelector(".index-change").classList.add("positive");
+                    }
+                }
+            }
+        });
+    }
 </script>
 <!DOCTYPE html>
 <html lang="ko">
@@ -203,35 +239,35 @@
             <div class="indices-section">
                 <h2>주요 지수</h2>
                 <div class="indices">
-                    <div class="index-item">
+                    <div class="index-item" id="kospi">
                         <p class="index-name">코스피</p>
-                        <p class="index-value">2,755.11</p>
+                        <p class="index-value" >2,755.11</p>
                         <p class="index-change negative">-1.98 (-0.07%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item">
+                    <div class="index-item" id="kosdaq">
                         <p class="index-name">코스닥</p>
                         <p class="index-value">911.25</p>
                         <p class="index-change negative">-4.84 (-0.5%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item">
+                    <div class="index-item" id = "exchange_rate">
                         <p class="index-name">환율</p>
                         <p class="index-value">1,352.75</p>
                         <p class="index-change positive">+14.15 (1.0%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item">
+                    <div class="index-item" id = "nasdaq">
                         <p class="index-name">나스닥</p>
                         <p class="index-value">16,315.70</p>
                         <p class="index-change negative">-68.77 (0.4%)</p>
                         <!-- 그래프 이미지 또는 SVG가 들어갈 곳 -->
                         <div class="index-graph negative"><!-- 그래프 이미지 또는 SVG --></div>
                     </div>
-                    <div class="index-item">
+                    <div class="index-item" id = "snp500">
                         <p class="index-name">S&P 500</p>
                         <p class="index-value">5,203.58</p>
                         <p class="index-change negative">-14.61 (0.2%)</p>
@@ -297,4 +333,3 @@
 
 </body>
 </html>
-

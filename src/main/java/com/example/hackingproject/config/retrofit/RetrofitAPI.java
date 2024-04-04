@@ -8,7 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RetrofitAPI {
-    private static final String BASE_URL = "https://apis-navi.kakaomobility.com/v1/";
+    private static final String BASE_URL = "https://apis.data.go.kr/1160100/service/GetMarketIndexInfoService/";
     private static Retrofit retrofit;
 
     public static Retrofit getApiClient() {

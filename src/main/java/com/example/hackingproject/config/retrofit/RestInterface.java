@@ -17,4 +17,13 @@ public interface RestInterface {
             @Query("destination") String destination
     );
 
+    @GET("getStockMarketIndex")
+    Call<Object> getStockIndex(
+            @Query("serviceKey") String serviceKey,
+            @Query("resultType") String resultType,
+            @Query("pageNo") int pageNo,
+            @Query("numOfRows") int numOfRows,
+            @Query("likeIdxNm") String idxNm
+    );
+
 }
