@@ -70,8 +70,10 @@ public class DetailStockAPIController {
         String message = user_id+"님의 구매 가격 : " + price + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " + unit;
         System.out.println(message);
 
-        detailStockService.buyStock(detailStockVO);
-        
+        boolean isSuccess = detailStockService.buyStock(detailStockVO);
+        if(!isSuccess) {
+        	return ResponseEntity.ok(Map.of("MSG","보유 금액 이상판매 불가능"));
+        }
         // 클라이언트에게 JSON 형태로 응답 반환
         return ResponseEntity.ok(Map.of("MSG", message));
     }

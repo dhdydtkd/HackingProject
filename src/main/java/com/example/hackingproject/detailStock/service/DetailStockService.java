@@ -16,7 +16,7 @@ public class DetailStockService {
         this.detailStockDAO = detailStocDAO;
     }
 	
-    public void buyStock(DetailStockVO detailStockVO) {
+    public boolean buyStock(DetailStockVO detailStockVO) {
         // UserEntity 객체의 데이터를 로그로 출력
     	
     	detailStockVO.setStockQuantity();
@@ -30,7 +30,8 @@ public class DetailStockService {
     		detailStockDAO.minusAccount(detailStockVO);
     		detailStockDAO.buyStock(detailStockVO);
             detailStockDAO.insertUser(detailStockVO);
-    	}
+            return true;
+    	}else return false;
     	
     	
     }
