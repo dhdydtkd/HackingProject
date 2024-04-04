@@ -20,34 +20,32 @@
             MSFT = MSFT + VALUES(MSFT);
     </insert>
 
-<insert id="sellStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
-    INSERT INTO rookie.UserStock (USER_ID, AAPL, AMZN, FB, GOOGL, MSFT)
-    VALUES (#{userId}, #{AAPL}, #{AMZN}, #{FB}, #{GOOGL}, #{MSFT})
-    ON DUPLICATE KEY UPDATE 
-        AAPL = CASE 
-            WHEN AAPL + VALUES(AAPL) >= 0 THEN AAPL + VALUES(AAPL)
-            ELSE AAPL
-        END, 
-        AMZN = CASE 
-            WHEN AMZN + VALUES(AMZN) >= 0 THEN AMZN + VALUES(AMZN)
-            ELSE AMZN
-        END,
-        FB = CASE 
-            WHEN FB + VALUES(FB) >= 0 THEN FB + VALUES(FB)
-            ELSE FB
-        END,
-        GOOGL = CASE 
-            WHEN GOOGL + VALUES(GOOGL) >= 0 THEN GOOGL + VALUES(GOOGL)
-            ELSE GOOGL
-        END,
-        MSFT = CASE 
-            WHEN MSFT + VALUES(MSFT) >= 0 THEN MSFT + VALUES(MSFT)
-            ELSE MSFT
-        END;
-</insert>
+    <insert id="sellStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
+        INSERT INTO rookie.UserStock (USER_ID, AAPL, AMZN, FB, GOOGL, MSFT)
+        VALUES (#{userId}, #{AAPL}, #{AMZN}, #{FB}, #{GOOGL}, #{MSFT})
+        ON DUPLICATE KEY UPDATE
+            AAPL = CASE
+                WHEN AAPL + VALUES(AAPL) >= 0 THEN AAPL + VALUES(AAPL)
+                ELSE AAPL
+            END,
+            AMZN = CASE
+                WHEN AMZN + VALUES(AMZN) >= 0 THEN AMZN + VALUES(AMZN)
+                ELSE AMZN
+            END,
+            FB = CASE
+                WHEN FB + VALUES(FB) >= 0 THEN FB + VALUES(FB)
+                ELSE FB
+            END,
+            GOOGL = CASE
+                WHEN GOOGL + VALUES(GOOGL) >= 0 THEN GOOGL + VALUES(GOOGL)
+                ELSE GOOGL
+            END,
+            MSFT = CASE
+                WHEN MSFT + VALUES(MSFT) >= 0 THEN MSFT + VALUES(MSFT)
+                ELSE MSFT
+            END;
+    </insert>
 
-
-    
     <select id="haveStock" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO" resultType="com.example.hackingproject.detailStock.vo.DetailStockVO">
         SELECT * FROM rookie.UserStock WHERE USER_ID = #{userId}
     </select>
@@ -75,16 +73,15 @@
         END
         WHERE USER_ID = #{userId}
     </update>
-</update>
 
     <update id="plusAccount" parameterType="com.example.hackingproject.detailStock.vo.DetailStockVO">
         UPDATE rookie.Users
-    SET ACCOUNT_BALANCE = CASE 
-        WHEN ACCOUNT_BALANCE + #{cal} >= 0 THEN ACCOUNT_BALANCE + #{cal}
-        ELSE ACCOUNT_BALANCE
-    END
-    WHERE USER_ID = #{userId}
-</update>
+        SET ACCOUNT_BALANCE = CASE
+            WHEN ACCOUNT_BALANCE + #{cal} >= 0 THEN ACCOUNT_BALANCE + #{cal}
+            ELSE ACCOUNT_BALANCE
+        END
+        WHERE USER_ID = #{userId}
+    </update>
     
     
 </mapper>
