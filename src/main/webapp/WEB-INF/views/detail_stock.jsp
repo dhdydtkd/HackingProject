@@ -54,6 +54,24 @@
  
 </script>
 
+<script type="text/javascript">
+
+	function setBalance(){
+		var balance = document.getElementById("BALANCE");
+		
+		//alert(`${haveStock}`);
+		balance.innerHTML += ": "+`${balance}`+"원";
+		
+		//balance += ${id};
+	}
+	
+	function setOwn(){
+		var own = document.getElementById("OWN");
+		own.innerHTML += ": "+`${haveStock}`+"개";
+	}
+
+</script>
+
   <script type="text/javascript">
       // 초기 데이터
       var initialData = {
@@ -271,31 +289,7 @@
       $('#BUYINFO').click(function() {
     	  setCurrent();
       });
-  });
-      $(document).ready(function(){
-          $('#SELLINFO').click(function() {
-        	  setCurrent();
-              var USERID = $('#USER_ID').val();
-              var STOCK = setCompany(); // setCompany() 함수는 현재 코드에서 정의되지 않았지만, 이 함수가 적절한 값을 반환한다고 가정합니다.
-              $.ajax({
-                  url: '/haveStock',
-                  type: 'POST',
-                  contentType: 'application/json',
-                  data: JSON.stringify({ userId: USERID, stock: STOCK }),
 
-                  success: function(response){
-                      // 서버로부터 응답 받은 후 처리
-                      // response 객체에서 userId와 unit을 추출하여 alert로 표시
-                      //alert("Success: " + response.userId + ", Unit: " + response.unit);
-                      document.getElementById("OWN").innerHTML = "보유 주식: "+ "<span id='OWNN'>" +response.unit + "</span>";
-
-                  },
-                  error: function(xhr, status, error){
-                      // 오류 발생 시 처리
-                      alert("Error: " + error);
-                  }
-              });
-          });
           $('#buyButton').click(function() {
         	  event.preventDefault();
               var PRICE = $('#PRICE').text().replace(",", "");;
@@ -330,12 +324,14 @@
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
                       alert(response.MSG);
+                      location.reload();
                   },
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
                   }
               });
+          
           });
           $('#sellButton').click(function() {
         	  event.preventDefault();
@@ -376,12 +372,14 @@
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
                       alert('판매완료');
+                      location.reload();
                   },
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
                   }
               });
+              
           });
       });
       function setCompany(){
@@ -454,6 +452,7 @@
           커뮤니티
         </a>
       </div>
+      <input type="hidden" value ="${balance}">
         <div class="flex justify-end mt-10 ">
             <div class="border border-black rounded">
                 <button class="border-r border-black py-1 px-2">1분</button>
@@ -498,6 +497,9 @@
     <div style="display: none;" class="col-12 col-12-xsmall">
         공개키 : RSAExponent<input type="text" id="RSAExponent" value="${RSAExponent}" readonly/>
     </div>
+   <div id="userInfo" data-id="${id}" data-balance="${balance}" data-nm="${nm}">
+    <!-- 여기에 더 많은 HTML 내용이 있을 수 있습니다. -->
+</div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <div id="buy-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -508,6 +510,9 @@
                 <div class="text-center">
                     <h1 id="buy_name" class="text-sm text-gray-500" id="companyName" >삼성전자</h1>
                     <div class="text-xl font-semibold">구매 하기</div>
+                    
+                    <div id="BALANCE" class="absolute text-gray-500 top-0 right-0">보유금액</div>
+                    <script>setBalance()</script>
                     <form class="divide-y">
                         <div class="flex items-center justify-between py-2">
                             <div>희망 가격</div>
@@ -539,7 +544,7 @@
                     <div class="text-xl font-semibold">판매 하기</div>
                  
                     <div id="OWN" class="absolute text-gray-500 top-0 right-0">보유주식</div>
-                    
+                    <script>setOwn();</script>
                     <from class="divide-y">
                         <div class="flex items-center justify-between py-2">
                             <div>시장 가격</div>

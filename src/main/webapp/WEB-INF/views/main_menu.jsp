@@ -110,6 +110,7 @@
             stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
             stockBodyHTML += "<p name='STOCK_NAME'>"+stockListData[i].STOCK_NAME+"</p>";
             stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockListData[i].STOCK_PRICE)+"원</p>";
+            //stockBodyHTML += "<p name='STOCK_PRICE'> 500원</p>";
 
             if(percentage<0){
                 stockBodyHTML += "<p class='rate negative' name='STOCK_RATE'>"+percentage.toFixed(2)+"%</p>";

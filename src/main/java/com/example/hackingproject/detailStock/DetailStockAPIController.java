@@ -99,7 +99,7 @@ public class DetailStockAPIController {
         String user_id = detailStockVO.getUserId();
     	
         String message = user_id+"님의 판매 가격 : " + price + ", 판매 수량 : " + unit; 
-        
+
         detailStockService.sellStock(detailStockVO);      
     	
     	return ResponseEntity.ok(Map.of("MSG", message));
@@ -119,30 +119,8 @@ public class DetailStockAPIController {
         String message = user_id + "님 :" + stock; 
         System.out.println(message);
 
-        detailStockVO = detailStockService.haveStock(detailStockVO);    
 
-        if (stock != null) {
-            switch (stock) {
-                case "AAPL":
-                    unit = detailStockVO.getAAPL();
-                    break;
-                case "AMZN":
-                    unit = detailStockVO.getAMZN();
-                    break;
-                case "FB":
-                    unit = detailStockVO.getFB();
-                    break;
-                case "GOOGL":
-                    unit = detailStockVO.getGOOGL();
-                    break;
-                default:
-                    unit = detailStockVO.getMSFT();
-                    break;
-            }
-        }
-        
-        // user_id와 unit을 Map에 담아 반환
-        return ResponseEntity.ok(Map.of("userId", user_id, "unit", unit));
+        return ResponseEntity.ok(Map.of("userId", user_id));
     }
 
     /**
