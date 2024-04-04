@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.text.NumberFormat;
+
 import com.example.hackingproject.mypage.dto.MyUserData;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +82,13 @@ public class DetailStockRESTAPIController {
                     break;
             }
         }
+
+        String user_balance;// = String.valueOf(user.getACCOUNT_BALANCE());
+        user_balance = NumberFormat.getNumberInstance().format(user.getACCOUNT_BALANCE());
         System.out.println("주식 : "+stockCode + " 개수 :"+unit);
         mav.addObject("haveStock", unit);
         mav.addObject("id", user.getUSER_ID());
-        mav.addObject("balance", user.getACCOUNT_BALANCE());
+        mav.addObject("balance", user_balance);
         mav.addObject("nm", user.getUSER_NM());
         mav.addObject("stockCode", stockCode);
         mav.addObject("stockName", stockName);
