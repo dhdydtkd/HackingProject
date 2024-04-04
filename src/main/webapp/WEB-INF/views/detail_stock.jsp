@@ -42,6 +42,8 @@
     }
 
 </style>
+
+
 <script>
 
         function setCurrent() {
@@ -246,6 +248,10 @@
 
                       $('#stcok_price').text(formattedString(newStockData.STOCK_PRICE)+"원");
 					  setCurrent();
+					  ////
+					  
+					  
+					  ///
                       var newDataPoint = newStockData.STOCK_PRICE;
                       // 현재 시간을 레이블로 추가
                       myChart.data.datasets[0].data.push(newDataPoint);
@@ -286,6 +292,40 @@
   <script>
   
   $(document).ready(function(){
+	    $('#UNIT').on('input', function() {
+	        var expect = document.getElementById('EXPECT_PRICE')
+	    	var input = $(this).val();
+	        var pri = $('#stcok_price').text();
+	        var filteredInput = input.replace(/,/g, '');
+	        filteredInput = filteredInput.replace(/[^\d]/g, '');
+	        filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	        pri = parseInt(pri,10);
+	        input = parseInt(input,10)|| 0;
+	        var cal = (pri*input);
+	        if (input==0){
+	        	expect.innerHTML = 0;
+	        }
+	        expect.innerHTML = cal;
+	        //alert(input*pri)
+	      });
+	    
+	    $('#UNITS').on('input', function() {
+	        var expect = document.getElementById('EXPECT_PRICES')
+	    	var input = $(this).val();
+	        var pri = $('#stcok_price').text();
+	        var filteredInput = input.replace(/,/g, '');
+	        filteredInput = filteredInput.replace(/[^\d]/g, '');
+	        filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	        pri = parseInt(pri,10);
+	        input = parseInt(input,10)|| 0;
+	        var cal = (pri*input);
+	        if (input==0){
+	        	expect.innerHTML = 0;
+	        }
+	        expect.innerHTML = cal;
+	        //alert(input*pri)
+	      });
+	  
       $('#BUYINFO').click(function() {
     	  setCurrent();
       });
@@ -329,6 +369,7 @@
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
+                      location.reload();
                   }
               });
           
@@ -371,12 +412,13 @@
 
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
-                      alert('판매완료');
+                      alert(response.MSG);
                       location.reload();
                   },
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
+                      location.reload();
                   }
               });
               
@@ -511,7 +553,7 @@
                     <h1 id="buy_name" class="text-sm text-gray-500" id="companyName" >삼성전자</h1>
                     <div class="text-xl font-semibold">구매 하기</div>
                     
-                    <div id="BALANCE" class="absolute text-gray-500 top-0 right-0">보유금액</div>
+                    <div id="BALANCE" class="text-gray-500 mt-3 text-right">보유금액</div>
                     <script>setBalance()</script>
                     <form class="divide-y">
                         <div class="flex items-center justify-between py-2">
@@ -524,6 +566,12 @@
                             <div>주식 개수</div>
                             <div>
                                 <input id="UNIT"class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <div>예상 가격</div>
+                            <div>
+                                <span id="EXPECT_PRICE"> </span><span>원</span>
                             </div>
                         </div>
                         <button data-modal-hide="buy-modal" id="buyButton" class="w-full bg-red-500 mt-3 text-white py-2 rounded-lg">구매하기</button>
@@ -543,7 +591,7 @@
                     <h1 id="sell_name" class="text-sm text-gray-500" id="companyNames" >삼성전자</h1>
                     <div class="text-xl font-semibold">판매 하기</div>
                  
-                    <div id="OWN" class="absolute text-gray-500 top-0 right-0">보유주식</div>
+                    <div id="OWN" class="mt-3 text-gray-500 text-right">보유주식</div>
                     <script>setOwn();</script>
                     <from class="divide-y">
                         <div class="flex items-center justify-between py-2">
@@ -556,6 +604,12 @@
                             <div>주식 수</div>
                             <div>
                                 <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between py-2">
+                            <div>예상 가격</div>
+                            <div>
+                                <span id="EXPECT_PRICES"> </span><span>원</span>
                             </div>
                         </div>
                         <button data-modal-hide="sell-modal" id="sellButton" type="submit" class="w-full bg-blue-500 mt-3 text-white py-2 rounded-lg">판매하기</button>

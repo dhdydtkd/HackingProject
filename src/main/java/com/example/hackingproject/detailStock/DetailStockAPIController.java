@@ -96,15 +96,20 @@ public class DetailStockAPIController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int cal_price = Integer.parseInt(detailStockVO.getPrice()) * Integer.parseInt(detailStockVO.getUnit());
+        detailStockVO.setCal(cal_price);
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
         String user_id = detailStockVO.getUserId();
     	
         String message = user_id+"님의 판매 가격 : " + price + ", 판매 수량 : " + unit; 
 
-        detailStockService.sellStock(detailStockVO);      
+        boolean isSuccess = detailStockService.sellStock(detailStockVO);      
     	
-    	return ResponseEntity.ok(Map.of("MSG", message));
+        if(isSuccess) {
+        	return ResponseEntity.ok(Map.of("MSG", message));
+        }
+    	return ResponseEntity.ok(Map.of("MSG", "보유 갯수 보다 많이 판매 하실 수 없습니다."));
     }
     
     @PostMapping("/haveStock")

@@ -36,18 +36,46 @@ public class DetailStockService {
     	
     }
     
-    public void sellStock(DetailStockVO detailStockVO) {
+    public boolean sellStock(DetailStockVO detailStockVO) {
     	detailStockVO.setStockSellQuantity();
     	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 판매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""+detailStockVO.getAAPL(); 
-    	System.out.println(message);
+    	int unit = 0;
+    	int getUnit = Integer.parseInt(detailStockVO.getUnit());
+    	System.out.println(message+"   ,"+getUnit);
     	//음수로 바꾸
     	detailStockVO.setUnit("-"+detailStockVO.getUnit());
-    	DetailStockVO pivot = this.haveStock(detailStockVO);
+    	DetailStockVO pivot = new DetailStockVO();
+    	pivot.setUserId(detailStockVO.getUserId());
+    	pivot = this.haveStock(pivot);
     	
-    	
-        detailStockDAO.sellStock(detailStockVO);
-        detailStockDAO.insertUser(detailStockVO);
-        
+    	String stockCode = detailStockVO.getStock();
+    	System.out.println("Service Level - - >"+ stockCode);
+    	if (stockCode != null) {
+            switch (stockCode) {
+                case "AAPL":
+                    unit = pivot.getAAPL();
+                    break;
+                case "AMZN":
+                    unit = pivot.getAMZN();
+                    break;
+                case "FB":
+                    unit = pivot.getFB();
+                    break;
+                case "GOOGL":
+                    unit = pivot.getGOOGL();
+                    break;
+                default:
+                    unit = pivot.getMSFT();
+                    break;
+            }
+        }
+    	System.out.println("보유량 : "+unit +"매수량: "+getUnit);
+    	if(unit >=  getUnit) {
+	        detailStockDAO.sellStock(detailStockVO);
+	        detailStockDAO.insertUser(detailStockVO);
+	        detailStockDAO.plusAccount(detailStockVO);
+	        return true;
+	    }return false;
     }
     
     public DetailStockVO haveStock(DetailStockVO detailStockVO) {
@@ -61,7 +89,8 @@ public class DetailStockService {
     	int A = detailStockVO.getGOOGL();
     	int SK = detailStockVO.getMSFT();
     	System.out.println(user_id+"님의 보유 주식 개수 \nAAPL: "+S+"\nAMZN: "+L+"\nFB: "+T+"\nGOOGL: "+A+"\nMSFT: "+SK);
-
+    	
+    	
     	
     	
     	return detailStockVO;
