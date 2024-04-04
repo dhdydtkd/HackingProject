@@ -45,13 +45,88 @@
 
 
 <script>
+function reBaseSell(){
+	  var expect1 = document.getElementById('EXPECT_PRICES')
+	  var input = $(this).val();
+	  var pri = $('#stcok_price').text().replace(/,/g,"");
+	  var filteredInput = input.replace(/,/g, '');
+    filteredInput = filteredInput.replace(/[^\d]/g, '');
+    filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    pri = parseInt(pri,10);
+    input = parseInt(input,10)|| 0;
+    var cal = (pri*input);
+    if (input==0){
+    	expect.innerHTML = 0;
+    }
+    expect.innerHTML = cal;
+}
 
-        function setCurrent() {
+
+function reBaseBuy(){
+	  var expect = document.getElementById('EXPECT_PRICE')
+	  var input = $(this).val();
+	  var pri = $('#stcok_price').text().replace(/,/g,"");
+	  var filteredInput = input.replace(/,/g, '');
+    filteredInput = filteredInput.replace(/[^\d]/g, '');
+    filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    pri = parseInt(pri,10);
+    input = parseInt(input,10)|| 0;
+    var cal = (pri*input);
+    if (input==0){
+    	expect.innerHTML = 0;
+    }
+    expect.innerHTML = cal;
+}
+
+/*         function setCurrent() {
             var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
             pri = pri.replace("원", "");
             $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
             $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
+            var expectBuy = document.getElementById('EXPECT_PRICE')
+            var expectSell = document.getElementById('EXPECT_PRICES')
+            var inputBuy = $('#UNIT').val() || 0;
+            var inputSell = $('#UNITS').val() || 0;
+            
+            pri = pri.replace(",","");
+            pri = parseInt(pri,10);
+            inputBuy = parseInt(inputBuy,10)|| 0;
+            inputSell = parseInt(inputSell, 10) || 0;
+            var calBuy = (pri*inputBuy);
+            var calSell = (pri*inputSell);
+            if (inputBuy==0 && inputSell == 0){
+            	expectBuy.innerHTML = 0;
+            	expectSell.innerHTML = 0
+            }
+            expectBuy.innerHTML = calBuy;
+            expectSell.innerHTML = calSell;
+
         }
+ */
+ function setCurrent() {
+     var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
+     pri = pri.replace("원", "");
+     $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
+     $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
+     var expectBuy = document.getElementById('EXPECT_PRICE')
+     var expectSell = document.getElementById('EXPECT_PRICES')
+     var inputBuy = $('#UNIT').val().replace(/,/g, "") || 0;
+     var inputSell = $('#UNITS').val().replace(/,/g, "") || 0;
+     
+     pri = pri.replace(",","");
+     pri = parseInt(pri,10);
+     inputBuy = parseInt(inputBuy,10)|| 0;
+     inputSell = parseInt(inputSell, 10) || 0;
+     var calBuy = (pri*inputBuy);
+     var calSell = (pri*inputSell);
+     if (inputBuy==0 && inputSell == 0){
+     	expectBuy.innerHTML = 0;
+     	expectSell.innerHTML = 0
+     }
+     expectBuy.innerHTML = calBuy.toLocaleString();
+     expectSell.innerHTML = calSell.toLocaleString();
+
+ }
 
  
 </script>
@@ -249,7 +324,7 @@
                       $('#stcok_price').text(formattedString(newStockData.STOCK_PRICE)+"원");
 					  setCurrent();
 					  ////
-					  
+
 					  
 					  ///
                       var newDataPoint = newStockData.STOCK_PRICE;
@@ -284,46 +359,62 @@
               clearInterval(intervalId);
           }
           function startInterval() {
-              intervalId = setInterval(updateUserData, 2000);
+              intervalId = setInterval(updateChartData, 2000);
           }
       });
       
   </script>
   <script>
+
   
   $(document).ready(function(){
 	    $('#UNIT').on('input', function() {
 	        var expect = document.getElementById('EXPECT_PRICE')
-	    	var input = $(this).val();
-	        var pri = $('#stcok_price').text();
+	    	var input = $(this).val().replace(/,/g,"");
+			var inputs = parseInt(input,10);
+			
+			
+			//alert(input);
+	        var pri = $('#stcok_price').text().replace(/,/g,"");
 	        var filteredInput = input.replace(/,/g, '');
 	        filteredInput = filteredInput.replace(/[^\d]/g, '');
 	        filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	        $(this).val(filteredInput);
+	        
 	        pri = parseInt(pri,10);
 	        input = parseInt(input,10)|| 0;
+	        //alert(pri);
 	        var cal = (pri*input);
-	        if (input==0){
+	        cal = cal.toLocaleString();
+	        if (inputs==0){
 	        	expect.innerHTML = 0;
 	        }
-	        expect.innerHTML = cal;
-	        //alert(input*pri)
+	        expect.innerHTML = cal; 
+	        
 	      });
 	    
 	    $('#UNITS').on('input', function() {
 	        var expect = document.getElementById('EXPECT_PRICES')
-	    	var input = $(this).val();
-	        var pri = $('#stcok_price').text();
+	    	var input = $(this).val().replace(/,/g,"");
+			var inputs = parseInt(input,10);
+			
+			
+			//alert(input);
+	        var pri = $('#stcok_price').text().replace(/,/g,"");
 	        var filteredInput = input.replace(/,/g, '');
 	        filteredInput = filteredInput.replace(/[^\d]/g, '');
 	        filteredInput = filteredInput.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	        $(this).val(filteredInput);
+	        
 	        pri = parseInt(pri,10);
 	        input = parseInt(input,10)|| 0;
+	        //alert(pri);
 	        var cal = (pri*input);
-	        if (input==0){
+	        cal = cal.toLocaleString();
+	        if (inputs==0){
 	        	expect.innerHTML = 0;
 	        }
-	        expect.innerHTML = cal;
-	        //alert(input*pri)
+	        expect.innerHTML = cal; 
 	      });
 	  
       $('#BUYINFO').click(function() {
@@ -332,8 +423,8 @@
 
           $('#buyButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICE').text().replace(",", "");;
-              var UNIT = $('#UNIT').val();
+              var PRICE = $('#PRICE').text().replace(/,/g, "");
+              var UNIT = $('#UNIT').val().replace(/,/g, "");
               var USERID = $('#USER_ID').val();
               //alert(USERID);
               //var company = document.getElementById('companyName').textContent;
@@ -376,8 +467,8 @@
           });
           $('#sellButton').click(function() {
         	  event.preventDefault();
-              var PRICE = $('#PRICES').text().replace(",", "");;
-              var UNIT = $('#UNITS').val();
+              var PRICE = $('#PRICES').text().replace(/,/g, "");;
+              var UNIT = $('#UNITS').val().replace(/,/g, "");
               var USERID = $('#USER_ID').val();
               var OWN = $('#OWNN').text();
               //alert(USERID);
@@ -565,13 +656,13 @@
                         <div class="flex items-center justify-between py-2">
                             <div>주식 개수</div>
                             <div>
-                                <input id="UNIT"class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                                <input id="UNIT"class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
                             <div>예상 가격</div>
                             <div>
-                                <span id="EXPECT_PRICE"> </span><span>원</span>
+                                <span id="EXPECT_PRICE">0</span><span>원</span>
                             </div>
                         </div>
                         <button data-modal-hide="buy-modal" id="buyButton" class="w-full bg-red-500 mt-3 text-white py-2 rounded-lg">구매하기</button>
@@ -603,13 +694,13 @@
                         <div class="flex items-center justify-between py-2">
                             <div>주식 수</div>
                             <div>
-                                <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" type="number" placeholder="1" min="0" />개
+                                <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
                             <div>예상 가격</div>
                             <div>
-                                <span id="EXPECT_PRICES"> </span><span>원</span>
+                                <span id="EXPECT_PRICES">0</span><span>원</span>
                             </div>
                         </div>
                         <button data-modal-hide="sell-modal" id="sellButton" type="submit" class="w-full bg-blue-500 mt-3 text-white py-2 rounded-lg">판매하기</button>
