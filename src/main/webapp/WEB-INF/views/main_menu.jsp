@@ -2,6 +2,7 @@
 <%@ page import="com.example.hackingproject.notice.dto.NoticeReq" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -24,20 +25,22 @@
 <script src="/js/main.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/main_menu.js"></script>
+<c:set var="stockListJson" value="${stockListJson}" />
 <script>
-    var intervalId = null
 
+    var stockListJsonString = '${stockListJson}';
+    var stockListJson = JSON.parse(stockListJsonString.replaceAll('&quot;', '"'));
 
     $(() => {
-        stockListSearch();
-        let intervalId = setInterval(stockListSearch, 2000); // 1000 밀리초 = 1초
+        stockListSetting(stockListJson);
+        let intervalId = setInterval(StockListSearch, 2000); // 1000 밀리초 = 1초
         window.addEventListener("blur", stopInterval);
         window.addEventListener("focus", startInterval);
         function stopInterval() {
             clearInterval(intervalId);
         }
         function startInterval() {
-            intervalId = setInterval(updateUserData, 2000);
+            intervalId = setInterval(StockListSearch, 2000);
         }
 
 
@@ -60,60 +63,61 @@
 
     });
 
-    function stockListSearch(){
-        console.log("stockListSearch");
+    function StockListSearch(){
         $.ajaxGET("stock/stocklist", null, function(result){
             if (result.state.code == "0000") {
-                let stockList = result.body;
-                let stockBodyHTML = "";
-                var stockBaseList = []
-                function addStock(name, price) {
-                    var stock = {
-                        name: name,
-                        price: price
-                    };
-                    stockBaseList.push(stock);
-                }
-                addStock("AAPL", 100);
-                addStock("AMZN", 1000);
-                addStock("FB", 1500);
-                addStock("GOOGL", 22000);
-                addStock("MSFT", 100000);
-
-                function calculatePercentage(base, value) {
-                    return (value / base) * 100;
-                }
-
-                for(let i = 0 ; i<stockList.length ; i++){
-                    var stockbasePrice = 0;
-                    for(let j = 0 ;j<stockBaseList.length; j++){
-                        if(stockBaseList[j].name == stockList[i].STOCK_CODE){
-                            stockbasePrice = stockBaseList[j].price;
-                            break;
-                        }
-                    }
-                    var percentage = calculatePercentage(stockbasePrice,stockList[i].STOCK_PRICE) -100;
-                    var detailstockdata = "/detailstock?stockCode="+stockList[i].STOCK_CODE+"&stockName="+stockList[i].STOCK_NAME;
-                    stockBodyHTML += "<a href="+detailstockdata+">";
-                    stockBodyHTML += "<li>";
-                    stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
-                    stockBodyHTML += "<p name='STOCK_NAME'>"+stockList[i].STOCK_NAME+"</p>";
-                    stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockList[i].STOCK_PRICE)+"원</p>";
-
-                    if(percentage<0){
-                        stockBodyHTML += "<p class='rate negative' name='STOCK_RATE'>"+percentage.toFixed(2)+"%</p>";
-                    }else{
-                        stockBodyHTML += "<p class='rate positive' name='STOCK_RATE'>+"+percentage.toFixed(2)+"%</p>";
-                    }
-                    stockBodyHTML += "</li>";
-                    stockBodyHTML += "</a>";
-                }
-
-                $('#stock_list').empty();
-                $('#stock_list').append(stockBodyHTML);
-
+                let stockListData = result.body;
+                stockListSetting(stockListData);
             }
         });
+    }
+    function stockListSetting(stockListData) {
+        let stockBodyHTML = "";
+        var stockBaseList = []
+        function addStock(name, price) {
+            var stock = {
+                name: name,
+                price: price
+            };
+            stockBaseList.push(stock);
+        }
+        addStock("AAPL", 100);
+        addStock("AMZN", 1000);
+        addStock("FB", 1500);
+        addStock("GOOGL", 22000);
+        addStock("MSFT", 100000);
+
+        function calculatePercentage(base, value) {
+            return (value / base) * 100;
+        }
+
+        for(let i = 0 ; i<stockListData.length ; i++){
+            var stockbasePrice = 0;
+            for(let j = 0 ;j<stockBaseList.length; j++){
+                if(stockBaseList[j].name == stockListData[i].STOCK_CODE){
+                    stockbasePrice = stockBaseList[j].price;
+                    break;
+                }
+            }
+            var percentage = calculatePercentage(stockbasePrice,stockListData[i].STOCK_PRICE) -100;
+            var detailstockdata = "/detailstock?stockCode="+stockListData[i].STOCK_CODE+"&stockName="+stockListData[i].STOCK_NAME;
+            stockBodyHTML += "<a href="+detailstockdata+">";
+            stockBodyHTML += "<li>";
+            stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
+            stockBodyHTML += "<p name='STOCK_NAME'>"+stockListData[i].STOCK_NAME+"</p>";
+            stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stockListData[i].STOCK_PRICE)+"원</p>";
+
+            if(percentage<0){
+                stockBodyHTML += "<p class='rate negative' name='STOCK_RATE'>"+percentage.toFixed(2)+"%</p>";
+            }else{
+                stockBodyHTML += "<p class='rate positive' name='STOCK_RATE'>+"+percentage.toFixed(2)+"%</p>";
+            }
+            stockBodyHTML += "</li>";
+            stockBodyHTML += "</a>";
+        }
+
+        $('#stock_list').empty();
+        $('#stock_list').append(stockBodyHTML);
     }
 </script>
 <!DOCTYPE html>

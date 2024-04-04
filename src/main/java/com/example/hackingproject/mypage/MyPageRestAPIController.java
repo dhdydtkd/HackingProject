@@ -36,11 +36,8 @@ public class MyPageRestAPIController {
         try {
             String myUserDataJson = objectMapper.writeValueAsString(myUserData);
             mav.addObject("myUserDataJson", myUserDataJson);
-            mav.addObject("myUserData", myUserData);
-        } catch (
-        JsonProcessingException e) {
-            // 예외 처리
-            e.printStackTrace(); // 예외 정보를 출력하거나 로그에 기록할 수 있음
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
 
         mav.addObject("user_id", myUserData.getUSER_NM());
