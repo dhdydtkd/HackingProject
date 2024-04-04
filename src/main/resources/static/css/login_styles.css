@@ -18,7 +18,6 @@ body, html {
     margin: 3.125rem auto;
     padding: 1.25rem;
     text-align: center;
-    align-items: center;
     border-radius: 0.5rem;
 }
 .logo {
@@ -33,6 +32,8 @@ body, html {
 }
 
 .input-group label {
+    padding-left: 0.7rem;
+    text-align: left;
     display: block;
     margin-bottom: 0.3125rem;
 }
@@ -68,11 +69,25 @@ button {
 .signup-btn {
     background-color: #f0f0f0;
     color: #333;
+    text-decoration: none;
 }
 
 .signup-btn:hover {
     background-color: #e0e0e0;
+
 }
+
+.signup-btn a {
+    color: #333;
+    text-decoration: none;
+}
+
+
+.signup-btn a:hover {
+    text-decoration: none;
+}
+
+
 
 /* Media Queries for Responsive Design */
 @media only screen and (min-width: 37.5rem) { /* 600px -> 37.5rem */

@@ -43,7 +43,7 @@ public class LoginService {
 
         loginReq.setUser_id(userId);
         loginReq.setUser_pw(SHA256Encrypt(userPw));
-
+        System.out.println(SHA256Encrypt(userPw));
         UserVO user = loginDAO.getUserInfo(loginReq);
 
         Map<String, Object> result = new HashMap<String,Object>();
