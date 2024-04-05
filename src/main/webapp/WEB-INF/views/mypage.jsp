@@ -97,7 +97,7 @@
         </div>
 
         <div class="account-info">
-          <div class="account-number">${user_bank_name}은행 ${user_account_number}</div>
+          <div class="account-number">${user_bank_name} ${user_account_number}</div>
 
           <div id="account_balance" class="balance">0원</div>
           <div class="button-group">

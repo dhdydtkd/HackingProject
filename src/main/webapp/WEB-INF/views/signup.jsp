@@ -127,12 +127,12 @@
         <label for="USER_BANK">은행사</label>
         <select id="USER_BANK" name="bank">
             <option value="">은행사 선택</option>
-            <option value="option1">카카오뱅크</option>
-            <option value="option2">신한은행</option>
-            <option value="option3">우리은행</option>
-            <option value="option4">KB국민은행</option>
-            <option value="option5">NH농협은행</option>
-            <option value="option6">RK루키은행</option>
+            <option value="카카오뱅크">카카오뱅크</option>
+            <option value="신한은행">신한은행</option>
+            <option value="우리은행">우리은행</option>
+            <option value="KB국민은행">KB국민은행</option>
+            <option value="NH농협은행">NH농협은행</option>
+            <option value="RK루키은행">RK루키은행</option>
         </select>
     </div>
     
