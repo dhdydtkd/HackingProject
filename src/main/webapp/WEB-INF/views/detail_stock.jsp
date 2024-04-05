@@ -45,6 +45,28 @@
 
 
 <script>
+
+function reloadStockDetails() {
+    $.ajax({
+        url: '/detailReload', // 요청을 보낼 경로
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            stock: `${stockCode}` // stockCode 변수의 값을 사용
+            
+        }),
+        success: function(stockResponse) {
+            console.log(stockResponse);
+            setBalanceR(stockResponse.balance);
+            setOwnR(stockResponse.haveStock);
+        },
+        error: function(xhr, status, error) {
+            alert('Stock 정보 로드 실패: ' + error);
+        }
+    });
+}
+
+
 function reBaseSell(){
 	  var expect1 = document.getElementById('EXPECT_PRICES')
 	  var input = $(this).val();
@@ -78,36 +100,11 @@ function reBaseBuy(){
     expect.innerHTML = cal;
 }
 
-/*         function setCurrent() {
-            var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
-            pri = pri.replace("원", "");
-            $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
-            $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
-            var expectBuy = document.getElementById('EXPECT_PRICE')
-            var expectSell = document.getElementById('EXPECT_PRICES')
-            var inputBuy = $('#UNIT').val() || 0;
-            var inputSell = $('#UNITS').val() || 0;
-            
-            pri = pri.replace(",","");
-            pri = parseInt(pri,10);
-            inputBuy = parseInt(inputBuy,10)|| 0;
-            inputSell = parseInt(inputSell, 10) || 0;
-            var calBuy = (pri*inputBuy);
-            var calSell = (pri*inputSell);
-            if (inputBuy==0 && inputSell == 0){
-            	expectBuy.innerHTML = 0;
-            	expectSell.innerHTML = 0
-            }
-            expectBuy.innerHTML = calBuy;
-            expectSell.innerHTML = calSell;
-
-        }
- */
  function setCurrent() {
-     var pri = $('#stcok_price').text(); // 오타 수정: 'stcok_price' -> 'stock_price'
+     var pri = $('#stcok_price').text(); 
      pri = pri.replace("원", "");
-     $('#PRICES').text(pri); // 이것은 id가 'PRICES'인 요소의 텍스트를 설정합니다.
-     $('#PRICE').text(pri); // 이것은 id가 'PRICE'인 다른 요소의 텍스트를 설정합니다.
+     $('#PRICES').text(pri); 
+     $('#PRICE').text(pri); 
      var expectBuy = document.getElementById('EXPECT_PRICE')
      var expectSell = document.getElementById('EXPECT_PRICES')
      var inputBuy = $('#UNIT').val().replace(/,/g, "") || 0;
@@ -132,14 +129,22 @@ function reBaseBuy(){
 </script>
 
 <script type="text/javascript">
+function setBalanceR(bal){
+	var balance = document.getElementById("BALANCE");
+	
+	balance.innerHTML = "보유금액: "+parseInt(bal).toLocaleString()+"원";
+	
+}
+function setOwnR(hs){
+	var own = document.getElementById("OWN");
+	own.innerHTML = "보유주식: "+parseInt(hs).toLocaleString()+"개";
+}
 
 	function setBalance(){
 		var balance = document.getElementById("BALANCE");
 		
-		//alert(`${haveStock}`);
 		balance.innerHTML += ": "+`${balance}`+"원";
 		
-		//balance += ${id};
 	}
 	
 	function setOwn(){
@@ -150,17 +155,13 @@ function reBaseBuy(){
 </script>
 
   <script type="text/javascript">
-      // 초기 데이터
       var initialData = {
           labels: [],
           datasets: [{
-              // label: 'Test Dataset',
               fill: false,
               data: [], // 초기 데이터 배열
               backgroundColor: 'rgba(99,130,255,0.2)',
               borderColor: 'rgb(79,115,255)',
-              // backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              // borderColor: 'rgba(255, 99, 132, 1)',
               borderWidth: 1
           }]
       };
@@ -450,17 +451,16 @@ function reBaseBuy(){
                   url: '/detailBuy', // 컨트롤러 경로를 지정하세요.
                   type: 'POST',
                   contentType: 'application/json',
-                  data: e2eData, // 데이터를 JSON 형식으로 전송
+                  data: e2eData, 
 
                   success: function(response) {
-                      // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
                       alert(response.MSG);
-                      location.reload();
+                      reloadStockDetails();
+                      
                   },
                   error: function(xhr, status, error) {
-                      // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
-                      location.reload();
+                      reloadStockDetails();
                   }
               });
           
@@ -471,10 +471,7 @@ function reBaseBuy(){
               var UNIT = $('#UNITS').val().replace(/,/g, "");
               var USERID = $('#USER_ID').val();
               var OWN = $('#OWNN').text();
-              //alert(USERID);
-              //var company = document.getElementById('companyName').textContent;
               var STOCK = document.getElementById('stock_code').textContent;
-              //alert(STOCK);
 			  
               OWN = parseInt(OWN, 10);
 			  UNIT = parseInt(UNIT, 10);
@@ -504,12 +501,12 @@ function reBaseBuy(){
                   success: function(response) {
                       // 성공 시 실행될 코드. response는 컨트롤러에서 반환한 데이터입니다.
                       alert(response.MSG);
-                      location.reload();
+                      reloadStockDetails();
                   },
                   error: function(xhr, status, error) {
                       // 오류 발생 시 실행될 코드
                       alert('오류 발생: ' + error);
-                      location.reload();
+                      reloadStockDetails();
                   }
               });
               

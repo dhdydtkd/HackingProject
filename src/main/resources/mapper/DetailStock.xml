@@ -83,5 +83,14 @@
         WHERE USER_ID = #{userId}
     </update>
     
+    <select id="getStockPrice" parameterType="String"
+            resultType="Integer">
+            SELECT STOCK_PRICE
+        FROM rookie.Stock_Price
+        WHERE STOCK_CODE = #{stock}
+        ORDER BY STOCK_DATE DESC
+        LIMIT 1
+    </select>
+    
     
 </mapper>

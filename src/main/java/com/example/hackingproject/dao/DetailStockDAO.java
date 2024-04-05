@@ -14,4 +14,5 @@ public interface DetailStockDAO {
 	MyUserData getUserData (String user);
 	void minusAccount(DetailStockVO detailStockVO);
 	void plusAccount(DetailStockVO detailStockVO);
+	Integer getStockPrice(String stockCode);
 }

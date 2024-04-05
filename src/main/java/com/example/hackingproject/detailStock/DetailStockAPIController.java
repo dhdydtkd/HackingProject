@@ -2,6 +2,8 @@ package com.example.hackingproject.detailStock;
 
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
+import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
@@ -16,14 +18,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.hackingproject.BaseModel;
+import com.example.hackingproject.common.JwtTokenUtil;
 import com.example.hackingproject.detailStock.service.DetailStockService;
 import com.example.hackingproject.detailStock.vo.DetailStockVO;
+import com.example.hackingproject.mypage.dto.MyUserData;
 
 @Controller
 public class DetailStockAPIController {
@@ -33,7 +40,12 @@ public class DetailStockAPIController {
 
     @Value("${rsa_instance}")
     private String RSA_INSTANCE; // rsa transformation
-
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+    
+    @Autowired
+    private DetailStockRESTAPIController de;
+    
     @Autowired
 	private DetailStockService detailStockService;
 
@@ -41,6 +53,49 @@ public class DetailStockAPIController {
 		this.detailStockService = detailStockService;
 	}
 
+	
+	@PostMapping("/detailReload")
+	public ResponseEntity<?> reload(HttpServletRequest request, @RequestBody DetailStockVO detailStockVO) {
+		//BaseModel baseModel = new BaseModel();
+		Map<String, Object> responseBody = new HashMap<>();
+		
+		MyUserData user = new MyUserData();
+		String JWTToken = jwtTokenUtil.GetJWTCookie(request);
+		String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+		String stockCode = detailStockVO.getStock();
+		
+		user.setUSER_ID(user_id);
+		
+        int unit = 0;
+        
+        detailStockVO.setUserId(user_id);
+        detailStockVO = detailStockService.haveStock(detailStockVO);
+        
+        if (stockCode != null) {
+            switch (stockCode) {
+                case "AAPL":
+                    unit = detailStockVO.getAAPL();
+                    break;
+                case "AMZN":
+                    unit = detailStockVO.getAMZN();
+                    break;
+                case "FB":
+                    unit = detailStockVO.getFB();
+                    break;
+                case "GOOGL":
+                    unit = detailStockVO.getGOOGL();
+                    break;
+                default:
+                    unit = detailStockVO.getMSFT();
+                    break;
+            }
+        }
+        user = detailStockService.getUserData(user);
+        responseBody.put("haveStock", unit);
+        responseBody.put("balance", user.getACCOUNT_BALANCE());
+        return ResponseEntity.ok(responseBody);
+	}
+	
     @PostMapping("/detailBuy")
     public ResponseEntity<?> buyStock(HttpServletRequest request,@RequestBody String E2EdetailStockData) {
         // payload에서 price와 unit을 추출
@@ -48,6 +103,7 @@ public class DetailStockAPIController {
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSA_WEB_KEY);
         String detailStockJsonData = "";
         DetailStockVO detailStockVO = null;
+        int total;
         try{
             detailStockJsonData = decryptRsa(privateKey, E2EdetailStockData);
         }catch (Exception e){
@@ -63,18 +119,19 @@ public class DetailStockAPIController {
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
         String user_id = detailStockVO.getUserId();
-
+        
 
 
         // 비즈니스 로직 처리 후 결과 메시지 생성
-        String message = user_id+"님의 구매 가격 : " + price + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " + unit;
-        System.out.println(message);
+        
 
-        boolean isSuccess = detailStockService.buyStock(detailStockVO);
-        if(!isSuccess) {
+        String isSuccess = detailStockService.buyStock(detailStockVO);
+        if(isSuccess==null) {
         	return ResponseEntity.ok(Map.of("MSG","보유 금액 이상 구매 불가능"));
         }
-        // 클라이언트에게 JSON 형태로 응답 반환
+        total = Integer.parseInt(isSuccess)*Integer.parseInt(unit);
+        String message = user_id+"님의 구매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " +NumberFormat.getNumberInstance().format(Integer.parseInt(unit))+"\n총 구매 가격 : "+NumberFormat.getNumberInstance().format(total);
+        System.out.println(message);        
         return ResponseEntity.ok(Map.of("MSG", message));
     }
     
@@ -96,17 +153,19 @@ public class DetailStockAPIController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int cal_price = Integer.parseInt(detailStockVO.getPrice()) * Integer.parseInt(detailStockVO.getUnit());
-        detailStockVO.setCal(cal_price);
+        int cal_price;
+        
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
         String user_id = detailStockVO.getUserId();
     	
-        String message = user_id+"님의 판매 가격 : " + price + ", 판매 수량 : " + unit; 
+        String message = ""; 
+        
+        String isSuccess = detailStockService.sellStock(detailStockVO);      
+    	cal_price = Integer.parseInt(isSuccess) * Integer.parseInt(unit);
 
-        boolean isSuccess = detailStockService.sellStock(detailStockVO);      
-    	
-        if(isSuccess) {
+        if(isSuccess != null) {
+        	message = user_id+"님의 판매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n판매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 판매 금액 : "+NumberFormat.getNumberInstance().format(cal_price) ;
         	return ResponseEntity.ok(Map.of("MSG", message));
         }
     	return ResponseEntity.ok(Map.of("MSG", "보유 갯수 보다 많이 판매 하실 수 없습니다."));

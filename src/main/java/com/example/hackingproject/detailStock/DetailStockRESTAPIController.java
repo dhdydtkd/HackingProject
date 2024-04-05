@@ -54,8 +54,8 @@ public class DetailStockRESTAPIController {
         request.setAttribute(RSAModulus, RSA_Modulus); // rsa modulus 를 request 에 추가
         request.setAttribute(RSAExponent, RSA_Exponent); // rsa exponent 를 request 에 추가
         System.out.println("detailstock");
-        System.out.println(RSA_Modulus);
-        System.out.println(RSA_Exponent);
+        System.out.println(stockCode);
+        System.out.println(stockName);
         
         user.setUSER_ID(user_id);
         detailStockVO.setUserId(user_id);
