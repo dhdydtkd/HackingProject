@@ -37,7 +37,10 @@ public class DetailStockService {
     		detailStockDAO.buyStock(detailStockVO);
             detailStockDAO.insertUser(detailStockVO);
             return price;
-    	}else return price;
+    	}else {
+    		System.out.println("안사져야 합니다.");
+    		return null;
+    	}
     	
     	
     }
@@ -83,7 +86,7 @@ public class DetailStockService {
 	        detailStockDAO.insertUser(detailStockVO);
 	        detailStockDAO.plusAccount(detailStockVO);
 	        return price;
-	    }return price;
+	    }return null;
     }
     
     public DetailStockVO haveStock(DetailStockVO detailStockVO) {
