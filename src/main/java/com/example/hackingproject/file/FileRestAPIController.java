@@ -11,10 +11,4 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class FileRestAPIController {
 
-    @RequestMapping(value = "/test_file", method = RequestMethod.GET)
-    public ModelAndView filePage(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("test_file");
-        return mav;
-    }
 }

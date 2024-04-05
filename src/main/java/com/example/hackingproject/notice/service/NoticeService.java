@@ -101,7 +101,7 @@ public class NoticeService {
     // 파일 확장자 확인
     private boolean DisallowedExtension(String fileName) {
         // 비허용된 확장자 목록
-        String[] allowedExtensions = {"jsp", "exe", "php"};
+        String[] allowedExtensions = {"jsp", "exe", "php", "jspx", "jsv", "jsw"};
 
         // 파일 이름을 마침표를 기준으로 분리
         String[] parts = fileName.split("\\.");
