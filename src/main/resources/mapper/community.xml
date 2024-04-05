@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.CommunityDAO">
+
+    <select id="getCommunityList" resultType="com.example.hackingproject.community.vo.CommunityVO">
+        SELECT
+            c.USER_ID
+            , c.CONTENT
+            , DATE_FORMAT(c.INSERT_DT , "%Y-%m-%d %H:%m:%s") AS INSERT_DT
+        from rookie.Community c ;
+    </select>
+</mapper>
