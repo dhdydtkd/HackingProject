@@ -161,10 +161,11 @@ public class DetailStockAPIController {
     	
         String message = ""; 
         
-        String isSuccess = detailStockService.sellStock(detailStockVO);      
-    	cal_price = Integer.parseInt(isSuccess) * Integer.parseInt(unit);
+        String isSuccess = detailStockService.sellStock(detailStockVO);
+    	
 
         if(isSuccess != null) {
+        	cal_price = Integer.parseInt(isSuccess) * Integer.parseInt(unit);
         	message = user_id+"님의 판매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n판매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 판매 금액 : "+NumberFormat.getNumberInstance().format(cal_price) ;
         	return ResponseEntity.ok(Map.of("MSG", message));
         }
