@@ -593,10 +593,10 @@ function setOwnR(hs){
                 <button class="border-r border-black py-1 pl-1 pr-2">1년</button>
             </div>
         </div>
-        <div class="mt-2 pr-20 pl-5 h-96">
+        <div class="mt-2 pr-20 pl-5">
             <canvas id="myChart"></canvas>
         </div>
-        <div class="flex text-center text-xl mt-5">
+        <div class="flex text-center text-xl mt-10 mb-[75px]">
             <div class="w-full">
                 <div>최고가</div>
                 <div id="max_price" class="text-red-500 font-semibold mt-1">0원</div>
@@ -653,7 +653,7 @@ function setOwnR(hs){
                         <div class="flex items-center justify-between py-2">
                             <div>주식 개수</div>
                             <div>
-                                <input id="UNIT"class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
+                                <input id="UNIT" type="number" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
@@ -691,7 +691,7 @@ function setOwnR(hs){
                         <div class="flex items-center justify-between py-2">
                             <div>주식 수</div>
                             <div>
-                                <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
+                                <input id="UNITS" type="number" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">

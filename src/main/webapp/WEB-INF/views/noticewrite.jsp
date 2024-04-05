@@ -23,10 +23,6 @@
       <input type="text" id="title" name="NOTICE_TITLE" required>
     </div>
     <div class="form-group">
-      <label for="author">글쓴이:</label>
-      <input type="text" id="author" name="USER_ID" required>
-    </div>
-    <div class="form-group">
       <label for="attachment">첨부파일:</label>
       <input type="file" id="attachment" name="NOTICE_FILE" onchange="return validateForm()">
     </div>
