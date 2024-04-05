@@ -35,9 +35,6 @@ public class MyPageAPIController {
     @Autowired
     private MyPageService myPageService;
 
-    @Autowired
-    private UserDAO userDAO;
-
     @Value("${rsa_web_key}")
     private String RSA_WEB_KEY ; // 개인키 session key
 

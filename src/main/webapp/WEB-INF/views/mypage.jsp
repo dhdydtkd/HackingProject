@@ -92,7 +92,7 @@
       <div class="card">
         <div class="header">
           <div id="back" class="left"><i class="material-icons">arrow_back</i></div>
-          <div class="center">마이페이지</div>
+          <div class="center">${user_nm}님의 마이페이지</div>
           <div class="right"></div>
         </div>
 

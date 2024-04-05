@@ -47,7 +47,7 @@ public class MyPageRestAPIController {
             e.printStackTrace();
         }
 
-        mav.addObject("user_id", myUserData.getUSER_NM());
+        mav.addObject("user_nm", myUserData.getUSER_NM());
         mav.addObject("user_bank_name", myUserData.getUSER_BANK());
         mav.addObject("user_account_number", myUserData.getUSER_ACCOUNT_NUMBER());
 

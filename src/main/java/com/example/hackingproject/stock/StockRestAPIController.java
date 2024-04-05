@@ -1,6 +1,8 @@
 package com.example.hackingproject.stock;
 
 import com.example.hackingproject.common.JwtTokenUtil;
+import com.example.hackingproject.mypage.dto.MyUserData;
+import com.example.hackingproject.mypage.service.MyPageService;
 import com.example.hackingproject.notice.dto.NoticeReq;
 import com.example.hackingproject.notice.service.NoticeService;
 import com.example.hackingproject.stock.service.StockService;
@@ -29,6 +31,9 @@ public class StockRestAPIController {
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private MyPageService myPageService;
+
     @RequestMapping(value = {"/main","/"}, method = RequestMethod.GET)
     public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView();
@@ -45,8 +50,12 @@ public class StockRestAPIController {
         }
 
         mav.addObject("noticeList", noticeList);
-
-        mav.addObject("login", jwtTokenUtil.JWTTokenCheck(request));
+        boolean loginFlag = jwtTokenUtil.JWTTokenCheck(request);
+        if(loginFlag){
+            MyUserData myUserData = myPageService.getUserInfo(jwtTokenUtil.getUserIdFromToken(jwtTokenUtil.GetJWTCookie(request)));
+            mav.addObject("user_nm", myUserData.getUSER_NM());
+        }
+        mav.addObject("login", loginFlag);
 
         mav.setViewName("main_menu");
         return mav;
