@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<!-- NoticeReq 클래스 import -->
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,6 +19,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script>
+        function downloadFile(noticeNo, fileName) {
+            fetch(`/download?noticeNo=${noticeNo}&fileName=${fileName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('파일을 다운로드하는 도중 오류가 발생했습니다.');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('에러:', error);
+                    alert(error.message);
+                });
+        }
+    </script>
 </head>
 <body>
 <div class="notice-container">
@@ -49,9 +72,8 @@
             String noticeFilePath = (String) request.getAttribute("noticeFilePath");
             if (noticeFileName != null && !noticeFileName.isEmpty() && noticeFilePath != null && !noticeFilePath.isEmpty()) {
         %>
-        첨부파일 : <a href="/download?noticeNo=<%= noticeNo %>&fileName=<%= noticeFileName %>"><%= noticeFileName %></a>
+        첨부파일 : <a href="javascript:void(0);" onclick="downloadFile(<%= noticeNo %>, '<%= noticeFileName %>')"><%= noticeFileName %></a>
         <% } %>
-
     </div>
     <div class="submit-btn">
         <!-- 공지사항 목록으로 이동 -->
