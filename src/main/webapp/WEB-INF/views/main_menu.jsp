@@ -27,6 +27,31 @@
 <script src="/js/main_menu.js"></script>
 <c:set var="stockListJson" value="${stockListJson}" />
 <script>
+$(document).ready(function(){
+	$('#search-button').click(function(){
+	    //alert('Search input clicked!');
+	    var keyword = $('#search-input').val();
+	    //alert(keyword);
+	    $.ajax({
+	        url: '/search', // 요청을 보낼 경로
+	        type: 'POST',
+	        contentType: 'application/json',
+	        data: JSON.stringify({
+	            keywords: keyword // stockCode 변수의 값을 사용
+	        }),
+	        success: function(stockResponse) {
+	            console.log(stockResponse);
+	           //alert(stockResponse.MSG);
+	            $('#hidde').val(stockResponse.MSG);
+	        },
+	        error: function(xhr, status, error) {
+	            alert('Stock 정보 로드 실패: ' + error);
+	        }
+	    });
+	});
+});
+</script>
+<script>
 
     var stockListJsonString = '${stockListJson}';
     var stockListJson = JSON.parse(stockListJsonString.replaceAll('&quot;', '"'));
@@ -324,7 +349,7 @@
                 -->
         </section>
 
-
+	<input type="hidden" id ="hidde" value="">
     </main>
     <footer class="descript">
         <p>루키증권에서 제공하는 투자 정보는 고객의 투자 판단을 위한 단순 참고용일뿐, 투자 제안 및 권유·종목 추천을 위해 작성된 것이 아닙니다.

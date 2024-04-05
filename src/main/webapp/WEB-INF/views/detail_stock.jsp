@@ -653,7 +653,7 @@ function setOwnR(hs){
                         <div class="flex items-center justify-between py-2">
                             <div>주식 개수</div>
                             <div>
-                                <input id="UNIT" type="number" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
+                                <input id="UNIT" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
@@ -691,7 +691,7 @@ function setOwnR(hs){
                         <div class="flex items-center justify-between py-2">
                             <div>주식 수</div>
                             <div>
-                                <input id="UNITS" type="number" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
+                                <input id="UNITS" class="border-none text-right focus:ring-0 focus:border-none focus:outline-none" placeholder="1" min="0" />개
                             </div>
                         </div>
                         <div class="flex items-center justify-between py-2">
