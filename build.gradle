@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.5'
+    id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'war'
@@ -28,7 +28,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
+
+
+
+
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
@@ -49,7 +54,7 @@ dependencies {
     //파일 관련
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.4'
 
     //mybatis
     implementation'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
