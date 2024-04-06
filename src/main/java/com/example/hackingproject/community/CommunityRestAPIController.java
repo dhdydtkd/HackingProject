@@ -22,9 +22,13 @@ public class CommunityRestAPIController {
         ModelAndView modelAndView = new ModelAndView("templates/community");
 
         List<CommunityVO> communityList = communityService.getCommunityList();
+        modelAndView.addObject("pageTitle", "커뮤니티");
+        modelAndView.addObject("companyName", "루키증권");
+        modelAndView.addObject("communityTitle", "커뮤니티");
+        modelAndView.addObject("searchText", "");
 
-        modelAndView.addObject("name", "1111");
-        modelAndView.addObject("communityList", communityList);
+//        modelAndView.addObject("name", "1111");
+        modelAndView.addObject("datas", communityList);
         return modelAndView;
     }
 }

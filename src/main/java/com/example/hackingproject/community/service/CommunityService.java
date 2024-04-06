@@ -17,4 +17,10 @@ public class CommunityService {
         List<CommunityVO> communityList = communityDAO.getCommunityList();
         return communityList;
     }
+
+    public List<CommunityVO> communitySearch(String searchText){
+        List<CommunityVO> communityList = communityDAO.communitySearch(searchText);
+        return communityList;
+    }
+
 }

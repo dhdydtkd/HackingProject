@@ -10,4 +10,6 @@ import java.util.List;
 public interface CommunityDAO {
 
     List<CommunityVO> getCommunityList();
+
+    List<CommunityVO> communitySearch(String searchText);
 }

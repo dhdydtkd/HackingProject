@@ -261,6 +261,21 @@ $(document).ready(function(){
                     <!-- 기타 주식 아이템을 추가할 수 있습니다 -->
                 </div>
             </div>
+            <br>
+            <a href="/community" class="alert-section">
+                <div class="text">
+                    <p>커뮤니티에서 정보를 공유하세요.<br></p>
+                    <button>커뮤니티 페이지</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="add-button" onclick="event.preventDefault();">
+              <span class="plus-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+              </span>
+                    </button>
+                </div>
+            </a>
         </section>
 
         <section id="todayStocks" class="tab-content">

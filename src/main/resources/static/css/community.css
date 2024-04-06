@@ -1,0 +1,180 @@
+/* Resetting default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  html, body {
+    height: 100%; /* 브라우저의 전체 높이 */
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+  }
+
+  /* styles.css */
+.search-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.search-form {
+    display: flex;
+    justify-content:right;
+}
+
+.search-select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-right: 0.7rem; /* 드롭다운과 입력 필드 사이의 간격 */
+    flex: none; /* 이 항목이 유연하게 늘어나지 않도록 설정 */
+    min-height: 2.5rem;
+}
+
+.search-input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    flex-grow: 1; /* 입력 필드가 남은 공간을 모두 차지하도록 설정 */
+    margin-right: 0.7rem; /* 입력 필드와 버튼 사이의 간격 */
+    min-height: 2.5rem;
+
+}
+
+.search-button {
+    padding: 0.7rem;
+    background-color: #fb923c;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    flex: none; /* 이 항목이 유연하게 늘어나지 않도록 설정 */
+    min-height: 2.5rem;
+
+}
+
+.search-button:hover {
+    background-color: #E68900;
+}
+
+
+
+
+  
+  body {
+    line-height: 1.6;
+    color: #333;
+    height: auto;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between; /* 좌, 중앙, 우 공간을 균등하게 배분 */
+    margin-bottom: 1rem;
+    line-height: 100%;
+  }
+  
+  .top .left,
+  .top .right {
+    flex: 1; /* 세 요소가 flex 컨테이너 공간을 균등하게 차지 */
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .top .right {
+    text-align: right; /* 오른쪽 요소의 텍스트를 오른쪽 정렬 */
+  }
+  .top .center{
+    font-size: 1.5rem;
+    text-align: center;
+    color: #fb923c;
+    font-weight: bold;
+    line-height: 100%;
+  }
+
+.chat-container {
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    position: relative;
+    min-height: 100vh; /* 최소 높이를 뷰포트의 100%로 설정 */
+    display: flex;
+    flex-direction: column; /* 자식 요소를 수직 방향으로 쌓음 */
+ 
+}
+
+.chat-entry {
+    background: #FFFFFF;
+    padding: 0.7rem;
+    margin: 1rem 0; /* 상하 여백 */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.chat-entry .sender {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.timestamp {
+    color: #999999;
+}
+
+.chat-entry .message {
+    font-size: 1rem;
+    color: #333333; /* 텍스트 색상 */
+}
+
+.chat-submit{
+    width: 100%;
+}
+
+/* 메시지 입력 박스와 보내기 버튼을 포함하는 부모 컨테이너에 대한 스타일 */
+.chat-submit {
+    display: flex; /* Flexbox 레이아웃을 적용 */
+    align-items: center; /* 자식 요소들의 높이를 가운데로 맞춤 */
+    gap: 0.7rem; /* 입력 필드와 버튼 사이의 간격 */
+    padding: 0.7rem; /* 컨테이너 내부 여백 */
+    box-sizing: border-box; /* 패딩을 너비에 포함 */
+    position: absolute;
+    bottom: 0;
+}
+
+#message {
+    padding: 0.7rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333333;
+    border: 2px solid #CCCCCC;
+    flex-grow: 1; /* 가용 공간을 모두 채움 */
+    height: 4rem; /* 변경: min-height에서 height로 수정 */
+    box-sizing: border-box;
+}
+
+.send-button {
+    background-color: #fb923c;
+    color: white;
+    border: none;
+    padding: 0.7rem 2rem; /* 수정: 패딩 값을 조정하여 버튼의 높이를 입력 필드와 일치시킴 */
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+    transition-duration: 0.4s;
+    height: 4rem; /* 추가: 높이 설정 */
+}
+
+.send-button:hover {
+    background-color: #E68900;
+}

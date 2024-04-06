@@ -11,4 +11,22 @@
             , DATE_FORMAT(c.INSERT_DT , "%Y-%m-%d %H:%m:%s") AS INSERT_DT
         from rookie.Community c ;
     </select>
+
+    <select id="communitySearch"
+            parameterType="String"
+            resultType="com.example.hackingproject.community.vo.CommunityVO">
+        SELECT
+            c.USER_ID
+             , c.CONTENT
+             , DATE_FORMAT(c.INSERT_DT , "%Y-%m-%d %H:%m:%s") AS INSERT_DT
+        from rookie.Community c
+        <where>
+            c.USER_ID LIKE CONCAT('%', #{param}, '%')
+            OR c.CONTENT LIKE CONCAT('%', #{param}, '%');
+        </where>
+    </select>
+
+
+
+
 </mapper>
