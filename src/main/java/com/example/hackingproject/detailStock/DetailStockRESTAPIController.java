@@ -27,9 +27,6 @@ import java.security.PrivateKey;
 public class DetailStockRESTAPIController {
 	
 	@Autowired
-    private JwtTokenUtil jwtTokenUtil;
-	
-	@Autowired
 	private DetailStockService detailStockService;
 	
     @Value("${rsa_modulus_key}")
@@ -45,12 +42,12 @@ public class DetailStockRESTAPIController {
     	MyUserData user = new MyUserData();
     	DetailStockVO detailStockVO = new DetailStockVO();
         ModelAndView mav = new ModelAndView();
-        String JWTToken = jwtTokenUtil.GetJWTCookie(request);
+        String user_id = (String)request.getSession().getAttribute("user_id");
         int unit = 0;
         HttpSession session = request.getSession();
         String RSA_Modulus = (String)session.getAttribute(RSAModulus);
         String RSA_Exponent = (String)session.getAttribute(RSAExponent);
-        String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+
         request.setAttribute(RSAModulus, RSA_Modulus); // rsa modulus 를 request 에 추가
         request.setAttribute(RSAExponent, RSA_Exponent); // rsa exponent 를 request 에 추가
         System.out.println("detailstock");

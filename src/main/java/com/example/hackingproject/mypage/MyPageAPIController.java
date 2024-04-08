@@ -30,9 +30,6 @@ import java.text.DecimalFormat;
 public class MyPageAPIController {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
     private MyPageService myPageService;
 
     @Value("${rsa_web_key}")
@@ -44,8 +41,7 @@ public class MyPageAPIController {
     @RequestMapping(method = RequestMethod.POST, path = "/userinfo")
     public BaseModel login(HttpServletRequest request, HttpServletResponse response) {
         BaseModel baseModel = new BaseModel();
-        String JWTToken = jwtTokenUtil.GetJWTCookie(request);
-        String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+        String user_id = (String)request.getSession().getAttribute("user_id");
         MyUserData myUserData = myPageService.getUserInfo(user_id);
         baseModel.setBody(myUserData);
         return baseModel;
@@ -55,8 +51,7 @@ public class MyPageAPIController {
     public BaseModel send(HttpServletRequest request, HttpServletResponse response
             , @RequestBody String E2ESendData) {
         BaseModel baseModel = new BaseModel();
-        String JWTToken = jwtTokenUtil.GetJWTCookie(request);
-        String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+        String user_id = (String)request.getSession().getAttribute("user_id");
         // E2E 암호화
 
         HttpSession session = request.getSession();

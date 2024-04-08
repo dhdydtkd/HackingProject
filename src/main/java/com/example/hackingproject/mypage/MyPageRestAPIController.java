@@ -21,9 +21,6 @@ import javax.servlet.http.HttpSession;
 public class MyPageRestAPIController {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
     private MyPageService myPageService;
 
     @Value("${rsa_modulus_key}")
@@ -35,8 +32,7 @@ public class MyPageRestAPIController {
     public ModelAndView main(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
 
-        String JWTToken = jwtTokenUtil.GetJWTCookie(request);
-        String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+        String user_id = (String)request.getSession().getAttribute("user_id");
         MyUserData myUserData = myPageService.getUserInfo(user_id);
 
         ObjectMapper objectMapper = new ObjectMapper();

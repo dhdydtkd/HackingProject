@@ -50,11 +50,14 @@ public class StockRestAPIController {
         }
 
         mav.addObject("noticeList", noticeList);
-        boolean loginFlag = jwtTokenUtil.JWTTokenCheck(request);
-        if(loginFlag){
-            MyUserData myUserData = myPageService.getUserInfo(jwtTokenUtil.getUserIdFromToken(jwtTokenUtil.GetJWTCookie(request)));
+        Object user_id_obj = request.getSession().getAttribute("user_id");
+        boolean loginFlag = false;
+        if(user_id_obj != null){
+            loginFlag = true;
+            MyUserData myUserData = myPageService.getUserInfo((String)user_id_obj);
             mav.addObject("user_nm", myUserData.getUSER_NM());
         }
+
         mav.addObject("login", loginFlag);
 
         mav.setViewName("main_menu");

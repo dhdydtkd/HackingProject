@@ -26,7 +26,29 @@
 <script src="/js/rsa/rsa.js"></script>
 
 <script>
+    // 로컬 스토리지에서 JWT를 가져오기
+    const JWTToken = localStorage.getItem('SKJWTToken');
+    // 토큰이 있을 경우 자동 로그인을 위한 요청
+    if(JWTToken!=null){
+        $.ajax({
+            type: "POST",
+            url: "/login/autologin",
+            headers: {
+                'Authorization': 'Bearer '+JWTToken,
+                // 필요에 따라 추가적인 헤더를 설정할 수 있습니다.
+            },
+            success: (data) => {
+                if(data.state.code == "0000"){
+                    window.location.href = '/main';
+                }else{
+                    alert(data.state.desc);
+                }
+            }
+        });
+    }
+
     $(() => {
+
         $("#signup").click(function(){
             window.location.href = '/signup';
         });
@@ -53,7 +75,9 @@
             $.ajaxPOST("login/login", data, function(result){
                 if (result.state.code == "0000") {
                     if(result.body.jwtToken!=null&&result.body.jwtToken!=''){
-                        document.cookie = "SKJWTToken=" + result.body.jwtToken + "; path=/"; // 쿠키에 JWT 토큰 저장
+                        // 자동로그인 체크 했을 경우 로컬 스토리지로 저장
+                        localStorage.setItem('SKJWTToken', result.body.jwtToken);
+
                         window.location.href = '/main';
                         $("#login_fail").hide();
                     }else{

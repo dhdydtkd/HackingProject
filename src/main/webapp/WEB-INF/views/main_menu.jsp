@@ -83,11 +83,13 @@ $(document).ready(function(){
             $('#logout').show();
         }
         $("#logout").click(function() {
-            //쿠키 삭제
-            document.cookie = "SKJWTToken" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-            console.log("logout");
-            alert("로그아웃 되었습니다.");
-            location.reload();
+            //세션 만료  삭제
+            $.ajaxPOST("login/logout", null, function(result){
+                if (result.state.code == "0000") {
+                    alert("로그아웃 되었습니다.");
+                    location.reload();
+                }
+            });
         });
 
     });

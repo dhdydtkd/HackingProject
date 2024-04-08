@@ -1,9 +1,7 @@
 package com.example.hackingproject.common;
 
 import com.example.hackingproject.login.vo.UserVO;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +21,7 @@ public class JwtTokenUtil {
 
     private String SIGNING_KEY;
 
-    private int ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60 * 10000;
+    private int ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60 * 24 * 7 * 1000;
 
     public String getUserIdFromToken(String token) {
         Claims claims =  getClaimFromToken(token);
@@ -56,12 +54,16 @@ public class JwtTokenUtil {
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        if (expiration == null) {
+    public Boolean isTokenExpired(String token) {
+        try{
+            final Date expiration = getExpirationDateFromToken(token);
+            if (expiration == null) {
+                return false;
+            }
+            return expiration.before(new Date());
+        }catch (ExpiredJwtException | MalformedJwtException e){
             return false;
         }
-        return expiration.before(new Date());
     }
 
 
@@ -93,9 +95,13 @@ public class JwtTokenUtil {
      * @return
      */
     public Boolean validateToken(String token) {
-        final String userId = getUserIdFromToken(token);
-//        final boolean isToken = !isTokenExpired(token);
-        return !userId.isEmpty();
+        try{
+            final String userId = getUserIdFromToken(token);
+            return !userId.isEmpty();
+        }catch (ExpiredJwtException | MalformedJwtException e){
+            return false;
+        }
+
     }
 
     public Boolean validateTokenForUser(String token) {

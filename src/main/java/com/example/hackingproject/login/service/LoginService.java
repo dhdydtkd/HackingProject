@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
@@ -26,7 +28,7 @@ public class LoginService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public Map<String, Object> getUserInfo(LoginReq loginReq, PrivateKey privateKey){
+    public Map<String, Object> getUserInfo(LoginReq loginReq, PrivateKey privateKey, HttpServletRequest request){
 
         String userId = "";
         String userPw = "";
@@ -51,7 +53,10 @@ public class LoginService {
         if(user == null){
         }else{
             // JWT 셋팅
+            // 자동 로그인 체크 했을때 토큰 반환해야줘함
             result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
+            HttpSession session = request.getSession();
+            session.setAttribute("user_id", userId);
         }
 
         //session.removeAttribute(RSA_WEB_KEY);

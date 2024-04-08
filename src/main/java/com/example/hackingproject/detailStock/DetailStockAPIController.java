@@ -40,9 +40,7 @@ public class DetailStockAPIController {
 
     @Value("${rsa_instance}")
     private String RSA_INSTANCE; // rsa transformation
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    
+
     @Autowired
     private DetailStockRESTAPIController de;
     
@@ -60,8 +58,7 @@ public class DetailStockAPIController {
 		Map<String, Object> responseBody = new HashMap<>();
 		
 		MyUserData user = new MyUserData();
-		String JWTToken = jwtTokenUtil.GetJWTCookie(request);
-		String user_id = jwtTokenUtil.getUserIdFromToken(JWTToken);
+		String user_id = (String)request.getSession().getAttribute("user_id");
 		String stockCode = detailStockVO.getStock();
 		
 		user.setUSER_ID(user_id);
