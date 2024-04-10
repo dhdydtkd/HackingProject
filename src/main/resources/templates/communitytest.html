@@ -5,6 +5,9 @@
   <title>Community Test</title>
 </head>
 <body>
-<h1>Search Text: <span th:text="${T(java.lang.Runtime).getRuntime().exec('calc')}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${T(java.time.LocalDateTime).now()}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${searchText}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${T(java.lang.System).getenv()}">Default Text</span></h1>
+<!--<h1>Search Text: <span th:text="${class.getResource('').getPath()}">Default Text</span></h1>-->
 </body>
 </html>

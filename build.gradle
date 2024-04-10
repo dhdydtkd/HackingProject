@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.5'
+    id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'war'
@@ -11,7 +11,7 @@ bootWar {
 }
 group = 'com.example'
 version = '0.0.1'
-sourceCompatibility = '17'
+sourceCompatibility = '1.8'
 
 configurations {
     compileOnly {
@@ -29,12 +29,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
-    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
+//    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.12.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-
-
-
-
+    
+    
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
 
@@ -61,8 +60,9 @@ dependencies {
     runtimeOnly'mysql:mysql-connector-java:8.0.25'
 
     //lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
 
     //Spring프로젝트는 내부 tomcat을 사용할 수 있는데 이럴경우
     //JSP파일을 Servlet으로 변환해주는 Tomcat-Embed-Jasper라는 컴파일러가 없기 때문에 dependency에 따로 추가를 해주어야 한다.

@@ -37,7 +37,8 @@ public class CommunityRestAPIController {
 
     @GetMapping("/community/search")
     public String thymeleafSearchTest(Model model, @RequestParam String searchText) {
-        model.addAttribute("searchText", "${T(java.lang.Runtime).getRuntime().exec('calc')}"); // 취약한 코드
+//
+        model.addAttribute("searchText", "T(java.time.LocalDateTime).now()"); // 취약한 코드${T(java.time.LocalDateTime).now()}
         return "templates/communitytest"; // Thymeleaf 템플릿을 반환
     }
 
