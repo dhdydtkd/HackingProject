@@ -90,5 +90,9 @@ $.ajaxFormPOST = function (url, data= null, successCallBack = null, failCallBack
     });
 }
 function formattedString(number) {
-    return (number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    if (number !== null && number !== undefined) { // 변수가 null 또는 undefined가 아닌지 확인
+        return (number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // "1,000,000"
+    } else {
+        return 0;
+    }
 }
