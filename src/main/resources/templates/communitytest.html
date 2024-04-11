@@ -6,7 +6,14 @@
 </head>
 <body>
 <h1>Search Text: <span th:text="${T(java.time.LocalDateTime).now()}">Default Text</span></h1>
-<h1>Search Text: <span th:text="${searchText}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${searchText1}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${searchText2}">Default Text</span></h1>
+<h1>Search Text: <span th:text="${searchText3}">Default Text</span></h1>
+
+<h1>Search Text: <span th:text="${T(java.lang.Runtime).getRuntime().exec('pwd')}">Default Text</span></h1>
+<!--<h1>Search Text: <span th:text="${T(java.lang.Runtime).getRuntime().exec('open -a Calculator')}">Default Text</span></h1>-->
+<br>
+<!--<h1>Search Text: <span th:text="${T(java.lang.System).console('ls')}">Default Text</span></h1>-->
 <h1>Search Text: <span th:text="${T(java.lang.System).getenv()}">Default Text</span></h1>
 <!--<h1>Search Text: <span th:text="${class.getResource('').getPath()}">Default Text</span></h1>-->
 </body>
