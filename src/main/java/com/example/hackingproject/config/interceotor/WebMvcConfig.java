@@ -20,6 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             , "/js/**"
             , "/login"
             , "/main"
+            , "/login/login"
             , "/login/autologin"
             , "/signup"
             , "/signup/signup_confirm"

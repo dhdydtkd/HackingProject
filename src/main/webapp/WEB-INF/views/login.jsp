@@ -77,6 +77,9 @@
                     if(result.body.jwtToken!=null&&result.body.jwtToken!=''){
                         // 자동로그인 체크 했을 경우 로컬 스토리지로 저장
                         localStorage.setItem('SKJWTToken', result.body.jwtToken);
+                        try {
+                            Android.setToken(result.body.jwtToken);
+                        } catch (err) {/* 안드로이드를 위한 코드기 때문에 Web에서 에러 발생함.*/}
 
                         window.location.href = '/main';
                         $("#login_fail").hide();
