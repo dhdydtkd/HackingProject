@@ -63,7 +63,7 @@ public class DetailStockAPIController {
 		
 		user.setUSER_ID(user_id);
 		
-        int unit = 0;
+        long unit = 0;
         
         detailStockVO.setUserId(user_id);
         detailStockVO = detailStockService.haveStock(detailStockVO);
@@ -100,7 +100,7 @@ public class DetailStockAPIController {
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSA_WEB_KEY);
         String detailStockJsonData = "";
         DetailStockVO detailStockVO = null;
-        int total;
+        long total;
         try{
             detailStockJsonData = decryptRsa(privateKey, E2EdetailStockData);
         }catch (Exception e){
@@ -126,8 +126,8 @@ public class DetailStockAPIController {
         if(isSuccess==null) {
         	return ResponseEntity.ok(Map.of("MSG","보유 금액 이상 구매 불가능"));
         }
-        total = Integer.parseInt(isSuccess)*Integer.parseInt(unit);
-        String message = user_id+"님의 구매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " +NumberFormat.getNumberInstance().format(Integer.parseInt(unit))+"\n총 구매 가격 : "+NumberFormat.getNumberInstance().format(total);
+        total = Long.parseLong(isSuccess)*Long.parseLong(unit);
+        String message = user_id+"님의 구매 가격 : " + NumberFormat.getNumberInstance().format(Long.parseLong(isSuccess)) + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " +NumberFormat.getNumberInstance().format(Integer.parseInt(unit))+"\n총 구매 가격 : "+NumberFormat.getNumberInstance().format(total);
         System.out.println(message);        
         return ResponseEntity.ok(Map.of("MSG", message));
     }
@@ -150,7 +150,7 @@ public class DetailStockAPIController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int cal_price;
+        long cal_price;
         
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
@@ -162,7 +162,7 @@ public class DetailStockAPIController {
     	
 
         if(isSuccess != null) {
-        	cal_price = Integer.parseInt(isSuccess) * Integer.parseInt(unit);
+        	cal_price = Long.parseLong(isSuccess) * Long.parseLong(unit);
         	message = user_id+"님의 판매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n판매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 판매 금액 : "+NumberFormat.getNumberInstance().format(cal_price) ;
         	return ResponseEntity.ok(Map.of("MSG", message));
         }

@@ -10,14 +10,14 @@ public class DetailStockVO {
     private String unit;
     private String stock;
     private String userId;
-    private int own;
-    private int pivot = 0;
-    private int AAPL=0;
-    private int AMZN=0;
-    private int FB=0;
-    private int GOOGL=0;
-    private int MSFT=0;
-    private int cal;
+    private long own;
+    private long pivot = 0;
+    private long AAPL=0;
+    private long AMZN=0;
+    private long FB=0;
+    private long GOOGL=0;
+    private long MSFT=0;
+    private long cal;
     
     
     

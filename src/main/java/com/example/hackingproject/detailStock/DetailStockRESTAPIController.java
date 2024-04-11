@@ -43,7 +43,7 @@ public class DetailStockRESTAPIController {
     	DetailStockVO detailStockVO = new DetailStockVO();
         ModelAndView mav = new ModelAndView();
         String user_id = (String)request.getSession().getAttribute("user_id");
-        int unit = 0;
+        long unit = 0;
         HttpSession session = request.getSession();
         String RSA_Modulus = (String)session.getAttribute(RSAModulus);
         String RSA_Exponent = (String)session.getAttribute(RSAExponent);
