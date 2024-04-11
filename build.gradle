@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.5'
+    id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'war'
@@ -11,7 +11,7 @@ bootWar {
 }
 group = 'com.example'
 version = '0.0.1'
-sourceCompatibility = '17'
+sourceCompatibility = '1.8'
 
 configurations {
     compileOnly {
@@ -49,15 +49,16 @@ dependencies {
     //파일 관련
     implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.4'
 
     //mybatis
     implementation'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
     runtimeOnly'mysql:mysql-connector-java:8.0.25'
 
     //lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
 
     //Spring프로젝트는 내부 tomcat을 사용할 수 있는데 이럴경우
     //JSP파일을 Servlet으로 변환해주는 Tomcat-Embed-Jasper라는 컴파일러가 없기 때문에 dependency에 따로 추가를 해주어야 한다.
