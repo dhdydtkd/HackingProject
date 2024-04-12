@@ -381,6 +381,12 @@ $(document).ready(function(){
                     }
                 }
             %>
+            <c:set var="accessLevel" value="${sessionScope.access_level}" />
+            <c:if test="${accessLevel != null && accessLevel == 1}">
+                <a href="/noticewrite" class="text">
+                    <button>글쓰기</button>
+                </a>
+            </c:if>
 
             <!-- 가운데 정렬을 위한 컨테이너 -->
             <div class="center-container">
@@ -395,10 +401,6 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-            <!--<a href="#">수정</a>
-            </div>
-                <a href="공지사항_페이지_URL" class="more-link">더보기</a>
-                -->
         </section>
 
 	<input type="hidden" id ="hidde" value="">

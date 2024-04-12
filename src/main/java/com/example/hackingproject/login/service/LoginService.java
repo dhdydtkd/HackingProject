@@ -59,6 +59,7 @@ public class LoginService {
             }
             HttpSession session = request.getSession();
             session.setAttribute("user_id", userId);
+            session.setAttribute("access_level", user.getAccessLevel());
         }
 
         //session.removeAttribute(RSA_WEB_KEY);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Slf4j
@@ -46,8 +47,14 @@ public class NoticeController {
 
     //공지사항 작성
     @GetMapping("/noticewrite")
-    public String getNoticeWritePage() {
-        return "noticewrite";
+    public String getNoticeWritePage(HttpSession session) {
+        Integer accessLevel = (Integer) session.getAttribute("access_level");
+        if (accessLevel != null && accessLevel == 1) {
+            System.out.println("Access level: " + accessLevel);
+            return "noticewrite"; // 관리자인 경우 공지사항 작성 페이지 이동
+        } else {
+            return "redirect:/main"; // 관리자가 아닌 경우 메인 페이지로 이동
+        }
     }
 
     //공지사항 제출

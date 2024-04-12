@@ -12,4 +12,8 @@ public class UserVO {
     private String USER_NM;
 
     private Integer ACCESS_LEVEL;
+
+    public Integer getAccessLevel() {
+        return this.ACCESS_LEVEL;
+    }
 }
