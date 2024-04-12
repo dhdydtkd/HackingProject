@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,9 +52,12 @@ public class NoticeService {
 
         if (resource.exists() && resource.isReadable()) {
             String originalFileName = notice.getNOTICE_FILE_NAME();
+            // 파일명을 UTF-8로 인코딩
+            String encodedFileName = URLEncoder.encode(originalFileName, StandardCharsets.UTF_8)
+                    .replaceAll("\\+", "%20");
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + originalFileName + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"")
                     .body(resource);
         } else {
             String errorMessage = "파일을 찾을 수 없습니다: " + file;
