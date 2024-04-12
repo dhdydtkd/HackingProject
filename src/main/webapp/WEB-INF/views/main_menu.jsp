@@ -40,9 +40,34 @@ $(document).ready(function(){
 	            keywords: keyword // stockCode 변수의 값을 사용
 	        }),
 	        success: function(stockResponse) {
-	            console.log(stockResponse);
-	           //alert(stockResponse.MSG);
-	            $('#hidde').val(stockResponse.MSG);
+                if(stockResponse.MSG==true){
+                    let stockBodyHTML = "";
+                    for(var i = 0; i<stockResponse.stockList.length; i++){
+                        var stock_code = stockResponse.stockList[i]["STOCK_CODE"];
+                        var stock_name = stockResponse.stockList[i]["STOCK_NAME"];
+                        var stock_price = stockResponse.stockList[i]["STOCK_PRICE"];
+
+                        var detailstockdata = "/detailstock?stockCode="+stock_code+"&stockName="+stock_name;
+                        stockBodyHTML += "<a href="+detailstockdata+">";
+                        stockBodyHTML += "<li>";
+                        stockBodyHTML += "<span class='stock-number'>"+(i+1)+"</span>";
+                        stockBodyHTML += "<p name='STOCK_NAME'>"+stock_name+"</p>";
+                        stockBodyHTML += "<p name='STOCK_PRICE'>"+formattedString(stock_price)+"원</p>";
+
+                        stockBodyHTML += "</li>";
+                        stockBodyHTML += "</a>";
+
+                    }
+
+                    $('#search_result').empty();
+                    $('#search_result').append(stockBodyHTML);
+                    $('.search-result-section').show();
+
+                }
+                else{
+                    $('.search-result-section').hide();
+                }
+
 	        },
 	        error: function(xhr, status, error) {
 	            alert('Stock 정보 로드 실패: ' + error);
@@ -280,7 +305,16 @@ $(document).ready(function(){
             </a>
         </section>
 
+
+
         <section id="todayStocks" class="tab-content">
+
+            <div class="search-result-section" style="display: none;">
+                <h2>검색 결과</h2>
+                <ol id="search_result" class="search-result">
+                </ol>
+            </div>
+
             <div class="indices-section">
                 <h2>주요 지수</h2>
                 <div class="indices">
@@ -328,6 +362,7 @@ $(document).ready(function(){
                 </ol>
             </div>
         </section>
+
         <section id="news" class="tab-content hidden">
             <%
                 List<NoticeReq> noticeList = (List<NoticeReq>) request.getAttribute("noticeList");
