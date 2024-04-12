@@ -23,16 +23,16 @@ public class DetailStockService {
     	String price = null;
     	price = String.valueOf(detailStockDAO.getStockPrice(detailStockVO.getStock()));
 
-    	int cal = Integer.parseInt(price)* Integer.parseInt(detailStockVO.getUnit());
+    	long cal = Long.parseLong(price)* Long.parseLong(detailStockVO.getUnit());
     	
     	System.out.println(message+"합 : "+ cal);
     	
     	detailStockVO.setPrice(price);
     	detailStockVO.setCal(cal);
     	
-    	int balance = detailStockDAO.getUserData(detailStockVO.getUserId()).getACCOUNT_BALANCE();
+    	long balance = detailStockDAO.getUserData(detailStockVO.getUserId()).getACCOUNT_BALANCE();
     	System.out.println("최신 가격 : "+ price+"bal : "+balance);
-    	if(balance > 0  && balance - cal > 0) {
+    	if(balance > 0  && balance - cal > 0 && cal>0) {
     		detailStockDAO.minusAccount(detailStockVO);
     		detailStockDAO.buyStock(detailStockVO);
             detailStockDAO.insertUser(detailStockVO);
@@ -48,8 +48,8 @@ public class DetailStockService {
     public String sellStock(DetailStockVO detailStockVO) {
     	detailStockVO.setStockSellQuantity();
     	String message = detailStockVO.getUserId()+"님 service Level =>가격 : " + detailStockVO.getPrice() + ", 판매 수량 : " + detailStockVO.getUnit() + "주식 : "+detailStockVO.getStock()+""+detailStockVO.getAAPL(); 
-    	int unit = 0;
-    	int getUnit = Integer.parseInt(detailStockVO.getUnit());
+    	long unit = 0;
+    	long getUnit = Long.parseLong(detailStockVO.getUnit());
     	String price = null;
     	
     	detailStockVO.setUnit("-"+detailStockVO.getUnit());
@@ -79,7 +79,7 @@ public class DetailStockService {
                     break;
             }
         }
-    	int cal = Integer.parseInt(price)* getUnit;
+    	long cal = Long.parseLong(price)* getUnit;
     	detailStockVO.setCal(cal);
     	if(unit >=  getUnit) {
 	        detailStockDAO.sellStock(detailStockVO);
@@ -94,11 +94,11 @@ public class DetailStockService {
     	
     	detailStockVO = detailStockDAO.haveStock(detailStockVO);
     	//detailStockVO.setStockQuantity();
-    	int S = detailStockVO.getAAPL();
-    	int L = detailStockVO.getAMZN();
-    	int T = detailStockVO.getFB();
-    	int A = detailStockVO.getGOOGL();
-    	int SK = detailStockVO.getMSFT();
+    	long S = detailStockVO.getAAPL();
+    	long L = detailStockVO.getAMZN();
+    	long T = detailStockVO.getFB();
+    	long A = detailStockVO.getGOOGL();
+    	long SK = detailStockVO.getMSFT();
     	System.out.println(user_id+"님의 보유 주식 개수 \nAAPL: "+S+"\nAMZN: "+L+"\nFB: "+T+"\nGOOGL: "+A+"\nMSFT: "+SK);
     	
     	
