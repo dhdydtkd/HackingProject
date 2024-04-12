@@ -9,4 +9,5 @@ public class LoginReq {
 
     private String user_id;
     private String user_pw;
+    private Boolean auto_login_flag;
 }

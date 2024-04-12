@@ -30,6 +30,8 @@
     const JWTToken = localStorage.getItem('SKJWTToken');
     // 토큰이 있을 경우 자동 로그인을 위한 요청
     if(JWTToken!=null){
+        $("#auto-login").prop("checked", true);
+        $("#auto_login_popup").show();
         $.ajax({
             type: "POST",
             url: "/login/autologin",
@@ -48,7 +50,10 @@
     }
 
     $(() => {
-
+        if(JWTToken!=null) {
+            $("#auto-login").prop("checked", true);
+            $("#auto_login_popup").show();
+        }
         $("#signup").click(function(){
             window.location.href = '/signup';
         });
@@ -67,25 +72,31 @@
             }
             const rsa = new RSAKey();
             rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+
             let data = {
                 user_id: rsa.encrypt(id.val())
                 , user_pw: rsa.encrypt(pass.val())
+                , auto_login_flag: $("#auto-login").is(":checked")
             }
-
+            console.log(document.cookie);
+            $("#login_fail").hide();
             $.ajaxPOST("login/login", data, function(result){
                 if (result.state.code == "0000") {
-                    if(result.body.jwtToken!=null&&result.body.jwtToken!=''){
+                    if(result.body.userData!=null){
                         // 자동로그인 체크 했을 경우 로컬 스토리지로 저장
-                        localStorage.setItem('SKJWTToken', result.body.jwtToken);
-                        try {
-                            Android.setToken(result.body.jwtToken);
-                        } catch (err) {/* 안드로이드를 위한 코드기 때문에 Web에서 에러 발생함.*/}
-
+                        if($("#auto-login").is(":checked")){
+                            if(result.body.jwtToken!=null&&result.body.jwtToken!='') {
+                                localStorage.setItem('SKJWTToken', result.body.jwtToken);
+                                try {
+                                    Android.setToken(result.body.jwtToken);
+                                } catch (err) {/* 안드로이드를 위한 코드기 때문에 Web에서 에러 발생함.*/}
+                            }
+                        }
                         window.location.href = '/main';
-                        $("#login_fail").hide();
                     }else{
                         $("#login_fail").show();
                     }
+
                 }
             });
         });
@@ -111,9 +122,16 @@
             <input type="password" id="password" name="password" required>
         </div>
         <p id="login_fail" style="display:none; color:red;">로그인 실패!</p>
+        <div class="checkbox">
+            <input type="checkbox" id="auto-login" name="auto-login" />
+            <label for="auto-login">자동로그인</label>
+        </div>
         <button type="submit" id="login" class="login-btn">로그인</button>
 <%--    </form>--%>
     <button class="signup-btn" id="signup">회원가입</button>
+</div>
+<div id="auto_login_popup" class="auto-login-overlay" style="display: none;">
+    <div class="auto-login-message">자동 로그인 중입니다.</div>
 </div>
 </body>
 </html>

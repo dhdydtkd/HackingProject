@@ -54,7 +54,9 @@ public class LoginService {
         }else{
             // JWT 셋팅
             // 자동 로그인 체크 했을때 토큰 반환해야줘함
-            result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
+            if(loginReq.getAuto_login_flag()){
+                result.put("jwtToken",jwtTokenUtil.generateTokenForUser(user));
+            }
             HttpSession session = request.getSession();
             session.setAttribute("user_id", userId);
         }
