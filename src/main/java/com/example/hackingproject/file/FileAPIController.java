@@ -83,7 +83,7 @@ public class FileAPIController {
         response.setContentLength(fileByte.length);
 
         //response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(file.getFileName(),"UTF-8") +"\";");
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(file.getFileName(), StandardCharsets.UTF_8)+"\";");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(file.getFileName(), String.valueOf(StandardCharsets.UTF_8))+"\";");
         response.setHeader("Content-Transfer-Encoding", "binary");
 
         response.getOutputStream().write(fileByte);
