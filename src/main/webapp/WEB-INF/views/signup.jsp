@@ -43,11 +43,11 @@
             let data = {
                 userId: rsa.encrypt($("#USER_ID").val()),
                 userPw: rsa.encrypt($("#USER_PW").val()),
-                userTelno: $("#USER_TELNO").val(),
-                userName: $("#USER_NM").val(),
+                userTelno: rsa.encrypt($("#USER_TELNO").val()),
+                userName: rsa.encrypt($("#USER_NM").val()),
                 userBirth: rsa.encrypt($("#USER_BIRTH").val()),
                 userBank: $("#USER_BANK").val(),
-                accountNumber: $("#USER_ACCOUNT_NUM").val(),
+                accountNumber: rsa.encrypt($("#USER_ACCOUNT_NUM").val()),
                 userAgency: $("#USER_AGENCY").val(),
                 accessLevel: $("#ACCESS_LEVEL").val(),
                 accountBalance: $("#ACCOUNT_BALANCE").val()

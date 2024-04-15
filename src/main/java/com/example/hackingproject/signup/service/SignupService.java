@@ -40,12 +40,19 @@ public class SignupService {
         String userId = "";
         String userPw = "";
         String userBirth = "";
+        String userName = "";
+        String userTelno = "";
+        String userAccountNum = "";
 
         //RSA 복호화
         try{
             userId = decryptRsa(privateKey,userEntity.getUserId());
             userPw = decryptRsa(privateKey,userEntity.getUserPw());
             userBirth = decryptRsa(privateKey,userEntity.getUserBirth());
+            userName = decryptRsa(privateKey,userEntity.getUserName());
+            userTelno = decryptRsa(privateKey,userEntity.getUserTelno());
+            userAccountNum = decryptRsa(privateKey,userEntity.getAccountNumber());
+
         }catch(Exception e){
         }
         
@@ -53,11 +60,17 @@ public class SignupService {
         decryptionData.setUserId(userId);
         decryptionData.setUserPw(userPw);
         decryptionData.setUserBirth(userBirth);
+        decryptionData.setUserName(userName);
+        decryptionData.setUserTelno(userTelno);
+        decryptionData.setAccountNumber(userAccountNum);
 
         //유저정보설정
         userEntity.setUserId(userId);
         userEntity.setUserPw(SHA256Encrypt(userPw));
         userEntity.setUserBirth(userBirth);
+        userEntity.setUserName(userName);
+        userEntity.setUserTelno(userTelno);
+        userEntity.setAccountNumber(userAccountNum);
         userEntity.setAccountBalance(ThreadLocalRandom.current().nextInt(1000, 100000)); //계좌 잔액 기본값 설정(테스트용)
         signupDAO.insertUser(userEntity);
         signupDAO.insertUserStock(userId);
