@@ -43,31 +43,24 @@ public class DetailStockAPIController {
 
     @Autowired
     private DetailStockRESTAPIController de;
-    
+
     @Autowired
-	private DetailStockService detailStockService;
+    private DetailStockService detailStockService;
 
-	public DetailStockAPIController(DetailStockService detailStockService) {
-		this.detailStockService = detailStockService;
-	}
+    public DetailStockAPIController(DetailStockService detailStockService) {
+        this.detailStockService = detailStockService;
+    }
 
-	
-	@PostMapping("/detailReload")
-	public ResponseEntity<?> reload(HttpServletRequest request, @RequestBody DetailStockVO detailStockVO) {
-		//BaseModel baseModel = new BaseModel();
-		Map<String, Object> responseBody = new HashMap<>();
-		
-		MyUserData user = new MyUserData();
-		String user_id = (String)request.getSession().getAttribute("user_id");
-		String stockCode = detailStockVO.getStock();
-		
-		user.setUSER_ID(user_id);
-		
+    @PostMapping("/detailReload")
+    public ResponseEntity<?> reload(HttpServletRequest request, @RequestBody DetailStockVO detailStockVO) {
+        Map<String, Object> responseBody = new HashMap<>();
+        MyUserData user = new MyUserData();
+        String user_id = (String)request.getSession().getAttribute("user_id");
+        String stockCode = detailStockVO.getStock();
+        user.setUSER_ID(user_id);
         long unit = 0;
-        
         detailStockVO.setUserId(user_id);
         detailStockVO = detailStockService.haveStock(detailStockVO);
-        
         if (stockCode != null) {
             switch (stockCode) {
                 case "AAPL":
@@ -91,23 +84,21 @@ public class DetailStockAPIController {
         responseBody.put("haveStock", unit);
         responseBody.put("balance", user.getACCOUNT_BALANCE());
         return ResponseEntity.ok(responseBody);
-	}
-	
+    }
+
     @PostMapping("/detailBuy")
-    public ResponseEntity<?> buyStock(HttpServletRequest request,@RequestBody String E2EdetailStockData) {
-        // payload에서 price와 unit을 추출
+    public ResponseEntity<?> buyStock(HttpServletRequest request, @RequestBody String E2EdetailStockData) {
         HttpSession session = request.getSession();
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSA_WEB_KEY);
         String detailStockJsonData = "";
         DetailStockVO detailStockVO = null;
         long total;
-        try{
+        try {
             detailStockJsonData = decryptRsa(privateKey, E2EdetailStockData);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("[주식 구매]복호화 에러");
         }
         try {
-            // JSON 데이터를 StockData 객체로 변환
             ObjectMapper objectMapper = new ObjectMapper();
             detailStockVO = objectMapper.readValue(detailStockJsonData, DetailStockVO.class);
         } catch (Exception e) {
@@ -116,101 +107,86 @@ public class DetailStockAPIController {
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
         String user_id = detailStockVO.getUserId();
-        
-
-
-        // 비즈니스 로직 처리 후 결과 메시지 생성
-        
-
         String isSuccess = detailStockService.buyStock(detailStockVO);
-        if(isSuccess==null) {
-        	return ResponseEntity.ok(Map.of("MSG","보유 금액 이상 구매 불가능"));
+        if (isSuccess == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("MSG", "보유 금액 이상 구매 불가능");
+            return ResponseEntity.ok(response);
         }
-        total = Long.parseLong(isSuccess)*Long.parseLong(unit);
-        String message = user_id+"님의 구매 가격 : " + NumberFormat.getNumberInstance().format(Long.parseLong(isSuccess)) + "\n구매 정보 : "+detailStockVO.getStock()+"\n구매 수량 : " +NumberFormat.getNumberInstance().format(Integer.parseInt(unit))+"\n총 구매 가격 : "+NumberFormat.getNumberInstance().format(total);
-        System.out.println(message);        
-        return ResponseEntity.ok(Map.of("MSG", message));
+        total = Long.parseLong(isSuccess) * Long.parseLong(unit);
+        String message = user_id + "님의 구매 가격 : " + NumberFormat.getNumberInstance().format(Long.parseLong(isSuccess)) + "\n구매 정보 : " + detailStockVO.getStock() + "\n구매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 구매 가격 : " + NumberFormat.getNumberInstance().format(total);
+        System.out.println(message);
+        Map<String, Object> response = new HashMap<>();
+        response.put("MSG", message);
+        return ResponseEntity.ok(response);
     }
-    
+
     @PostMapping("/detailSell")
-    public ResponseEntity<?> sellStock(HttpServletRequest request,@RequestBody String E2EdetailStockData){
+    public ResponseEntity<?> sellStock(HttpServletRequest request, @RequestBody String E2EdetailStockData){
         HttpSession session = request.getSession();
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSA_WEB_KEY);
         String detailStockJsonData = "";
         DetailStockVO detailStockVO = null;
-        try{
+        try {
             detailStockJsonData = decryptRsa(privateKey, E2EdetailStockData);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("[주식 판매]복호화 에러");
         }
         try {
-            // JSON 데이터를 StockData 객체로 변환
             ObjectMapper objectMapper = new ObjectMapper();
             detailStockVO = objectMapper.readValue(detailStockJsonData, DetailStockVO.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
         long cal_price;
-        
         String price = String.valueOf(detailStockVO.getPrice());
         String unit = String.valueOf(detailStockVO.getUnit());
         String user_id = detailStockVO.getUserId();
-    	
-        String message = ""; 
-        
+        String message = "";
         String isSuccess = detailStockService.sellStock(detailStockVO);
-    	
-
         if(isSuccess != null) {
-        	cal_price = Long.parseLong(isSuccess) * Long.parseLong(unit);
-        	message = user_id+"님의 판매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n판매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 판매 금액 : "+NumberFormat.getNumberInstance().format(cal_price) ;
-        	return ResponseEntity.ok(Map.of("MSG", message));
+            cal_price = Long.parseLong(isSuccess) * Long.parseLong(unit);
+            message = user_id+"님의 판매 가격 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(isSuccess)) + "\n판매 수량 : " + NumberFormat.getNumberInstance().format(Integer.parseInt(unit)) + "\n총 판매 금액 : "+NumberFormat.getNumberInstance().format(cal_price) ;
+            Map<String, Object> response = new HashMap<>();
+            response.put("MSG", message);
+            return ResponseEntity.ok(response);
         }
-    	return ResponseEntity.ok(Map.of("MSG", "보유 갯수 보다 많이 판매 하실 수 없습니다."));
+        Map<String, Object> response = new HashMap<>();
+        response.put("MSG", "보유 갯수 보다 많이 판매 하실 수 없습니다.");
+        return ResponseEntity.ok(response);
     }
-    
+
+
     @PostMapping("/haveStock")
     public ResponseEntity<?> haveStock(@RequestBody(required = false) DetailStockVO detailStockVO){
-        // detailStockVO 객체가 null인 경우의 처리
         if (detailStockVO == null) {
             return ResponseEntity.badRequest().body("요청 본문이 비어 있습니다.");
         }
-        
-        // 받은 정보를 서비스로 넘긴다.
         int unit = 0;
         String stock = detailStockVO.getStock();
         String user_id = detailStockVO.getUserId();
-        String message = user_id + "님 :" + stock; 
+        String message = user_id + "님 :" + stock;
         System.out.println(message);
 
-
-        return ResponseEntity.ok(Map.of("userId", user_id));
+        Map<String, Object> response = new HashMap<>();
+        response.put("userId", user_id);
+        return ResponseEntity.ok(response);
     }
 
-    /**
-     * 복호화
-     *
-     * @param privateKey
-     * @param securedValue
-     * @return
-     * @throws Exception
-     */
+
     private String decryptRsa(PrivateKey privateKey, String securedValue) throws Exception {
         Cipher cipher = Cipher.getInstance(RSA_INSTANCE);
         byte[] encryptedBytes = hexToByteArray(securedValue);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        String decryptedValue = new String(decryptedBytes, StandardCharsets.UTF_8); // 문자 인코딩 주의.
+        String decryptedValue = new String(decryptedBytes, StandardCharsets.UTF_8);
         return decryptedValue;
     }
-    /**
-     * 16진 문자열을 byte 배열로 변환한다.
-     *
-     * @param hex
-     * @return
-     */
+
     public static byte[] hexToByteArray(String hex) {
-        if (hex == null || hex.length() % 2 != 0) { return new byte[] {}; }
+        if (hex == null || hex.length() % 2 != 0) {
+            return new byte[] {};
+        }
 
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < hex.length(); i += 2) {

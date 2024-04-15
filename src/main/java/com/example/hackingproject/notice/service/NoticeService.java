@@ -53,8 +53,7 @@ public class NoticeService {
         if (resource.exists() && resource.isReadable()) {
             String originalFileName = notice.getNOTICE_FILE_NAME();
             // 파일명을 UTF-8로 인코딩
-            String encodedFileName = URLEncoder.encode(originalFileName, StandardCharsets.UTF_8)
-                    .replaceAll("\\+", "%20");
+            String encodedFileName = URLEncoder.encode(originalFileName, StandardCharsets.UTF_8.toString());
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"")
