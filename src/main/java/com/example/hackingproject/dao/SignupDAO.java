@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SignupDAO {
 	void insertUser(SignupVO user);
+	void insertUserStock(String userId);
 }

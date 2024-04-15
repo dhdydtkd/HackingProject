@@ -45,7 +45,7 @@
                 userPw: rsa.encrypt($("#USER_PW").val()),
                 userTelno: $("#USER_TELNO").val(),
                 userName: $("#USER_NM").val(),
-                userBirth: $("#USER_BIRTH").val(),
+                userBirth: rsa.encrypt($("#USER_BIRTH").val()),
                 userBank: $("#USER_BANK").val(),
                 accountNumber: $("#USER_ACCOUNT_NUM").val(),
                 userAgency: $("#USER_AGENCY").val(),
@@ -104,8 +104,8 @@
     </div>
     
     <div class="input-group">
-        <label for="USER_BIRTH">주민등록번호</label>
-        <input type="text" id="USER_BIRTH" name="ssn" placeholder="주민등록번호 입력">
+        <label for="USER_BIRTH">생년월일</label>
+        <input type="text" id="USER_BIRTH" name="ssn" placeholder="생년월일 입력 (YYMMDD)">
     </div>
     
     <div class="input-group">

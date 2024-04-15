@@ -14,6 +14,8 @@ import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 @Service
 public class SignupService {
@@ -37,20 +39,28 @@ public class SignupService {
 
         String userId = "";
         String userPw = "";
+        String userBirth = "";
 
+        //RSA 복호화
         try{
             userId = decryptRsa(privateKey,userEntity.getUserId());
             userPw = decryptRsa(privateKey,userEntity.getUserPw());
+            userBirth = decryptRsa(privateKey,userEntity.getUserBirth());
         }catch(Exception e){
         }
         
         SignupVO decryptionData = new SignupVO();
         decryptionData.setUserId(userId);
         decryptionData.setUserPw(userPw);
+        decryptionData.setUserBirth(userBirth);
 
+        //유저정보설정
         userEntity.setUserId(userId);
         userEntity.setUserPw(SHA256Encrypt(userPw));
+        userEntity.setUserBirth(userBirth);
+        userEntity.setAccountBalance(ThreadLocalRandom.current().nextInt(1000, 100000)); //계좌 잔액 기본값 설정(테스트용)
         signupDAO.insertUser(userEntity);
+        signupDAO.insertUserStock(userId);
 
         Map<String, Object> result = new HashMap<String,Object>();
         result.put("userEntity",userEntity);

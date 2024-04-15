@@ -7,4 +7,9 @@
         VALUES (#{userId}, #{userPw}, #{userTelno}, #{userName}, #{userBirth}, #{userBank}, #{accountNumber}, #{userAgency}, #{accessLevel}, #{accountBalance})
     </insert>
 
+    <insert id="insertUserStock" parameterType="String">
+        INSERT INTO rookie.UserStock (USER_ID, AAPL, AMZN, FB, GOOGL, MSFT)
+        VALUES (#{userId}, 0, 0, 0, 0, 0)
+    </insert>
+
 </mapper>
