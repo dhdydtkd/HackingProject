@@ -1,0 +1,213 @@
+/* Resetting default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+.qna-container {
+  width: 100%;
+  max-width: 25rem;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: #ffffff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fafafa;
+  border-top: 0.063rem solid #e0e0e0;
+  border-bottom: 0.063rem solid #e0e0e0;
+}
+
+.header .material-icons {
+  color: #333;
+  cursor: pointer;
+}
+
+.header .left {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.header .center,
+.header .right {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.announcement {
+  background: #f9f9f9;
+  margin: 0.938rem 0;
+  padding: 0.938rem;
+  border-left: 0.313rem solid #333;
+}
+
+.announcement h2 {
+  font-size: 0.938rem;
+  margin-bottom: 0.313rem;
+  color: #333;
+}
+
+.announcement p {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.announcement span {
+  font-size: 0.83rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.QNA-header {
+  display: flex; /* �뚮젆�� 而⑦뀒�대꼫 �ㅼ젙 */
+  align-items: center; /* �몃줈 諛⑺뼢 以묒븰 �뺣젹 */
+  justify-content: space-between; /* �붿냼�ㅼ쓣 �쒖옉�먯뿉�� �뺣젹 */
+}
+
+.QNA-footer {
+  display: flex; /* �뚮젆�� 而⑦뀒�대꼫 �ㅼ젙 */
+  align-items: center; /* �몃줈 諛⑺뼢 以묒븰 �뺣젹 */
+  justify-content: space-between; /* �붿냼�ㅼ쓣 �쒖옉�먯뿉�� �뺣젹 */
+}
+
+.answer {
+  font-size: 0.5rem;
+  color: rgb(133, 213, 133);
+}
+
+.response-indicator {
+  font-size: 0.75rem;
+  color: #333;
+  font-weight: bold;
+  position: relative;
+}
+
+.response-indicator::before {
+  content: "\21B5"; /* CSS code for a bent arrow */
+  color: #333;
+  font-size: 1rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%) scaleX(-1); /* �붿궡�� �꾩튂 議곗젙 諛� 諛섏쟾 */
+  line-height: 1;
+}
+
+.response-content {
+  display: flex; /* �뚮젆�� 而⑦뀒�대꼫 �ㅼ젙 */
+  flex-direction: column; /* �먯떇 �붿냼�ㅼ쓣 �몃줈濡� �볤린 */
+  padding-left: 1.563rem; /* �붿궡�쒖��� �щ갚 */
+}
+
+.response-content h2 {
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.response-footer {
+  display: flex; /* �뚮젆�� 而⑦뀒�대꼫 �ㅼ젙 */
+  align-items: center; /* �몃줈 諛⑺뼢 以묒븰 �뺣젹 */
+  justify-content: space-between; /* �붿냼�ㅼ쓣 �쒖옉�먯뿉�� �뺣젹 */
+}
+
+.response-footer p {
+  order: 1; /* �좎쭨媛� �ㅻⅨ履쎌쑝濡� �대룞�⑸땲��. */
+}
+
+.response-footer span {
+  order: -1; /* 臾멸뎄媛� �쇱そ�쇰줈 �대룞�⑸땲��. */
+}
+
+.QNA_RESPONSE_TITLE {
+  margin: 0;
+  color: #333;
+  font-size: 0.75rem;
+}
+
+.QNA_RESPONSE_DATE {
+  margin: 0;
+  color: #666;
+  margin-right: 0.5rem; /* �좎쭨�� 臾멸뎄 �ъ씠�� 媛꾧꺽 */
+}
+
+.button {
+  text-align: center;
+  font-size: 0.4rem;
+}
+
+.button a {
+  display: inline-block;
+  min-width: 1rem;
+  margin-left: 0.625rem;
+  padding: 0.2rem;
+  border: 0.063rem solid #515151;
+  border-radius: 0.125rem;
+  font-size: 0.5rem;
+  text-decoration: none;
+}
+
+.button a:first-child {
+  margin-left: 0;
+}
+
+.button a.on {
+  background: #515151;
+  color: #fff;
+}
+
+.submit-btn {
+  margin-top: 1.875rem;
+  text-align: center;
+  font-size: 0;
+}
+
+.submit-btn a {
+  display: inline-block;
+  min-width: 3.75rem;
+  margin-left: 0.625rem;
+  padding: 0.375rem;
+  border: 0.063rem solid #333;
+  border-radius: 0.125rem;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.submit-btn a:first-child {
+  margin-left: 0;
+}
+
+.submit-btn a.on {
+  background: #333;
+  color: #fff;
+}
+
+/* Media Queries for Responsive Design */
+@media only screen and (min-width: 637.5rem) {
+  .qna-container {
+    max-width: 80%;
+  }
+
+  .header {
+    font-size: 1.125rem;
+  }
+}
+
+@media only screen and (min-width: 48rem) {
+  .qna-container {
+    max-width: 50%;
+  }
+}

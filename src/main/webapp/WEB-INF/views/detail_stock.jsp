@@ -576,7 +576,7 @@ function setOwnR(hs){
         <a
         href="커뮤니티 페이지"
           id="communityButton"
-          onclick="clickButton('community')"
+<%--          onclick="clickButton('community')"--%>
           class="w-full text-center py-3 "
         >
           커뮤니티

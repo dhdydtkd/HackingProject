@@ -37,7 +37,7 @@ public class MyPageService {
 
     public Boolean AccountPriceCheck(String user_id, SendData sendJsonData){
         MyUserData myUserData = userDAO.getUserInfo(user_id);
-        if(myUserData.getACCOUNT_BALANCE() > sendJsonData.getPrice()){
+        if(myUserData.getACCOUNT_BALANCE() >= sendJsonData.getPrice()){
             return true;
         }else{
             return false;

@@ -12,6 +12,7 @@ public class MyUserData {
     public String USER_BANK;
     public String USER_ACCOUNT_NUMBER;
     public Integer ACCOUNT_BALANCE;
+    public Integer ACCESS_LEVEL;
 
     public Integer nowTotalPrice;
     public Integer buyTotalPrice;

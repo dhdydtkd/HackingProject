@@ -1,0 +1,153 @@
+body,
+h1,
+p,
+table {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fafafa;
+  border-top: 0.063rem;
+  border-bottom: 0.063rem;
+}
+
+.header .material-icons {
+  color: #333;
+  cursor: pointer;
+}
+
+.header .left {
+  flex-grow: 1;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.header .center,
+.header .right {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.context {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.notice-header {
+  text-align: center;
+  padding: 3.125rem 0.625rem 1.25rem;
+}
+
+.notice-header h1 {
+  color: #333;
+  font-size: 3.75rem;
+  font-weight: 700;
+  margin-bottom: 0.625rem;
+}
+
+.notice-header p {
+  color: #4a5568;
+  margin-bottom: 1.25rem;
+}
+
+.notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.25rem;
+}
+
+.notice-table th,
+.notice-table td {
+  text-align: left;
+  padding: 0.938rem;
+  border-bottom: 0.063rem solid #ddd;
+}
+
+.notice-table th {
+  background-color: #f2f2f2;
+}
+
+.notice-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.form-container {
+  max-width: 31.25rem;
+  margin: 1.25rem auto;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group1 {
+  text-align: right;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.313rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.625rem;
+  border: 0.063rem solid #ddd;
+  border-radius: 0.25rem;
+  box-sizing: border-box; /* width瑜� padding �ы븿�쇰줈 怨꾩궛 */
+}
+
+.form-group1 button {
+  padding: 0.625rem 1.25rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.form-group1 button:hover {
+  background: #696666;
+}
+
+@media screen and (max-width: 768px) {
+  .notice-header h1 {
+    font-size: 3em;
+  }
+
+  .notice-header p {
+    font-size: 1em;
+  }
+
+  .notice-table th,
+  .notice-table td {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .notice-header h1 {
+    font-size: 1.2em;
+  }
+
+  .notice-header p {
+    font-size: 0.8em;
+  }
+
+  .notice-table th,
+  .notice-table td {
+    padding: 8px;
+  }
+}

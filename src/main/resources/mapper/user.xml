@@ -12,6 +12,7 @@
             , u.USER_BANK
             , u.USER_ACCOUNT_NUMBER
             , u.ACCOUNT_BALANCE
+            , u.ACCESS_LEVEL
         FROM rookie.Users as u
         <where>
             u.USER_ID = #{param}

@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.QnaDAO">
+
+    <select id="getQnaList"
+            parameterType="String"
+            resultType="com.example.hackingproject.qna.dto.QnaData">
+        SELECT
+            q.IDX,
+            q.USER_ID,
+            q.USER_NAME,
+            q.TITLE AS Q_TITLE,
+            q.CONTENT AS Q_CONTENT,
+            q.CREATE_DT AS Q_CREATE_DT,
+            a.IDX_CONNECTION,
+            a.TITLE AS A_TITLE,
+            a.CONTENT AS A_CONTENT,
+            a.CREATE_DT AS A_CREATE_DT
+        FROM rookie.Question q
+            LEFT JOIN rookie.Answer a ON q.IDX = a.IDX_CONNECTION
+        <where>
+            q.USER_ID = #{param};
+        </where>
+    </select>
+
+    <select id="getAllQnaList"
+            resultType="com.example.hackingproject.qna.dto.QnaData">
+        SELECT
+            q.IDX,
+            q.USER_ID,
+            q.USER_NAME,
+            q.TITLE AS Q_TITLE,
+            q.CONTENT AS Q_CONTENT,
+            q.CREATE_DT AS Q_CREATE_DT,
+            a.IDX_CONNECTION,
+            a.TITLE AS A_TITLE,
+            a.CONTENT AS A_CONTENT,
+            a.CREATE_DT AS A_CREATE_DT
+        FROM rookie.Question q
+             LEFT JOIN rookie.Answer a ON q.IDX = a.IDX_CONNECTION
+--         WHERE a.IDX_CONNECTION IS NULL;
+
+    </select>
+
+
+    <insert id="addQna"
+            parameterType="com.example.hackingproject.qna.dto.QnaReq">
+        INSERT INTO rookie.Question (
+             USER_ID
+           , USER_NAME
+           , TITLE
+           , CONTENT
+           , CREATE_DT
+        )
+        VALUES
+        (
+            #{create_id}
+            , #{create_nm}
+            , #{title}
+            , #{content}
+            , (SELECT DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%S"))
+        )
+    </insert>
+
+</mapper>

@@ -36,7 +36,6 @@ body {
     margin-top: 0.5rem;
     align-items: center;
     margin-bottom: 1rem;
-    text-align: center;
 }
 
 .left-content img{
@@ -46,6 +45,12 @@ body {
 }
 .right-content {
     flex: 0 0 auto; /* 로고와 로그아웃 버튼 크기가 유지되도록 설정 */
+    text-align:right;
+}
+
+.qna {
+    padding-left: 0.2rem;
+    padding-right: 2.5rem;
 }
 
 .center-content {

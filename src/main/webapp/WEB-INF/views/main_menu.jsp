@@ -29,9 +29,7 @@
 <script>
 $(document).ready(function(){
 	$('#search-button').click(function(){
-	    //alert('Search input clicked!');
 	    var keyword = $('#search-input').val();
-	    //alert(keyword);
 	    $.ajax({
 	        url: '/search', // 요청을 보낼 경로
 	        type: 'POST',
@@ -236,6 +234,7 @@ $(document).ready(function(){
                     <a id="logout" class="logout">로그아웃</a>
                     <a id="login" href="/login" class="logout">로그인</a>
                     <p id="login_flag" style="display: none;">${login}</p>
+                    <a id="qna" href="/qna" class="qna">Q&A</a>
                 </div>
             </div>
         </div>
