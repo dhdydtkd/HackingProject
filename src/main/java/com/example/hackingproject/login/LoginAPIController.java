@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +36,9 @@ import java.util.Map;
 @RequestMapping("/login")
 public class LoginAPIController {
 
+	
+
+	
     @Value("${rsa_web_key}")
     private String RSA_WEB_KEY ; // 개인키 session key
 
@@ -48,6 +53,8 @@ public class LoginAPIController {
             , @RequestBody LoginReq loginReq) {
         BaseModel baseModel = new BaseModel();
 
+
+        
         HttpSession session = request.getSession();
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSA_WEB_KEY);
 

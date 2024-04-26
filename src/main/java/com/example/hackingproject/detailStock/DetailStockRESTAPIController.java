@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import java.text.NumberFormat;
 
 import com.example.hackingproject.mypage.dto.MyUserData;
@@ -26,6 +27,8 @@ import java.security.PrivateKey;
 @Controller
 public class DetailStockRESTAPIController {
 	
+
+
 	@Autowired
 	private DetailStockService detailStockService;
 	
@@ -39,6 +42,7 @@ public class DetailStockRESTAPIController {
     , @RequestParam(value = "stockCode")String stockCode
     , @RequestParam(value = "stockName")String stockName) {
     	
+    	
     	MyUserData user = new MyUserData();
     	DetailStockVO detailStockVO = new DetailStockVO();
         ModelAndView mav = new ModelAndView();
@@ -47,6 +51,7 @@ public class DetailStockRESTAPIController {
         HttpSession session = request.getSession();
         String RSA_Modulus = (String)session.getAttribute(RSAModulus);
         String RSA_Exponent = (String)session.getAttribute(RSAExponent);
+
 
         request.setAttribute(RSAModulus, RSA_Modulus); // rsa modulus 를 request 에 추가
         request.setAttribute(RSAExponent, RSA_Exponent); // rsa exponent 를 request 에 추가

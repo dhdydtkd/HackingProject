@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +19,8 @@ import java.security.spec.RSAPublicKeySpec;
 
 @Controller
 public class LoginRestAPIController {
+	
+	
     @Value("${rsa_web_key}")
     private String RSA_WEB_KEY ; // 개인키 session key
 
@@ -41,9 +46,12 @@ public class LoginRestAPIController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
 
+    	
         String path = System.getProperty("user.dir");
         System.out.println("현재 작업 경로: " + path);
 
+
+        
         initRsa(request);
         ModelAndView mav = new ModelAndView();
         Boolean loginFlag = jwtTokenUtil.JWTTokenCheck(request);
