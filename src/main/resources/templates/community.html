@@ -55,10 +55,11 @@
         <div class="center" th:text="${companyName}">루키증권</div>
         <div class="right"></div>
     </div>
-
+    <div class="communityTitle">
+        <h1 th:text="${communityTitle}">커뮤니티</h1>
+    </div>
     <div class="search-container">
         <form th:action="@{/search}" method="get" class="search-form">
-            <h1 th:text="${communityTitle}">커뮤니티</h1>
             <div class="search-fields">
                 <select name="searchType" class="search-select">
                     <option value="title">이름 or 내용 </option>
