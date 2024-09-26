@@ -1,5 +1,7 @@
 package com.example.hackingproject.login;
 
+import com.example.hackingproject.common.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +22,28 @@ public class LoginRestAPIController {
     @Value("${rsa_instance}")
     private String RSA_INSTANCE; // rsa transformation
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+//    @RequestMapping(value = "/test_login", method = RequestMethod.GET)
+//    public ModelAndView testLogin(HttpServletRequest request, HttpServletResponse response) {
+//        initRsa(request);
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("test_login");
+//        return mav;
+//    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         initRsa(request);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
+        Boolean loginFlag = jwtTokenUtil.JWTTokenCheck(request);
+        if(loginFlag){
+            mav.setViewName("main_menu");
+        }{
+            mav.setViewName("login");
+        }
+
         return mav;
     }
 

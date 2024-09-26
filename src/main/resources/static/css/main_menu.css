@@ -1,0 +1,427 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 설정 */
+}
+
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 37.5rem;
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+
+}
+
+
+.header {
+    background-color: #fff;
+    text-align: center;
+    width: 100%;
+    position: relative; /* 헤더의 위치를 조정할 수 있습니다 */
+}
+
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.left-content img{
+    margin-left: 2rem;
+    width: 3rem;
+    height: 3rem;
+}
+.right-content {
+    flex: 0 0 auto; /* 로고와 로그아웃 버튼 크기가 유지되도록 설정 */
+}
+
+.center-content {
+    align-items: center;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.content {
+    flex: 1;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center;
+    width: 100%; /* 컨테이너 너비를 최대로 설정 */
+
+}
+
+#search-input {
+    flex-grow: 1; /* 입력란이 가능한 많은 공간을 차지하도록 설정 */
+    margin: 0; /* 마진 제거 */
+    padding: 0.4rem; /* 내부 여백 설정 */
+    border: none; /* 모든 테두리 제거 */
+    border-bottom: 0.0625rem solid #000; /* 검정색 밑줄만 추가 */
+    outline: none; /* 선택됐을 때의 테두리 제거 */
+    max-width: 70%; /* 최대 너비를 70%로 설정 */
+}
+
+
+#search-input:focus {
+    outline: none;
+}
+
+
+.search-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.logout {
+    white-space: nowrap;
+    padding-left: 0.1rem;
+    color: #fb923c;
+    text-decoration: none;
+    cursor: pointer; /* 마우스 포인터를 손가락으로 변경 */
+}
+
+
+section{
+    padding: 1rem;
+    /* border: 1px solid #000; */
+    margin-bottom: 0.625rem;
+}
+footer {
+    padding: 1rem;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.flex-item {
+    flex: 1;
+    margin: 0 0.3125rem;
+}
+
+
+/*계좌 개설 시작*/
+
+.alert-section {
+    display: flex;
+    justify-content: space-between; /* 양끝 정렬 */
+    align-items: center;
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 텍스트 색상 */
+    padding: 2rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    background-color: #f4f4f8; /* 배경색 */
+}
+
+
+.text p {
+    margin-bottom: 3rem;
+}
+
+.text button{
+    color: white;
+    background-color: #fb923c;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.add-button {
+    background-color: transparent; /* 배경색 투명 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer; /* 포인터 */
+    padding: 0; /* 패딩 제거 */
+    margin-left: 0.625rem; /* 버튼과 텍스트 사이의 간격 */
+}
+
+.plus-icon {
+    display: block;
+    font-size: 1.5rem; /* 아이콘 크기 */
+    line-height: 1; /* 아이콘 높이 */
+}
+
+
+/*계좌 개설 끝*/
+/* 최근 본 주식 스타일 */
+.recent-stocks {
+    display: block; /* 섹션 표시 */
+    padding: 2rem; /* 내부 여백 */
+    background: #f4f4f8; /* 배경색 */
+    margin-top: 1rem; /* 상단 여백 */
+    border-radius: 0.625rem; /* 모서리 둥글게 */
+}
+
+.recent-stocks-list {
+    display: flex; /* 플렉스 컨테이너로 설정 */
+    flex-wrap: wrap; /* 아이템이 여러 줄에 걸쳐 나타나도록 설정 */
+    gap: 1rem; /* 아이템 간격 */
+    padding: 1rem;
+}
+
+.stock-item {
+    padding: 0.5rem; /* 주식 아이템 내부 여백 */
+    background: white; /* 배경색 */
+    border: 0.0625rem solid #ddd; /* 테두리 */
+    border-radius: 0.625rem; /* 모서리 둥글게 */
+}
+
+.stock-name {
+    font-weight: bold; /* 주식 이름 굵게 */
+}
+
+
+.news-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.625rem;
+}
+
+.news-item img {
+    width: 5rem; /* or the size you prefer */
+    height: 3.125rem; /* or the size you prefer */
+    margin-right: 0.625rem;
+}
+
+.news-item a {
+    font-weight: bold;
+    color: #000; /* or any color you prefer */
+    margin-right: 0.625rem;
+    text-decoration: none; /* to remove the underline */
+}
+
+.news-item .news-source {
+    font-style: italic;
+    color: #666; /* or any color you prefer */
+    margin-right: 0.625rem;
+}
+
+.news-item .news-time {
+    color: #999; /* or any color you prefer */
+}
+
+.hidden {
+    display: none;
+}
+
+
+.tab-menu {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 1rem;
+}
+
+.tab {
+    font-size: 1rem; /* 20px 대신 */
+    border: none;
+    background: none;
+    padding: 0.625rem 1.25rem; /* 상하 10px, 좌우 20px 대신 */
+    cursor: pointer;
+    position: relative;
+}
+
+
+.tab.active {
+    border-bottom: 0.125rem solid #000; /* 활성 탭 하단 테두리 추가 */
+}
+
+.tab-content {
+    display: none; /* 기본적으로 모든 탭 콘텐츠 숨기기 */
+}
+
+.tab-content.hidden {
+    display: none; /* 숨겨진 탭 콘텐츠 */
+}
+
+/* 활성 탭 콘텐츠 */
+.tab-content:not(.hidden) {
+    display: block;
+}
+
+
+.descript {
+    position: relative;
+    transform : translateY(100%);
+    font-size: 0.7rem;
+    background-color: #ececec;
+    color:#5d5d5d ;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0; /* 위아래로 패딩 추가 */
+    margin-top: auto; /* 자동으로 상단 마진 추가하여 푸터를 하단으로 밀어냄 */
+}
+
+.indices-section{
+    margin:1rem;
+}
+
+.indices-section, .popular-stocks-section {
+    margin-bottom: 1.25rem;
+}
+
+.indices {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+    overflow-x: auto; /* 수평 스크롤을 활성화합니다. */
+    -webkit-overflow-scrolling: touch; /* iOS 기기에서 스크롤이 부드럽게 작동하도록 설정합니다. */
+
+}
+
+.index-item {
+    background-color: #f9f9f9;
+    border-radius: 0.5rem; /* 8px */
+    padding: 0.9375rem; /* 15px */
+    text-align: center;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1); /* 2px 4px */
+    flex-basis: calc(50% - 0.625rem); /* 10px */
+    margin: 0.3125rem; /* 5px */
+    min-width: 9.375rem; /* 150px */
+}
+
+
+.index-name {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.index-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.index-change {
+    font-size: 0.8rem;
+}
+
+.index-graph {
+    height: 1.25rem;
+    /* 배경 그래프 이미지를 추가합니다. */
+}
+
+.negative {
+    color: #4B89DC;
+}
+
+.positive {
+    color: #ff4242;
+}
+
+.popular-stocks {
+    list-style: none;
+    padding: 0;
+}
+
+.popular-stocks li {
+    padding: 0.3125rem;
+    border-bottom: 0.0625rem solid #ddd; /* 각 항목을 구분짓는 선 */
+}
+
+.stock-name {
+    font-weight: bold;
+}
+
+.stock-price {
+    color: #666;
+}
+
+.popular-stocks-section {
+    margin: 1rem;
+    margin-top: 3rem;
+}
+
+.stock-list {
+    margin-top: 1rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.stock-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.625rem;
+    background-color: #f9f9f9; /* Light grey background */
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+
+.stock-number {
+    min-width: 1.25rem; /* Ensure the width stays constant */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333; /* Dark grey color */
+    margin-right: 0.5rem;
+}
+
+[name="STOCK_NAME"] {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333; /* Dark grey color */
+    flex: 1; /* Allow the name to fill the space */
+}
+
+[name="STOCK_PRICE"],
+[name="STOCK_RATE"] {
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+    white-space: nowrap; /* Prevent wrapping to a new line */
+}
+
+[name="STOCK_RATE"] {
+    font-weight: bold;
+}
+
+
+.news-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    table-layout: fixed; /* 각 열의 너비를 고정하기 위해 사용 */
+}
+
+
+.news-table th, .news-table td {
+    border: none;
+    padding: 0.5rem;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.news-table thead th {
+    border: none;
+}
+
+.more-link {
+    display: block; /* 링크를 블록 요소로 만들어 줄바꿈 처리 */
+    margin-top: 3rem; /* 테이블과의 간격을 만듭니다 */
+    text-align: center; /* 중앙 정렬 */
+    color: black;
+    text-decoration: none;
+}
+
+.more-link:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄을 표시 */
+}

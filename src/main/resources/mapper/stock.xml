@@ -1,0 +1,91 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hackingproject.dao.StockDAO">
+
+    <insert id="addSchedulerStock" parameterType="com.example.hackingproject.stock.dto.StockData">
+        INSERT INTO rookie.Stock_Price (
+             STOCK_CODE
+             , STOCK_NAME
+             , STOCK_PRICE
+             , STOCK_DATE
+        )
+        VALUES
+        (
+              #{stock_code}
+            , #{stock_name}
+            , #{stock_price}
+            , (SELECT DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%S"))
+        )
+    </insert>
+
+    <delete id="deleteSchedulerStock">
+        DELETE FROM rookie.Stock_Price
+        WHERE STOCK_DATE &lt; DATE_SUB(NOW(), INTERVAL 100 MINUTE);
+    </delete>
+
+    <select id="getStock1HourData"
+            parameterType="int" resultType="com.example.hackingproject.stock.dto.StockHourData">
+        SELECT
+            CAST(AVG(STOCK_PRICE) AS UNSIGNED) as avg_STOCK_PRICE
+        FROM
+            (SELECT
+                 sp.STOCK_PRICE
+             FROM
+                 rookie.Stock_Price sp
+             ORDER BY sp.STOCK_DATE DESC
+                 LIMIT 60 OFFSET #{param}) as mindata;
+    </select>
+
+    <select id="getStockList" resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            s.STOCK_CODE,
+            s.STOCK_NAME,
+            sp.STOCK_PRICE,
+            DATE_FORMAT(sp.STOCK_DATE, "%Y-%m-%d %H:%i:%S") as STOCK_DATE
+        FROM
+            rookie.Stock s
+        LEFT JOIN
+        (
+            SELECT sp1.* FROM rookie.Stock_Price sp1
+            LEFT JOIN rookie.Stock_Price sp2 ON
+                sp1.STOCK_CODE = sp2.STOCK_CODE AND sp1.STOCK_DATE &lt; sp2.STOCK_DATE
+            WHERE
+                sp2.STOCK_DATE IS NULL
+        ) AS sp
+        ON s.STOCK_CODE = sp.STOCK_CODE;
+    </select>
+
+
+    <select id="getStockDetail"
+            parameterType="String"
+            resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            sp.STOCK_CODE
+             , sp.STOCK_NAME
+             , sp.STOCK_PRICE
+        FROM rookie.Stock_Price sp
+        WHERE
+            sp.STOCK_CODE = #{param}
+        ORDER BY sp.STOCK_DATE DESC
+            LIMIT 1;
+    </select>
+
+    <select id="getStockMinute"
+            parameterType="String"
+            resultType="com.example.hackingproject.stock.vo.StockVO">
+        SELECT
+            sp.STOCK_CODE
+             , sp.STOCK_NAME
+             , sp.STOCK_PRICE
+        FROM rookie.Stock_Price sp
+        WHERE
+            sp.STOCK_CODE = #{param}
+        ORDER BY sp.STOCK_DATE DESC
+            LIMIT 60;
+    </select>
+
+
+
+</mapper>

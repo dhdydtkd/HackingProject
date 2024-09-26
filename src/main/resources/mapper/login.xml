@@ -7,18 +7,19 @@
     <select id="getUserInfo" parameterType="com.example.hackingproject.login.dto.LoginReq"
             resultType="com.example.hackingproject.login.vo.UserVO">
         SELECT
-            u.id
-            , u.pass
-            , u.name
-        FROM my.user as u
+            u.USER_ID
+            , u.USER_PW
+            , u.USER_NM
+            , u.ACCESS_LEVEL
+        FROM rookie.Users as u
         <where>
-            u.id = #{id}
-            AND u.pass = #{pass}
+            u.USER_ID = #{user_id}
+            AND u.USER_PW = #{user_pw}
         </where>
     </select>
 
     <update id="updateUserLogin" parameterType="com.example.hackingproject.login.vo.UserVO">
-        UPDATE my.user as u
+        UPDATE rookie.user as u
             SET u.last_login = DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
         WHERE u.id = #{id}
     </update>

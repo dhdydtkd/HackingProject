@@ -4,58 +4,31 @@
 
 <mapper namespace="com.example.hackingproject.dao.NoticeDAO">
 
-    <select id="getNoticeList" parameterType="com.example.hackingproject.common.vo.TableSearchVO"
-            resultType="com.example.hackingproject.notice.vo.NoticeVO">
-        SELECT
-            n.no
-            , n.title
-            , n.context
-            , n.create_id
-            , DATE_FORMAT(n.create_dt, "%Y-%m-%d %H:%m:%s") AS create_dt
-            , DATE_FORMAT(n.update_dt, "%Y-%m-%d %H:%m:%s") AS update_dt
-        FROM my.notice as n
-        <where>
-            AND n.delete_dt IS NULL
-        </where>
-        LIMIT #{pageMaxCount}
-        OFFSET #{currentPage};
-    </select>
+        <!--공지사항 목록 -->
+        <select id="getNoticeList" resultType="com.example.hackingproject.notice.dto.NoticeReq">
+                SELECT NOTICE_NO, USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE_PATH, NOTICE_FILE_NAME FROM rookie.Notice
+        </select>
 
-    <select id="getNoticeListCount" parameterType="com.example.hackingproject.common.vo.TableSearchVO"
-            resultType="int">
-        SELECT
-            COUNT(*)
-        FROM my.notice as n
-        <where>
-            AND n.delete_dt IS NULL
-        </where>
-    </select>
+        <!--공지사항 확인-->
+        <select id="getNoticeByNo" resultType="com.example.hackingproject.notice.dto.NoticeReq">
+                SELECT * FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
+        </select>
 
-    <insert id="addSchedulerNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
-        INSERT INTO my.notice (
-            title
-            , context
-            , create_id
-            , create_dt)
-        VALUES(
-                #{title}
-               , #{context}
-               , #{createID}
-               , DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
-        );
-    </insert>
+        <!--공지사항 등록-->
+        <insert id="registerNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
+                INSERT INTO rookie.Notice (USER_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_DATE, NOTICE_FILE_PATH, NOTICE_FILE_NAME)
+                VALUES (#{USER_ID}, #{NOTICE_TITLE}, #{NOTICE_CONTEXT}, #{NOTICE_DATE}, #{NOTICE_FILE_PATH}, #{NOTICE_FILE_NAME})
+        </insert>
 
-    <select id="getAddNoticeIndex"
-            resultType="int">
-        Select (MAX(no)+1) from my.notice;
-    </select>
+        <!--공지사항 수정-->
+        <update id="modifyNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
+                UPDATE rookie.Notice
+                SET NOTICE_TITLE = #{NOTICE_TITLE}, NOTICE_CONTEXT = #{NOTICE_CONTEXT}, NOTICE_DATE = #{NOTICE_DATE}, NOTICE_FILE_PATH = #{NOTICE_FILE_PATH}, NOTICE_FILE_NAME = #{NOTICE_FILE_NAME}}
+                WHERE NOTICE_NO = #{NOTICE_NO}
+        </update>
 
-    <update id="deleteNotice" parameterType="int">
-        UPDATE my.notice AS n
-               SET n.delete_dt = DATE_FORMAT(now(), "%Y-%m-%d %H:%m:%s")
-        <where>
-            AND n.no = #{param}
-            AND n.delete_dt IS NULL
-        </where>
-    </update>
+        <!--공지사항 삭제-->
+        <delete id="deleteNotice" parameterType="com.example.hackingproject.notice.dto.NoticeReq">
+                DELETE FROM rookie.Notice WHERE NOTICE_NO = #{NOTICE_NO}
+        </delete>
 </mapper>
